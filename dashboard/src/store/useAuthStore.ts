@@ -14,17 +14,23 @@ interface AuthState {
   isAuthenticated: boolean;
   isLoading: boolean;
 
+  // Helper action / getter
+  isLoggedIn: () => boolean;
+
   login: (user: User, token: string) => void;
   logout: () => void;
   setUser: (user: User) => void;
   setLoading: (loading: boolean) => void;
 }
 
-export const useAuthStore = create<AuthState>((set) => ({
+export const useAuthStore = create<AuthState>((set, get) => ({
   user: null,
   accessToken: null,
   isAuthenticated: false,
   isLoading: true,
+
+  // Returns true if user exists and isAuthenticated is true
+  isLoggedIn: () => Boolean(get().user && get().isAuthenticated),
 
   login: (user, token) =>
     set({

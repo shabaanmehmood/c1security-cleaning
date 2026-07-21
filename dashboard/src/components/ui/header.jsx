@@ -4,8 +4,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Menu } from "lucide-react";
+import { Menu, LogOut } from "lucide-react";
 
+import { useAuthStore } from "../../store/useAuthStore";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Sheet,
@@ -24,6 +25,10 @@ const navItems = [
 export default function Header() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
+
+  // Auth Store State & Actions
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const logout = useAuthStore((state) => state.logout);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -77,17 +82,30 @@ export default function Header() {
 
         {/* Desktop Buttons */}
         <div className="hidden items-center gap-2 md:flex">
-          <Link href="/login">
-            <Button variant="ghost" className="rounded-full">
-              Login
+          {isAuthenticated ? (
+            <Button
+              variant="outline"
+              className="rounded-full gap-2 border-slate-300 text-slate-700 hover:bg-slate-100"
+              onClick={logout}
+            >
+              <LogOut className="h-4 w-4" />
+              Sign Out
             </Button>
-          </Link>
+          ) : (
+            <>
+              <Link href="/login">
+                <Button variant="ghost" className="rounded-full">
+                  Login
+                </Button>
+              </Link>
 
-          <Link href="/sign-up">
-            <Button variant="outline" className="rounded-full">
-              Sign Up
-            </Button>
-          </Link>
+              <Link href="/sign-up">
+                <Button variant="outline" className="rounded-full">
+                  Sign Up
+                </Button>
+              </Link>
+            </>
+          )}
 
           <Link href="/get-a-quote">
             <Button className="rounded-full bg-blue-600 text-white hover:bg-blue-700">
@@ -126,17 +144,30 @@ export default function Header() {
                 ))}
 
                 <div className="mt-6 flex flex-col gap-3">
-                  <Link href="/login">
-                    <Button className="w-full rounded-full" variant="ghost">
-                      Login
+                  {isAuthenticated ? (
+                    <Button
+                      variant="outline"
+                      className="w-full rounded-full gap-2"
+                      onClick={logout}
+                    >
+                      <LogOut className="h-4 w-4" />
+                      Sign Out
                     </Button>
-                  </Link>
+                  ) : (
+                    <>
+                      <Link href="/login">
+                        <Button className="w-full rounded-full" variant="ghost">
+                          Login
+                        </Button>
+                      </Link>
 
-                  <Link href="/sign-up">
-                    <Button className="w-full rounded-full" variant="outline">
-                      Sign Up
-                    </Button>
-                  </Link>
+                      <Link href="/sign-up">
+                        <Button className="w-full rounded-full" variant="outline">
+                          Sign Up
+                        </Button>
+                      </Link>
+                    </>
+                  )}
 
                   <Link href="/get-a-quote">
                     <Button className="w-full rounded-full bg-blue-600 hover:bg-blue-700">
