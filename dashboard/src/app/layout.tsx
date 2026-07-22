@@ -1,14 +1,19 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import RootBackground from "../components/ui/rootbackground";
+import RootBackground from "@/components/ui/rootbackground";
 const inter = Inter({
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "CleanWorks",
+  title: "C1SCURITY-CLEANING",
   description: "Professional Commercial Cleaning Services",
+  icons: {
+    icon: "/MainLogo.svg", 
+    shortcut: "/Logo.svg",
+    apple: "/main.svg",
+  },
 };
 
 export default function RootLayout({

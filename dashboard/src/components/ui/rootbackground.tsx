@@ -1,53 +1,64 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useEffect } from "react";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 
-export default function RootBackground() {
+export default function Background() {
+  // Mouse tracking for fast-responsive cursor spotlight
+  const mouseX = useMotionValue(-500);
+  const mouseY = useMotionValue(-500);
+
+  // Snappy spring config for quick cursor feedback
+  const springConfig = { damping: 18, stiffness: 200 };
+  const smoothX = useSpring(mouseX, springConfig);
+  const smoothY = useSpring(mouseY, springConfig);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, [mouseX, mouseY]);
+
   return (
-    <div className="fixed inset-0 -z-50 overflow-hidden bg-slate-50 pointer-events-none">
-      {/* Moving Dark Grid Pattern */}
+    <div className="fixed inset-0 -z-50 overflow-hidden bg-slate-50 pointer-events-none select-none">
+      {/* 1. Fast-Responsive Cursor Spotlight */}
       <motion.div
-        animate={{
-          x: [0, -48],
-          y: [0, -48],
+        className="absolute h-[400px] w-[400px] rounded-full bg-gradient-to-tr from-slate-900/15 via-blue-900/10 to-transparent blur-2xl opacity-90"
+        style={{
+          x: smoothX,
+          y: smoothY,
+          translateX: "-50%",
+          translateY: "-50%",
         }}
-        transition={{
-          duration: 6,
-          repeat: Infinity,
-          ease: "linear",
-        }}
-        className="absolute -inset-[100px] bg-[linear-gradient(to_right,#334155_1.5px,transparent_1.5px),linear-gradient(to_bottom,#334155_1.5px,transparent_1.5px)] bg-[size:3rem_3rem] opacity-[0.08]"
       />
 
-      {/* Floating Accent Blob 1 (Top Left) */}
+      {/* 2. Fast-Moving & Pulsing Symmetric Dot Grid */}
       <motion.div
         animate={{
-          scale: [1, 1.2, 1],
-          x: [0, 40, 0],
-          y: [0, -30, 0],
+          backgroundPosition: ["0px 0px", "64px 64px"],
+          opacity: [0.2, 0.45, 0.2],
         }}
         transition={{
-          duration: 12,
-          repeat: Infinity,
-          ease: "easeInOut",
+          backgroundPosition: {
+            duration: 2.5, // Fast endless drift
+            repeat: Infinity,
+            ease: "linear",
+          },
+          opacity: {
+            duration: 1.8, // Catchy pulse rhythm
+            repeat: Infinity,
+            ease: "easeInOut",
+          },
         }}
-        className="absolute -top-32 -left-20 w-[30rem] h-[30rem] rounded-full bg-blue-300/30 blur-3xl"
+        className="absolute inset-0 bg-[radial-gradient(#0f172a_1.8px,transparent_1.8px)] [background-size:2rem_2rem]"
       />
 
-      {/* Floating Accent Blob 2 (Bottom Right) */}
-      <motion.div
-        animate={{
-          scale: [1, 1.25, 1],
-          x: [0, -40, 0],
-          y: [0, 40, 0],
-        }}
-        transition={{
-          duration: 15,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="absolute -bottom-32 -right-20 w-[30rem] h-[30rem] rounded-full bg-indigo-300/30 blur-3xl"
-      />
+      {/* 3. Dynamic Center Vignette */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,#f8fafc_90%)]" />
     </div>
   );
 }
