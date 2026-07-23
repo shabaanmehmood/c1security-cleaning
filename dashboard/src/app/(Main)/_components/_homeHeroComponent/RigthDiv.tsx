@@ -1,100 +1,108 @@
 "use client";
 
 import { motion } from "framer-motion";
-import HeroAnimation from "./homeHeroAnimation";
 
-const stars = Array.from({ length: 32 }, (_, i) => ({
-  id: i,
-  left: (i * 17) % 100,
-  top: (i * 29) % 100,
-  size: 2 + (i % 4),
-  duration: 2 + (i % 5),
-  delay: i * 0.15,
-}));
+const items = [
+  { label: "Cleaning", delay: 0 },
+  { label: "24/7", delay: 0.4 },
+  { label: "Reliabilty", delay: 0.8 },
+  { label: "Guards", delay: 1.2 },
+  { label: "Trusted", delay: 1.6 },
+  { label: "Sustainabilty", delay: 2.0 },
+];
 
-export default function Right() {
+export default function Rigth() {
   return (
-    <HeroAnimation delay={0.2}>
-      <div className="relative flex h-[350px] sm:h-[450px] lg:h-[650px] w-full items-center justify-center overflow-hidden">
-        {/* Soft Background Glow */}
-        <div className="absolute h-80 w-80 rounded-full bg-blue-400/20 blur-[100px]" />
+    <section className="relative flex h-[650px] w-full items-center justify-center overflow-hidden">
+      {/* Background Glow */}
+      <div className="absolute h-[500px] w-[500px] rounded-full bg-blue-500/10 blur-[140px]" />
 
-        {/* Stars */}
-        {stars.map((star) => (
+      {/* Orbit Rings */}
+      {[180, 280, 380].map((size) => (
+        <motion.div
+          key={size}
+          animate={{ rotate: 360 }}
+          transition={{
+            duration: size / 12,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+          className="absolute rounded-full border border-slate-300/30"
+          style={{
+            width: size,
+            height: size,
+          }}
+        />
+      ))}
+
+      {/* Floating Badges */}
+      {items.map((item, index) => {
+        const angle = (360 / items.length) * index;
+
+        return (
           <motion.div
-            key={star.id}
-            className="absolute rounded-full bg-white"
-            style={{
-              left: `${star.left}%`,
-              top: `${star.top}%`,
-              width: star.size,
-              height: star.size,
-              boxShadow: "0 0 12px rgba(255,255,255,0.9)",
-            }}
+            key={item.label}
             animate={{
-              opacity: [0.3, 1, 0.3],
-              scale: [1, 1.8, 1],
+              rotate: 360,
             }}
             transition={{
-              duration: star.duration,
-              delay: star.delay,
+              duration: 18,
               repeat: Infinity,
-              ease: "easeInOut",
+              ease: "linear",
+              delay: item.delay,
             }}
-          />
-        ))}
+            className="absolute"
+          >
+            <div
+              style={{
+                transform: `rotate(${angle}deg) translateY(-190px) rotate(-${angle}deg)`,
+              }}
+            >
+              <motion.div
+                animate={{
+                  y: [0, -12, 0],
+                  scale: [1, 1.08, 1],
+                }}
+                transition={{
+                  duration: 2.8,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                className="rounded-full border border-white/40 bg-white/80 px-5 py-3 shadow-2xl backdrop-blur-xl"
+              >
+                <span className="font-semibold text-slate-700">
+                  {item.label}
+                </span>
+              </motion.div>
+            </div>
+          </motion.div>
+        );
+      })}
 
-        {/* Orbit Ring */}
-        <motion.div
-          className="absolute h-56 w-56 rounded-full border border-blue-300/30 sm:h-72 sm:w-72 lg:h-[420px] lg:w-[420px]"
-          animate={{ rotate: 360 }}
-          transition={{
-            duration: 30,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-        />
-
-        {/* Second Orbit */}
-        <motion.div
-          className="absolute h-72 w-72 rounded-full border border-dashed border-cyan-300/20 sm:h-96 sm:w-96 lg:h-[520px] lg:w-[520px]"
-          animate={{ rotate: -360 }}
-          transition={{
-            duration: 45,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-        />
-
-        {/* Center Glow */}
-        <motion.div
-          className="absolute h-10 w-10 rounded-full bg-white shadow-[0_0_80px_20px_rgba(59,130,246,0.7)]"
-          animate={{
-            scale: [1, 1.4, 1],
-            opacity: [0.7, 1, 0.7],
-          }}
-          transition={{
-            duration: 2.5,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-
-        {/* Orbiting Dot */}
-        <motion.div
-          className="absolute"
-          animate={{ rotate: 360 }}
-          transition={{
-            duration: 12,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-        >
-          <div className="relative h-56 w-56 sm:h-72 sm:w-72 lg:h-[420px] lg:w-[420px]">
-            <div className="absolute left-1/2 top-0 h-3 w-3 -translate-x-1/2 rounded-full bg-cyan-400 shadow-lg shadow-cyan-400/60" />
-          </div>
-        </motion.div>
-      </div>
-    </HeroAnimation>
+      {/* Center Circle */}
+      <motion.div
+        animate={{
+          scale: [1, 1.08, 1],
+          boxShadow: [
+            "0 0 0 rgba(37,99,235,0.3)",
+            "0 0 50px rgba(37,99,235,0.5)",
+            "0 0 0 rgba(37,99,235,0.3)",
+          ],
+        }}
+        transition={{
+          duration: 3,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+        className="relative flex h-40 w-40 items-center justify-center rounded-full bg-gradient-to-br from-blue-600 to-cyan-500 text-white shadow-2xl"
+      >
+        <div className="absolute inset-0 rounded-full bg-white/10 backdrop-blur-md" />
+        <span className="relative text-center text-xl font-bold">
+          C1
+          <br />
+          SCURITY
+        </span>
+      </motion.div>
+    </section>
   );
 }

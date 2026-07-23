@@ -10,9 +10,7 @@ import CityButton from "../Citybutton";
 const navItems = [
   { title: "Home", href: "/" },
   { title: "About", href: "/about" },
-  { title: "Services", href: "/services" },
-  { title: "Industries", href: "/industries" },
-  { title: "Contact", href: "/contact" },
+  { title: "Contact", href: "/contacts" },
 ];
 
 export default function Navbar() {

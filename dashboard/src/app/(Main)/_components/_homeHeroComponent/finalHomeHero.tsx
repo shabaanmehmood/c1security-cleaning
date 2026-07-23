@@ -18,15 +18,15 @@ export default function HomeHero() {
         <div className="absolute -right-32 bottom-20 h-96 w-96 rounded-full bg-blue-500/10 blur-[160px]" />
       </div>
 
-      {/* Hero */}
-      <div className="relative z-10 mx-auto flex min-h-screen max-w-7xl items-center px-6 pt-28 pb-16 lg:px-8">
+      {/* Hero Content Grid */}
+      <div className="relative z-10 mx-auto grid min-h-screen max-w-7xl grid-cols-1 items-center gap-12 px-6 pt-28 pb-16 lg:grid-cols-12 lg:px-8">
         {/* Left Side */}
-        <div className="flex w-full items-center lg:w-[52%]">
+        <div className="flex w-full items-center lg:col-span-6 xl:col-span-7">
           <Left />
         </div>
 
         {/* Right Side */}
-        <div className="mt-14 hidden lg:flex lg:w-[48%] items-center justify-center">
+        <div className="flex w-full items-center justify-center lg:col-span-6 xl:col-span-5">
           <Right />
         </div>
       </div>

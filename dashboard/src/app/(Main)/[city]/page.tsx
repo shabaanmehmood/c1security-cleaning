@@ -1,47 +1,33 @@
-// app/(Main)/[city]/page.tsx
+import Page from "@/components/ui/city/city";
+import { cityPages } from "@/app/(Main)/_components/FillerData";
+import { notFound } from "next/navigation";
 
-// 1. Define or import your list of city slugs
-const CITIES = [
-  "brisbane",
-  "gold-coast",
-  "sunshine-coast",
-  "townsville",
-  "cairns",
-  "toowoomba",
-  "rockhampton",
-  "mackay",
-  "gladstone",
-  "bundaberg",
-  "hervey-bay",
-  "maryborough",
-  "mount-isa",
-  "emerald",
-  "gympie",
-  "warwick",
-  "charters-towers",
-  "kingaroy",
-  "roma",
-  "moranbah",
-];
-
-// 2. Export generateStaticParams
 export async function generateStaticParams() {
-  return CITIES.map((city) => ({
-    city: city,
+  const cities = Object.keys(cityPages);
+
+  console.log("Cities:", cities);
+
+  return cities.map((city) => ({
+    city,
   }));
 }
 
-// 3. Your Page Component
-export default async function CityPage({
-  params,
-}: {
-  params: Promise<{ city: string }>;
-}) {
+// 1. Update Props interface to mark params as a Promise
+interface Props {
+  params: Promise<{
+    city: string;
+  }>;
+}
+
+export default async function CityPage({ params }: Props) {
+  // 2. Add 'await' here to unwrap the params Promise
   const { city } = await params;
 
-  return (
-    <div>
-      <h1>Services in {city}</h1>
-    </div>
-  );
+  const pageData = cityPages[city as keyof typeof cityPages];
+
+  if (!pageData) {
+    notFound();
+  }
+
+  return <Page data={pageData.data} />;
 }

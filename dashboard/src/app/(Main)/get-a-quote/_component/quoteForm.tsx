@@ -36,7 +36,7 @@ export default function QuoteForm() {
   }
 
   return (
-    <section className="py-20 bg-white">
+    <section className="py-20 ">
       <div className="mx-auto max-w-5xl rounded-3xl border border-gray-200 bg-white p-10 shadow-2xl">
         <div className="mb-10 text-center">
           <h2 className="text-4xl font-bold">Request a Free Quote</h2>
