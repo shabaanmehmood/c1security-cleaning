@@ -39,7 +39,7 @@ export default function SwappingCards({
 
     const interval = setInterval(() => {
       swapPositions();
-    }, 2000); // Adjust duration here: 2000ms = 1s pause between transitions
+    }, 1000); // Adjust duration here: 2000ms = 1s pause between transitions
 
     return () => clearInterval(interval);
   }, [isPaused]);

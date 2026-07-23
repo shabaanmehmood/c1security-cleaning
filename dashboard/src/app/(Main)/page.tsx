@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import HomeHero from "./_components/_homeHeroComponent/finalHomeHero";
 import Features from "./_components/stackedFeature";
+import { ServicesSection } from "./_components/ServiceSection";
 
 // Motion Variants for Stats
 const statsContainerVariants = {
@@ -36,7 +37,9 @@ export default function Home() {
     <>
       {/* 1. HERO SECTION */}
       <HomeHero />
+       
 
+       <ServicesSection/>
       {/* 2. STATS BAR SECTION */}
       <section className="py-8 px-4 flex justify-center">
         <motion.div

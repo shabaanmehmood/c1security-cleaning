@@ -7,6 +7,7 @@ import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
 import type { LucideIcon } from "lucide-react";
 
 interface Feature {
+  
   icon: LucideIcon;
   title: string;
   description: string;

@@ -11,50 +11,17 @@ import {
 } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-
-interface FaqItem {
-  question: string;
-  answer: string;
-}
+import {EducatinalFaq,FaqItem } from "@/fillerData/Educatial";
 
 interface FaqProps {
   title?: string;
   subtitle?: string;
   faqs?: FaqItem[];
 }
-
-const defaultFaqs: FaqItem[] = [
-  {
-    question: "What security and facility management services do you offer?",
-    answer:
-      "We provide 24/7 static security guards, mobile patrols, commercial sanitation, deep cleaning, medical facility compliance, and general property maintenance tailored to commercial and industrial sites.",
-  },
-  {
-    question: "Are your security personnel and cleaning crews fully licensed?",
-    answer:
-      "Yes, 100% of our team members undergo rigorous background checks, hold valid security licenses, and are trained in health & safety compliance standards across Australia.",
-  },
-  {
-    question: "How quickly can you deploy staff to our facility?",
-    answer:
-      "We offer rapid deployment capabilities. Emergency security or sanitation coverage can typically be dispatched within 2 to 4 hours depending on location.",
-  },
-  {
-    question: "Can we customize a package for both security and maintenance?",
-    answer:
-      "Absolutely. We specialize in bundled facility solutions that combine security guards, janitorial services, and preventative maintenance under a single, cost-effective contract.",
-  },
-  {
-    question: "How do I request a quote for my business?",
-    answer:
-      "You can click the 'Get a Quote' button to fill out a brief 2-minute form, or contact our support team directly. We provide tailored proposals within 24 hours.",
-  },
-];
-
 export default function Faq({
   title = "Frequently Asked Questions",
   subtitle = "Everything you need to know about our facility security and sanitation services.",
-  faqs = defaultFaqs,
+  faqs = EducatinalFaq,
 }: FaqProps) {
   return (
     <section className="w-full max-w-5xl mx-auto px-4 py-12 sm:py-16">
