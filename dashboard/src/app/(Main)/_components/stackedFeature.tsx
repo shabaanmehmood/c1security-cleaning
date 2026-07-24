@@ -4,6 +4,7 @@ import { ShieldCheck, Sparkles, Clock, Headset, Leaf, FileCheck } from "lucide-r
 
 const features = [
   {
+    id:"Trained-Crew",
     icon: ShieldCheck,
     title: "Vetted & Trained Crew",
     description:
@@ -11,6 +12,7 @@ const features = [
     imageSrc: "/images/about/company-overview.jpg",
   },
   {
+    id:"Quality",
     icon: Sparkles,
     title: "Audited Quality Standards",
     description:
@@ -18,6 +20,7 @@ const features = [
     imageSrc: "/images/about/company-story-secondary.jpg",
   },
   {
+    id:"Response",
     icon: Clock,
     title: "Rapid Response",
     description:
@@ -25,6 +28,7 @@ const features = [
     imageSrc: "/images/about/company-story-main.jpg",
   },
   {
+    id:"Support",
     icon: Headset,
     title: "24/7 Dedicated Support",
     description:
@@ -32,6 +36,7 @@ const features = [
     imageSrc:"/images/about/company-story-main.jpg",
   },
   {
+    id:"Eco-Friendly",
     icon: Leaf,
     title: "Eco-Friendly Solutions",
     description:
@@ -39,6 +44,7 @@ const features = [
     imageSrc: "/images/about/about-hero.jpg",
   },
   {
+    id:"Transparent ",
     icon: FileCheck,
     title: "Transparent Compliance",
     description:

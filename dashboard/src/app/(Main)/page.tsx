@@ -6,8 +6,9 @@ import { Button } from "@/components/ui/button";
 import HomeHero from "./_components/_homeHeroComponent/finalHomeHero";
 import Features from "./_components/stackedFeature";
 import { ServicesSection } from "./_components/ServiceSection";
+import DocumentInfoCardDownload from "@/components/ui/DocumentInfoCardDownload";
+import MagneticButton from "@/components/ui/heyZaneButton";
 
-// Motion Variants for Stats
 const statsContainerVariants = {
   hidden: { opacity: 0, y: 30 },
   visible: {
@@ -37,9 +38,18 @@ export default function Home() {
     <>
       {/* 1. HERO SECTION */}
       <HomeHero />
-       
+        
+      <ServicesSection/>
 
-       <ServicesSection/>
+      <section className="py-8 px-4 flex justify-center items-center">
+        <DocumentInfoCardDownload pdfUrl="/Docs/download.pdf" fileName="C1-SECURITY.pdf"/>
+      </section>
+
+      {/* MAGNETIC BUTTON SECTION (CENTERED) */}
+      <section className="py-8 px-4 flex justify-center items-center">
+        <MagneticButton />
+      </section>
+
       {/* 2. STATS BAR SECTION */}
       <section className="py-8 px-4 flex justify-center">
         <motion.div
@@ -64,7 +74,6 @@ export default function Home() {
                 </p>
               </div>
 
-              {/* Subtle Vertical Divider between items on desktop */}
               {idx < stats.length - 1 && (
                 <div className="hidden md:block h-7 w-[1px] bg-slate-800" />
               )}
@@ -85,10 +94,8 @@ export default function Home() {
           transition={{ duration: 0.6 }}
           className="relative rounded-3xl bg-blue-600 p-6 sm:p-12 md:p-16 text-white overflow-hidden shadow-2xl shadow-blue-600/20"
         >
-          {/* Subtle grid accent */}
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff15_1px,transparent_1px),linear-gradient(to_bottom,#ffffff15_1px,transparent_1px)] bg-[size:2rem_2rem] pointer-events-none" />
 
-          {/* Glowing Ambient Light */}
           <div className="absolute -top-24 -right-24 h-72 w-72 rounded-full bg-white/10 blur-3xl pointer-events-none" />
 
           <div className="relative z-10 max-w-2xl text-center sm:text-left">

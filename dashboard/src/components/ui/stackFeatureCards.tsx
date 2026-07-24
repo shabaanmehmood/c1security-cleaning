@@ -1,13 +1,18 @@
-// components/StackedFeatureCards.tsx
 "use client";
 
 import { useRef } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  MotionValue,
+} from "framer-motion";
 import type { LucideIcon } from "lucide-react";
 
 interface Feature {
-  
+  id: string;
   icon: LucideIcon;
   title: string;
   description: string;
@@ -30,23 +35,25 @@ function StackedCard({
   total: number;
   progress: MotionValue<number>;
 }) {
+  const router = useRouter();
   const Icon = feature.icon;
 
-  // Each card's "active window" within the overall scroll progress
+  // Each card's active scroll window
   const start = index / total;
   const end = (index + 1) / total;
 
-  // As the NEXT card scrolls in, this card scales down + dims slightly
   const scale = useTransform(
     progress,
     [start, end],
     [1, index === total - 1 ? 1 : 0.92]
   );
+
   const opacity = useTransform(
     progress,
     [start, end],
     [1, index === total - 1 ? 1 : 0.6]
   );
+
   const brightness = useTransform(
     progress,
     [start, end],
@@ -55,19 +62,54 @@ function StackedCard({
 
   return (
     <div
-    className="sticky top-24 flex justify-center"
-    style={{ zIndex: index }}
+      className="sticky top-24 flex justify-center px-4"
+      style={{ zIndex: index }}
     >
-      {/*<div className="flex flex-col justify-center p-12 lg:p-16"> */}
       <motion.div
         style={{
           scale,
           opacity,
           filter: useTransform(brightness, (b) => `brightness(${b})`),
         }}
-        className="w-full max-w-7xl overflow-hidden rounded-3xl border border-slate-200/80 bg-white shadow-2xl">
+        className="relative w-full max-w-7xl overflow-hidden rounded-3xl border border-slate-200/80 bg-white shadow-2xl"
+      >
+        {/* Top Left Button */}
+        <button
+          onClick={() => router.push(`/services/${feature.id}`)}
+          className="
+  absolute
+  right-5
+  top-5
+  z-20
+  rounded-full
+  border
+  border-white/30
+  bg-white/90
+  px-4
+  py-2
+  text-[11px]
+  font-bold
+  uppercase
+  tracking-[0.2em]
+  text-slate-900
+  shadow-xl
+  backdrop-blur-md
+  transition-all
+  duration-300
+  hover:-translate-y-0.5
+  hover:scale-105
+  hover:border-blue-500
+  hover:bg-blue-600
+  hover:text-white
+  hover:shadow-blue-500/40
+  active:scale-95
+"
+        >
+          Read More About {feature.id} Cleaning
+        </button>
+
         <div className="grid grid-cols-1 md:grid-cols-2">
-          {/* Image side */}
+          {/* Image */}
           <div className="relative h-80 md:h-[620px]">
             <Image
               src={feature.imageSrc}
@@ -76,18 +118,21 @@ function StackedCard({
               sizes="(max-width: 768px) 100vw, 50vw"
               className="object-cover"
             />
+
             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/50 via-transparent to-transparent md:bg-gradient-to-r" />
           </div>
 
-          {/* Content side */}
+          {/* Content */}
           <div className="flex flex-col justify-center p-8 md:p-10">
-            <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-blue-600 text-white shadow-lg shadow-blue-600/30">
-              <Icon className="h-6 w-6" />
+            <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-lg shadow-blue-600/30">
+              <Icon className="h-7 w-7" />
             </div>
-            <h3 className="mb-3 text-2xl font-bold text-slate-900">
+
+            <h3 className="mb-4 text-3xl font-bold text-slate-900">
               {feature.title}
             </h3>
-            <p className="text-sm leading-relaxed text-slate-600">
+
+            <p className="text-base leading-8 text-slate-600">
               {feature.description}
             </p>
           </div>
@@ -115,7 +160,7 @@ export default function StackedFeatureCards({
     >
       {features.map((feature, idx) => (
         <StackedCard
-          key={feature.title}
+          key={feature.id}
           feature={feature}
           index={idx}
           total={features.length}

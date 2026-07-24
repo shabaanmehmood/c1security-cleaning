@@ -6,11 +6,11 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import CityButton from "../Citybutton";
-import { 
-  ChevronDown, 
-  Building2, 
-  MapPin, 
-  ArrowRight 
+import {
+  ChevronDown,
+  Building2,
+  MapPin,
+  ArrowRight
 } from "lucide-react";
 
 // Mock data placeholders for mega menus
@@ -64,9 +64,8 @@ export default function Navbar() {
         duration: 0.6,
         ease: [0.22, 1, 0.36, 1],
       }}
-      className={`fixed inset-x-0 z-50 flex justify-center px-4 sm:px-6 transition-all duration-500 ${
-        scrolled ? "top-4" : "top-0"
-      }`}
+      className={`fixed inset-x-0 z-50 flex justify-center px-4 sm:px-6 transition-all duration-500 ${scrolled ? "top-4" : "top-0"
+        }`}
     >
       <motion.div
         layout
@@ -82,9 +81,8 @@ export default function Navbar() {
           justify-between
           transition-all
           duration-500
-          ${
-            scrolled || isOpen
-              ? `
+          ${scrolled || isOpen
+            ? `
                 rounded-3xl lg:rounded-full
                 px-6 lg:px-8
                 py-3
@@ -95,7 +93,7 @@ export default function Navbar() {
                 shadow-xl
                 shadow-black/5
               `
-              : `
+            : `
                 px-2
                 py-6
                 bg-transparent
@@ -117,6 +115,7 @@ export default function Navbar() {
             width={160}
             height={40}
             className="h-10 w-auto object-contain"
+            style={{ width: "auto" }}
             priority
           />
         </Link>
@@ -127,9 +126,8 @@ export default function Navbar() {
           {/* Home Link */}
           <Link href="/" className="group relative">
             <span
-              className={`font-medium transition-colors duration-300 ${
-                pathname === "/" ? "text-blue-600" : "text-slate-700 group-hover:text-blue-600"
-              }`}
+              className={`font-medium transition-colors duration-300 ${pathname === "/" ? "text-blue-600" : "text-slate-700 group-hover:text-blue-600"
+                }`}
             >
               Home
             </span>
@@ -219,9 +217,8 @@ export default function Navbar() {
           {/* Industries Link */}
           <Link href="/industries" className="group relative">
             <span
-              className={`font-medium transition-colors duration-300 ${
-                pathname === "/industries" ? "text-blue-600" : "text-slate-700 group-hover:text-blue-600"
-              }`}
+              className={`font-medium transition-colors duration-300 ${pathname === "/industries" ? "text-blue-600" : "text-slate-700 group-hover:text-blue-600"
+                }`}
             >
               Industries
             </span>
@@ -237,9 +234,8 @@ export default function Navbar() {
           {/* About Link */}
           <Link href="/about" className="group relative">
             <span
-              className={`font-medium transition-colors duration-300 ${
-                pathname === "/about" ? "text-blue-600" : "text-slate-700 group-hover:text-blue-600"
-              }`}
+              className={`font-medium transition-colors duration-300 ${pathname === "/about" ? "text-blue-600" : "text-slate-700 group-hover:text-blue-600"
+                }`}
             >
               About
             </span>
@@ -255,9 +251,8 @@ export default function Navbar() {
           {/* Contact Link */}
           <Link href="/contacts" className="group relative">
             <span
-              className={`font-medium transition-colors duration-300 ${
-                pathname === "/contacts" ? "text-blue-600" : "text-slate-700 group-hover:text-blue-600"
-              }`}
+              className={`font-medium transition-colors duration-300 ${pathname === "/contacts" ? "text-blue-600" : "text-slate-700 group-hover:text-blue-600"
+                }`}
             >
               Contact
             </span>
@@ -276,12 +271,7 @@ export default function Navbar() {
         <div className="hidden lg:flex items-center gap-4">
           <CityButton />
 
-          <Link
-            href="/login"
-            className="font-medium text-slate-700 transition hover:text-blue-600"
-          >
-            Login
-          </Link>
+
 
           <Link
             href="/get-a-quote"
@@ -315,19 +305,16 @@ export default function Navbar() {
         >
           <div className="w-6 h-5 flex flex-col justify-between items-center relative">
             <span
-              className={`h-0.5 w-full bg-slate-800 rounded-full transition-all duration-300 ${
-                isOpen ? "rotate-45 translate-y-2" : ""
-              }`}
+              className={`h-0.5 w-full bg-slate-800 rounded-full transition-all duration-300 ${isOpen ? "rotate-45 translate-y-2" : ""
+                }`}
             />
             <span
-              className={`h-0.5 w-full bg-slate-800 rounded-full transition-all duration-300 ${
-                isOpen ? "opacity-0" : "opacity-100"
-              }`}
+              className={`h-0.5 w-full bg-slate-800 rounded-full transition-all duration-300 ${isOpen ? "opacity-0" : "opacity-100"
+                }`}
             />
             <span
-              className={`h-0.5 w-full bg-slate-800 rounded-full transition-all duration-300 ${
-                isOpen ? "-rotate-45 -translate-y-2.5" : ""
-              }`}
+              className={`h-0.5 w-full bg-slate-800 rounded-full transition-all duration-300 ${isOpen ? "-rotate-45 -translate-y-2.5" : ""
+                }`}
             />
           </div>
         </button>
@@ -346,18 +333,16 @@ export default function Navbar() {
               <nav className="flex flex-col gap-4">
                 <Link
                   href="/"
-                  className={`text-lg font-medium transition-colors ${
-                    pathname === "/" ? "text-blue-600" : "text-slate-700"
-                  }`}
+                  className={`text-lg font-medium transition-colors ${pathname === "/" ? "text-blue-600" : "text-slate-700"
+                    }`}
                 >
                   Home
                 </Link>
 
                 <Link
                   href="/services"
-                  className={`text-lg font-medium transition-colors flex items-center justify-between ${
-                    pathname.startsWith("/services") ? "text-blue-600" : "text-slate-700"
-                  }`}
+                  className={`text-lg font-medium transition-colors flex items-center justify-between ${pathname.startsWith("/services") ? "text-blue-600" : "text-slate-700"
+                    }`}
                 >
                   <span>Services</span>
                   <span className="text-xs text-blue-600 font-bold">View All</span>
@@ -365,9 +350,8 @@ export default function Navbar() {
 
                 <Link
                   href="/industries"
-                  className={`text-lg font-medium transition-colors ${
-                    pathname === "/industries" ? "text-blue-600" : "text-slate-700"
-                  }`}
+                  className={`text-lg font-medium transition-colors ${pathname === "/industries" ? "text-blue-600" : "text-slate-700"
+                    }`}
                 >
                   Industries
                 </Link>
@@ -391,18 +375,16 @@ export default function Navbar() {
 
                 <Link
                   href="/about"
-                  className={`text-lg font-medium transition-colors ${
-                    pathname === "/about" ? "text-blue-600" : "text-slate-700"
-                  }`}
+                  className={`text-lg font-medium transition-colors ${pathname === "/about" ? "text-blue-600" : "text-slate-700"
+                    }`}
                 >
                   About
                 </Link>
 
                 <Link
                   href="/contacts"
-                  className={`text-lg font-medium transition-colors ${
-                    pathname === "/contacts" ? "text-blue-600" : "text-slate-700"
-                  }`}
+                  className={`text-lg font-medium transition-colors ${pathname === "/contacts" ? "text-blue-600" : "text-slate-700"
+                    }`}
                 >
                   Contact
                 </Link>
@@ -415,12 +397,7 @@ export default function Navbar() {
                   <CityButton />
                 </div>
 
-                <Link
-                  href="/login"
-                  className="w-full text-center py-2.5 font-medium text-slate-700 hover:text-blue-600"
-                >
-                  Login
-                </Link>
+
 
                 <Link
                   href="/get-a-quote"

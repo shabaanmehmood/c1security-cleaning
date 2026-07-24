@@ -4,24 +4,25 @@ export const cityPages: Record<string, PageDataProps> = {
   brisbane: {
     data: {
       hero: {
-        title: "Professional Security Services in Brisbane",
+        city:"Brisbane",
+        title: "Professional Security + Cleaning Services in Brisbane",
         description:
           "Protecting Brisbane businesses, residential communities, construction sites, and events with highly trained security professionals available 24/7.",
       },
       banner: {
-        title: "Trusted Security Solutions Across Brisbane",
+        title: "Trusted Security + Cleaning Solutions Across Brisbane",
         description:
           "Our experienced team delivers tailored security services designed to keep your people, property, and assets safe throughout Brisbane.",
       },
       splitScroll: {
-        img: "/cities/brisbane.webp",
-        text: "Local Security Experts",
+        img: "/cities/brisbane.jpg",
+        text: "Local Security + Cleaning Experts",
         description:
           "From corporate offices and retail centres to residential properties and major events, our Brisbane security officers provide reliable protection backed by rapid response and exceptional customer service.",
       },
       swappingCards: {
-        img: "/services/mobile-patrol.webp",
-        text: "Comprehensive Security Services",
+        img: "/about/about-hero.jpg",
+        text: "Comprehensive Security + Cleaing Services",
         description:
           "We provide static guards, mobile patrols, concierge security, alarm response, crowd control, construction site security, and tailored security solutions for every Brisbane client.",
       },
@@ -40,9 +41,10 @@ export const cityPages: Record<string, PageDataProps> = {
   "gold-coast": {
     data: {
       hero: {
-        title: "Professional Security Services on the Gold Coast",
+        city:"Gold Coast",
+        title: "Professional Security + Cleaing Services on the Gold Coast",
         description:
-          "Reliable security solutions for businesses, resorts, retail stores, residential communities, and events across the Gold Coast.",
+          "Reliable security + cleaning solutions for businesses, resorts, retail stores, residential communities, and events across the Gold Coast.",
       },
       banner: {
         title: "Keeping the Gold Coast Safe",
@@ -76,7 +78,8 @@ export const cityPages: Record<string, PageDataProps> = {
   "sunshine-coast": {
     data: {
       hero: {
-        title: "Professional Security Services on the Sunshine Coast",
+        city:"Sunshine Coast",
+        title: "Professional Security + Cleaing Services on the Sunshine Coast",
         description:
           "Protecting Sunshine Coast businesses, residential communities, tourism venues, and construction projects with dependable security services.",
       },
@@ -112,7 +115,8 @@ export const cityPages: Record<string, PageDataProps> = {
   townsville: {
     data: {
       hero: {
-        title: "Professional Security Services in Townsville",
+        city:"Townsville",
+        title: "Professional Security + Cleaing Services in Townsville",
         description:
           "Delivering trusted security solutions for commercial properties, industrial facilities, events, and residential communities across Townsville.",
       },
@@ -148,7 +152,8 @@ export const cityPages: Record<string, PageDataProps> = {
   cairns: {
     data: {
       hero: {
-        title: "Professional Security Services in Cairns",
+        city:"Cairns",
+        title: "Professional Security + Cleaing Services in Cairns",
         description:
           "Providing dependable security services for hotels, tourism venues, businesses, construction projects, and residential properties throughout Cairns.",
       },
@@ -183,7 +188,8 @@ export const cityPages: Record<string, PageDataProps> = {
     toowoomba: {
     data: {
       hero: {
-        title: "Professional Security Services in Toowoomba",
+        city:"Toowoomba",
+        title: "Professional Security + Cleaing Services in Toowoomba",
         description:
           "Providing reliable security services for commercial properties, healthcare facilities, educational institutions, construction sites, and residential communities throughout Toowoomba.",
       },
@@ -219,7 +225,8 @@ export const cityPages: Record<string, PageDataProps> = {
   rockhampton: {
     data: {
       hero: {
-        title: "Professional Security Services in Rockhampton",
+        city:"Rockhampton",
+        title: "Professional Security + Cleaing Services in Rockhampton",
         description:
           "Delivering dependable security solutions for industrial facilities, retail businesses, commercial buildings, events, and residential properties throughout Rockhampton.",
       },
@@ -255,7 +262,8 @@ export const cityPages: Record<string, PageDataProps> = {
   mackay: {
     data: {
       hero: {
-        title: "Professional Security Services in Mackay",
+        city:"Mackay",
+        title: "Professional Security + Cleaing Services in Mackay",
         description:
           "Providing trusted security solutions for mining operations, commercial properties, residential communities, and events across Mackay.",
       },
@@ -291,7 +299,8 @@ export const cityPages: Record<string, PageDataProps> = {
   gladstone: {
     data: {
       hero: {
-        title: "Professional Security Services in Gladstone",
+        city:"Gladstone",
+        title: "Professional Security + Cleaing Services in Gladstone",
         description:
           "Protecting industrial facilities, ports, commercial businesses, and residential communities with professional security services throughout Gladstone.",
       },
@@ -327,7 +336,8 @@ export const cityPages: Record<string, PageDataProps> = {
   bundaberg: {
     data: {
       hero: {
-        title: "Professional Security Services in Bundaberg",
+        city:"Bundaberg",
+        title: "Professional Security + Cleaing Services in Bundaberg",
         description:
           "Delivering professional security services for retail businesses, healthcare facilities, schools, commercial buildings, and residential properties across Bundaberg.",
       },
@@ -362,7 +372,8 @@ export const cityPages: Record<string, PageDataProps> = {
     "hervey-bay": {
     data: {
       hero: {
-        title: "Professional Security Services in Hervey Bay",
+        city:"Hervey Bay",
+        title: "Professional Security + Cleaing Services in Hervey Bay",
         description:
           "Providing trusted security solutions for businesses, healthcare facilities, residential communities, tourism venues, and events throughout Hervey Bay.",
       },
@@ -398,7 +409,8 @@ export const cityPages: Record<string, PageDataProps> = {
   maryborough: {
     data: {
       hero: {
-        title: "Professional Security Services in Maryborough",
+        city:"Maryborough",
+        title: "Professional Security + Cleaing Services in Maryborough",
         description:
           "Protecting commercial properties, government facilities, construction sites, and residential communities with professional security services across Maryborough.",
       },
@@ -434,7 +446,8 @@ export const cityPages: Record<string, PageDataProps> = {
   "mount-isa": {
     data: {
       hero: {
-        title: "Professional Security Services in Mount Isa",
+        city:"Mount Isa",
+        title: "Professional Security + Cleaing Services in Mount Isa",
         description:
           "Delivering professional security services for mining operations, industrial facilities, commercial businesses, and residential properties throughout Mount Isa.",
       },
@@ -470,7 +483,8 @@ export const cityPages: Record<string, PageDataProps> = {
   emerald: {
     data: {
       hero: {
-        title: "Professional Security Services in Emerald",
+        city:"Emerald",
+        title: "Professional Security + Cleaing Services in Emerald",
         description:
           "Providing dependable security services for commercial properties, mining operations, construction projects, and residential communities throughout Emerald.",
       },
@@ -506,7 +520,8 @@ export const cityPages: Record<string, PageDataProps> = {
   gympie: {
     data: {
       hero: {
-        title: "Professional Security Services in Gympie",
+        city:"Gympie",
+        title: "Professional Security + Cleaing Services in Gympie",
         description:
           "Providing reliable security services for businesses, retail centres, schools, construction sites, and residential communities across Gympie.",
       },
@@ -541,7 +556,8 @@ export const cityPages: Record<string, PageDataProps> = {
     warwick: {
     data: {
       hero: {
-        title: "Professional Security Services in Warwick",
+        city:"Warwick",
+        title: "Professional Security + Cleaing Services in Warwick",
         description:
           "Providing reliable security services for businesses, schools, healthcare facilities, construction sites, and residential communities throughout Warwick.",
       },
@@ -577,7 +593,8 @@ export const cityPages: Record<string, PageDataProps> = {
   "charters-towers": {
     data: {
       hero: {
-        title: "Professional Security Services in Charters Towers",
+        city:"Towers",
+        title: "Professional Security + Cleaing Services in Charters Towers",
         description:
           "Delivering dependable security solutions for commercial properties, mining operations, public facilities, and residential communities throughout Charters Towers.",
       },
@@ -613,7 +630,8 @@ export const cityPages: Record<string, PageDataProps> = {
   kingaroy: {
     data: {
       hero: {
-        title: "Professional Security Services in Kingaroy",
+        city:"Kingaroy",
+        title: "Professional Security + Cleaing Services in Kingaroy",
         description:
           "Providing trusted security solutions for businesses, agricultural facilities, retail centres, schools, and residential communities across Kingaroy.",
       },
@@ -649,7 +667,8 @@ export const cityPages: Record<string, PageDataProps> = {
   roma: {
     data: {
       hero: {
-        title: "Professional Security Services in Roma",
+        city:"Roma",
+        title: "Professional Security + Cleaing Services in Roma",
         description:
           "Providing reliable security services for commercial properties, energy facilities, industrial sites, construction projects, and residential communities throughout Roma.",
       },
@@ -685,7 +704,8 @@ export const cityPages: Record<string, PageDataProps> = {
   moranbah: {
     data: {
       hero: {
-        title: "Professional Security Services in Moranbah",
+        city:"Moranbah",
+        title: "Professional Security + Cleaing Services in Moranbah",
         description:
           "Delivering trusted security solutions for mining operations, industrial facilities, commercial properties, and residential communities throughout Moranbah.",
       },

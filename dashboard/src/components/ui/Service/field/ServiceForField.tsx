@@ -4,20 +4,26 @@ import React, { useState } from "react";
 
 import { ServicesSection } from "@/app/(Main)/_components/ServiceSection";
 import QuoteForm from "@/app/(Main)/get-a-quote/_component/quoteForm";
-import { Sparkles, ShieldCheck, CheckCircle2 } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import ServicePage from "@/components/ui/Service/field/ServicePage";
-import IndustrialFeaturedServices from "../industries/_components/IndustrialFeatures";
-interface DivProp{
-Div1:string;
-Div2:string;
-Div3:string;
+import HomeHero, { HomeHeroProps } from "@/components/ui/city/Hero";
+import Faq from "@/components/ui/city/Faq";
+import { FaqItem } from "@/fillerData/allFaq";
+
+export interface FaqAndHeroProps {
+  faq: FaqItem[];
+  HeroContent: HomeHeroProps;
 }
-export default function ServicesPage(DivContent:DivProp ) {
+
+export default function ServicesFieldPage({ faq, HeroContent }: FaqAndHeroProps) {
   const [quoteModalOpen, setQuoteModalOpen] = useState(false);
 
   return (
     <main className="min-h-screen relative overflow-x-hidden pt-28">
-      <ServicePage/>
+      <HomeHero title={HeroContent.title} description={HeroContent.description} city={HeroContent.city} />
+      
+      <ServicePage title={HeroContent.title} />
+
       <section className="py-16 text-center relative max-w-4xl mx-auto px-4 bg-white">
         <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-600 text-xs font-bold uppercase tracking-wider mb-6">
           <Sparkles className="w-3.5 h-3.5" /> ISO 9001 & TGA Accredited Services
@@ -32,10 +38,9 @@ export default function ServicesPage(DivContent:DivProp ) {
 
       <ServicesSection onOpenQuoteModal={() => setQuoteModalOpen(true)} />
 
-       
+      <Faq faqs={faq} />
 
       <QuoteForm />
-
     </main>
   );
 }

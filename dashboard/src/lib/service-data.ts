@@ -114,29 +114,29 @@ export const SERVICES_DATA: ServiceDetail[] = [
     idealFor: ["Private Schools", "Universities", "Grammar Academies", "TAPE Campuses"],
     isoCertified: true
   },
-  {
-    id: "retail",
-    title: "Retail Cleaning",
-    shortDesc: "Immaculate showroom floors, mirror-shine glass storefronts, and premium customer spaces.",
-    fullDesc: "Elevate customer experience with pristine shopfront glass, polished terrazzo, polished display cabinets, and high-frequency fitting room sanitisation.",
-    iconName: "ShoppingBag",
-    badge: "Showroom Finish",
-    standards: ["Ultra-High Gloss Buffing", "Storefront Glass Specialist", "Pre-Opening Shifts"],
+ {
+    id: "food",
+    title: "Food Area & Processing Cleaning",
+    shortDesc: "HACCP-compliant sanitation, grease extraction, and food safety hygiene for production zones.",
+    fullDesc: "Specialised deep cleaning and pathogen management designed for food manufacturing plants, commercial kitchens, preparation areas, and dining facilities to eliminate cross-contamination and guarantee food safety compliance.",
+    iconName: "Utensils",
+    badge: "HACCP Compliant",
+    standards: ["HACCP Food Safety Standards", "TGA-Approved Food-Safe Chemicals", "Bio-Film Removal Protocol"],
     features: [
-      "Streak-free storefront glass & mirror cleaning",
-      "High-gloss marble/terrazzo floor diamond polishing",
-      "Fitting room steam clean & garment rack dusting",
-      "Point of Sale (POS) counter & terminal sanitisation"
+      "Commercial kitchen & food prep equipment deep degreasing",
+      "Exhaust canopy, grease trap & ventilation duct cleaning",
+      "ATP bioluminescence testing for surface cleanliness verification",
+      "Cold room, walk-in freezer & food storage wall sanitisation"
     ],
-    idealFor: ["Luxury Brands", "Shopping Centers", "Auto Showrooms", "Boutiques"],
+    idealFor: ["Food Production Plants", "Commercial Kitchens", "Bakeries & Bottling Plants", "Food Courts"],
     isoCertified: true
   },
   {
-    id: "hospitality",
-    title: "Hospitality Cleaning",
+    id: "hospital",
+    title: "Hospital Cleaning",
     shortDesc: "Kitchen grease hood degreasing, dining floor deep scrub, and bar zone sanitisation.",
     fullDesc: "Ensuring food safety compliance for restaurants, hotels, clubs, and event venues with deep grease extraction and overnight front/back of house cleaning.",
-    iconName: "Utensils",
+    iconName: "Hospital",
     badge: "Food Safety Grade",
     standards: ["HACCP Compliant", "Kitchen Exhaust Extraction", "Overnight Turnaround"],
     features: [
@@ -149,20 +149,20 @@ export const SERVICES_DATA: ServiceDetail[] = [
     isoCertified: true
   },
   {
-    id: "childcare",
-    title: "Childcare Cleaning",
-    shortDesc: "Pediatric-approved, 100% organic sanitisation protecting early learning environments.",
-    fullDesc: "Zero harsh chemicals. We use pediatric-grade organic disinfectant steam and UV-C light technology to eliminate 99.999% of germs on toys, play mats, and nap areas.",
-    iconName: "Baby",
-    badge: "100% Organic Safe",
-    standards: ["Pediatric Certified Non-Toxic", "UV-C Light Sterilisation", "Allergen Free"],
+    id: "government",
+    title: "Government Cleaning",
+    shortDesc: "High-security, compliant facility sanitisation and maintenance for public sector agencies.",
+    fullDesc: "Specialised cleaning solutions designed for municipal offices, courthouses, civic centres, and secure public facilities adhering to strict government procurement, compliance, and security clearance protocols.",
+    iconName: "Building2", 
+    badge: "Security Cleared",
+    standards: ["Police Cleared Personnel", "Strict ISO & WHS Compliance", "Secure Access Protocols"],
     features: [
-      "Toy & sensory play equipment non-toxic sanitisation",
-      "Play mat steam extraction & allergen removal",
-      "Low-level wall & finger mark removal",
-      "Nappy change station & high-chair sanitisation"
+      "Vetted, background-checked cleaning personnel",
+      "Public assembly & high-traffic civic area sanitisation",
+      "Secure document area & council chamber maintenance",
+      "Eco-friendly green cleaning for public sector sustainability targets"
     ],
-    idealFor: ["Childcare Centers", "Early Learning Hubs", "Kindergartens", "Creches"],
+    idealFor: ["Civic Centres", "Courthouses", "Municipal Offices", "Government Agencies"],
     isoCertified: true
   }
 ];

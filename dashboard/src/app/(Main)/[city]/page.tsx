@@ -1,5 +1,5 @@
 import Page from "@/components/ui/city/city";
-import { cityPages } from "@/app/(Main)/_components/FillerData";
+import { cityPages } from "@/fillerData/FillerData";
 import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {
@@ -11,8 +11,6 @@ export async function generateStaticParams() {
     city,
   }));
 }
-
-// 1. Update Props interface to mark params as a Promise
 interface Props {
   params: Promise<{
     city: string;
@@ -20,7 +18,6 @@ interface Props {
 }
 
 export default async function CityPage({ params }: Props) {
-  // 2. Add 'await' here to unwrap the params Promise
   const { city } = await params;
 
   const pageData = cityPages[city as keyof typeof cityPages];

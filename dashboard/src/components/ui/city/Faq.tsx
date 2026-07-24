@@ -11,9 +11,9 @@ import {
 } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {EducatinalFaq,FaqItem } from "@/fillerData/Educatial";
+import {FaqItem } from "@/fillerData/allFaq";
 
-interface FaqProps {
+export interface FaqProps {
   title?: string;
   subtitle?: string;
   faqs?: FaqItem[];
@@ -21,7 +21,11 @@ interface FaqProps {
 export default function Faq({
   title = "Frequently Asked Questions",
   subtitle = "Everything you need to know about our facility security and sanitation services.",
-  faqs = EducatinalFaq,
+  faqs = [{
+    question: "WHO IS C1-Scurity AND WHAT SERVICES DO YOU PROVIDE?",
+    answer:
+      "C1-Scurity is an award-winning, ISO-accredited commercial cleaning company with over 23 years of experience delivering premium facility maintenance across Australia. We specialize in tailored cleaning programs for corporate offices, medical and healthcare facilities, educational institutions, industrial complexes, food processing plants, and large-scale warehouses."
+  }],
 }: FaqProps) {
   return (
     <section className="w-full max-w-5xl mx-auto px-4 py-12 sm:py-16">
@@ -96,7 +100,7 @@ export default function Faq({
           <p className="text-xs sm:text-sm text-blue-900/70">
             Still have questions? Our team is available 24/7 to assist you.
           </p>
-          <Link href="/contact">
+          <Link href="/contacts">
             <Button
               variant="outline"
               size="sm"

@@ -11,6 +11,7 @@ export interface PageDataProps {
     hero: {
       title: string;
       description: string;
+      city:string;
     };
     banner: {
       title: string;
@@ -45,7 +46,8 @@ export default function Page({ data }: PageDataProps) {
       <HomeHero
         title={data.hero.title}
         description={data.hero.description}
-      />
+        city={data.hero.city}
+              />
 
       {/* 2. Hero Banner Card */}
       <HeroBannerCard

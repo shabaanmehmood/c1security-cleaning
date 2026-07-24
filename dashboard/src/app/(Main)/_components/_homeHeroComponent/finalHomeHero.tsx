@@ -19,15 +19,17 @@ export default function HomeHero() {
       </div>
 
       {/* Hero Content Grid */}
-      <div className="relative z-10 mx-auto grid min-h-screen max-w-7xl grid-cols-1 items-center gap-12 px-6 pt-28 pb-16 lg:grid-cols-12 lg:px-8">
-        {/* Left Side */}
-        <div className="flex w-full items-center lg:col-span-6 xl:col-span-7">
+      <div className="relative z-10 mx-auto grid min-h-screen max-w-7xl grid-cols-1 items-center gap-8 px-6 pt-28 pb-16 lg:grid-cols-12 lg:px-8">
+        {/* Left Side (Smaller Column Share) */}
+        <div className="flex w-full items-center lg:col-span-5">
           <Left />
         </div>
 
-        {/* Right Side */}
-        <div className="flex w-full items-center justify-center lg:col-span-6 xl:col-span-5">
-          <Right />
+        {/* Right Side (Larger Column Share + Dark Blue Background) */}
+        <div className="flex w-full items-center justify-center lg:col-span-7">
+          <div className="w-full rounded-3xl bg-white border border-blue-900/50 p-6 sm:p-10 shadow-2xl shadow-blue-950/40 text-white">
+            <Right />
+          </div>
         </div>
       </div>
     </section>

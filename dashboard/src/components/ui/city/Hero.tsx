@@ -6,18 +6,19 @@ import { ArrowRight, Sparkles, Star, ShieldCheck } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-
-interface HomeHeroProps {
+ import TiltedCard from '@/components/TiltedCard';
+export interface HomeHeroProps {
   title: string;
   description: string;
+  city: string;
 }
 
-export default function HomeHero({ title, description }: HomeHeroProps) {
+export default function HomeHero({ title, description, city }: HomeHeroProps) {
   return (
     <section className="relative overflow-hidden pt-24 pb-16 md:pt-32 md:pb-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-blue-50/50 via-sky-50/30 to-transparent">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          
+
           {/* Left Column: Copy & Actions */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -91,33 +92,35 @@ export default function HomeHero({ title, description }: HomeHeroProps) {
             <div className="relative mx-auto max-w-md lg:max-w-none">
               {/* Blueish Radial Ambient Glow */}
               <div className="absolute -inset-2 rounded-3xl bg-gradient-to-r from-blue-600 via-sky-400 to-indigo-500 opacity-25 blur-2xl" />
-
+              {/*{`/images/about/${city}.jpg`} */}
               <div className="relative rounded-3xl border border-blue-100 bg-white/90 p-6 shadow-2xl shadow-blue-950/10 backdrop-blur-xl">
-                <div className="relative h-64 sm:h-80 w-full overflow-hidden rounded-2xl bg-blue-50">
-                  <img
-                    src="/images/about/company-overview.jpg"
-                    alt="Facility Management"
-                    className="h-full w-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-blue-950/70 via-blue-900/10 to-transparent" />
-                  
-                  <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between rounded-xl bg-white/95 p-3.5 backdrop-blur-md border border-blue-100 shadow-xl shadow-blue-950/10">
-                    <div className="flex items-center gap-3">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-600 text-white shadow-md shadow-blue-600/30">
-                        <ShieldCheck className="h-5 w-5" />
-                      </div>
-                      <div>
-                        <p className="text-xs font-bold text-blue-950">100% Verified Crew</p>
-                        <p className="text-[10px] text-blue-700/70 font-medium">Licensed & Security Checked</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
+               
 
+                <TiltedCard
+                  imageSrc={`/images/cities/${city?.toLowerCase()}.png`} 
+                  altText="Australia"
+                  captionText={`${city}--Australia`}
+                  containerHeight="300px"
+                  containerWidth="300px"
+                  imageHeight="300px"
+                  imageWidth="300px"
+                  rotateAmplitude={12}
+                  scaleOnHover={1.05}
+                  showMobileWarning={false}
+                  showTooltip
+                  displayOverlayContent
+                  overlayContent={
+                    <p className="tilted-card-demo-text">
+                     {`${city}--Australia`}
+                    </p>
+                  }
+                />
+
+              </div>
+              </div>
+          </motion.div>
         </div>
+
       </div>
     </section>
   );

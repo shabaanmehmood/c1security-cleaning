@@ -2,80 +2,99 @@
 
 import StackedFeatureCards from "@/components/ui/stackFeatureCards";
 import {
-  HardHat,
-  Factory,
-  ShieldAlert,
   Building2,
+  Briefcase,
+  Stethoscope,
+  Factory,
   Warehouse,
-  Truck,
-  Wrench,
-  ClipboardCheck,
+  GraduationCap,
+  Utensils,
+  Hospital,
+  Landmark,
 } from "lucide-react";
 
-const industrialFeatures = [
+
+export const industrialFeatures = [
   {
-    icon: HardHat,
-    title: "PPE & Site Safety Compliance",
-    description:
-      "All crew members operate under strict WHS and OSHA safety protocols, wearing site-specific PPE with White Card certification for active industrial environments.",
-    imageSrc: "/images/industrial/feature-safety.jpg",
-    imageAlt: "Industrial cleaners wearing PPE on a worksite",
-  },
-  {
-    icon: Factory,
-    title: "Heavy Machinery & Floor Scrubbing",
-    description:
-      "Advanced industrial cleaning equipment removes grease, dust, and contaminants from factory floors, production lines, and high-bay facilities.",
-    imageSrc: "/images/industrial/feature-machinery.jpg",
-    imageAlt: "Industrial ride-on floor scrubber cleaning factory floors",
-  },
-  {
-    icon: ShieldAlert,
-    title: "Zero-Downtime Operations",
-    description:
-      "Cleaning schedules are coordinated around production shifts and logistics operations to eliminate workflow disruptions and maintain operational continuity.",
-    imageSrc: "/images/industrial/feature-downtime.jpg",
-    imageAlt: "Industrial warehouse operating safely during cleaning shifts",
-  },
-  {
-    icon: Warehouse,
-    title: "Warehouses & Distribution Centres",
-    description:
-      "Comprehensive cleaning for warehouses, fulfilment centres, logistics hubs, loading docks, storage facilities, and inventory management areas.",
-    imageSrc: "/images/industrial/feature-warehouse.jpg",
-    imageAlt: "Large warehouse being professionally cleaned",
-  },
-  {
+    id: "commercial",
     icon: Building2,
-    title: "Commercial & Corporate Facilities",
+    title: "Commercial Cleaning",
     description:
-      "Professional cleaning solutions for corporate campuses, office buildings, government facilities, and administrative industrial headquarters.",
+      "Comprehensive enterprise-grade hygiene and facility maintenance for corporate headquarters, commercial buildings, and multi-tenant facilities.",
     imageSrc: "/images/industrial/feature-commercial.jpg",
-    imageAlt: "Commercial industrial office building cleaning",
+    imageAlt: "Commercial office cleaning",
   },
   {
-    icon: ClipboardCheck,
-    title: "Healthcare & Government Compliance",
+    id: "office",
+    icon: Briefcase,
+    title: "Office Cleaning",
     description:
-      "Cleaning programs aligned with healthcare-grade hygiene standards, government procurement requirements, quality assurance, and documented inspection processes.",
+      "Professional office sanitisation including workstations, meeting rooms, reception areas, kitchens, and executive offices.",
     imageSrc: "/images/industrial/feature-compliance.jpg",
-    imageAlt: "Industrial cleaner performing compliance inspection",
+    imageAlt: "Office cleaning services",
   },
   {
-    icon: Wrench,
-    title: "Food Production & Manufacturing",
+    id: "medical",
+    icon: Stethoscope,
+    title: "Medical Cleaning",
     description:
-      "Specialized cleaning for food manufacturing plants, production facilities, processing equipment areas, and hygiene-sensitive environments with strict sanitation requirements.",
-    imageSrc: "/images/industrial/feature-food.jpg",
-    imageAlt: "Food manufacturing facility undergoing professional cleaning",
-  },
-  {
-    icon: Truck,
-    title: "24/7 Industrial Support Services",
-    description:
-      "Rapid-response cleaning teams available around the clock for emergency spill response, scheduled maintenance, shutdown cleaning, and high-demand industrial operations.",
+      "Hospital-grade infection control for hospitals, clinics, dental practices, surgical centres, and pathology laboratories.",
     imageSrc: "/images/industrial/feature-support.jpg",
-    imageAlt: "Industrial cleaning crew servicing logistics and transport facility",
+    imageAlt: "Medical facility cleaning",
+  },
+  {
+    id: "industrial",
+    icon: Factory,
+    title: "Industrial Cleaning",
+    description:
+      "Heavy-duty machinery degreasing, factory sanitation, hydro-jetting, confined space cleaning, and emergency spill response.",
+    imageSrc: "/images/industrial/feature-machinery.jpg",
+    imageAlt: "Industrial cleaning crew",
+  },
+  {
+    id: "warehouse",
+    icon: Warehouse,
+    title: "Warehouse Cleaning",
+    description:
+      "Ride-on floor scrubbing, high-bay dust removal, loading dock maintenance, and warehouse sanitation for logistics facilities.",
+    imageSrc: "/images/industrial/feature-warehouse.jpg",
+    imageAlt: "Warehouse cleaning",
+  },
+  {
+    id: "school",
+    icon: GraduationCap,
+    title: "School Cleaning",
+    description:
+      "Safe, non-toxic classroom, laboratory, gymnasium, cafeteria, and campus cleaning for educational institutions.",
+    imageSrc: "/images/industrial/feature-downtime.jpg",
+    imageAlt: "School cleaning services",
+  },
+  {
+    id: "food",
+    icon: Utensils,
+    title: "Food Processing Cleaning",
+    description:
+      "HACCP-compliant cleaning for food manufacturing plants, commercial kitchens, production areas, and processing equipment.",
+    imageSrc: "/images/industrial/feature-food.jpg",
+    imageAlt: "Food processing facility cleaning",
+  },
+  {
+    id: "hospital",
+    icon: Hospital,
+    title: "Hospitality Cleaning",
+    description:
+      "Deep cleaning for hotels, restaurants, clubs, bars, kitchens, dining areas, and event venues.",
+    imageSrc: "/images/industrial/hospital.jpg",
+    imageAlt: "Hotel and restaurant cleaning",
+  },
+  {
+    id: "government",
+    icon: Landmark,
+    title: "Government Cleaning",
+    description:
+      "Security-cleared cleaning services for government buildings, civic centres, courthouses, and public sector facilities.",
+    imageSrc: "/images/industrial/govt.jpg",
+    imageAlt: "Government building cleaning",
   },
 ];
 
