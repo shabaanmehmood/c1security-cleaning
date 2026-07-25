@@ -1,0 +1,113 @@
+import { NextResponse } from "next/server";
+import { adminDb, adminAuth } from "@/lib/fireBase-Admin";
+import { FieldValue } from "firebase-admin/firestore";
+import { jobSchema } from "@/validators/addJob"; 
+
+export const dynamic = "force-dynamic";
+
+export async function GET() {
+  try {
+    const snapshot = await adminDb
+      .collection("jobs")
+      .orderBy("createdAt", "desc")
+      .get();
+
+    const jobs = snapshot.docs.map((doc) => {
+      const data = doc.data();
+      
+      // Safely convert Firestore Timestamp or fallback to string/null
+      let formattedCreatedAt = null;
+      if (data.createdAt?.toDate) {
+        formattedCreatedAt = data.createdAt.toDate().toISOString();
+      } else if (typeof data.createdAt === "string") {
+        formattedCreatedAt = data.createdAt;
+      }
+
+      return {
+        id: doc.id,
+        ...data,
+        createdAt: formattedCreatedAt,
+      };
+    });
+
+    return NextResponse.json(jobs);
+  } catch (error) {
+    console.error("Error fetching jobs:", error);
+    // Corrected to return a proper 500 HTTP status code with error JSON
+    return NextResponse.json(
+      { error: "Failed to fetch jobs" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function POST(request: Request) {
+  try {
+    const authHeader = request.headers.get("Authorization");
+
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return NextResponse.json(
+        { error: "Unauthorized: Missing or invalid token format." },
+        { status: 401 }
+      );
+    }
+
+    const token = authHeader.split("Bearer ")[1];
+    let decodedToken;
+
+    try {
+      decodedToken = await adminAuth.verifyIdToken(token);
+    } catch (authError) {
+      console.error("Token verification failed:", authError);
+      return NextResponse.json(
+        { error: "Unauthorized: Invalid or expired token." },
+        { status: 401 }
+      );
+    }
+
+    const userDoc = await adminDb.collection("users").doc(decodedToken.uid).get();
+    const userData = userDoc.data();
+
+    if (!userData || userData.role !== "admin") {
+      return NextResponse.json(
+        { error: "Forbidden: Admin privileges required." },
+        { status: 403 }
+      );
+    }
+
+    const rawBody = await request.json();
+    const parsed = jobSchema.safeParse(rawBody);
+
+    if (!parsed.success) {
+      return NextResponse.json(
+        {
+          error: "Validation failed.",
+          details: parsed.error.flatten(),
+        },
+        { status: 400 }
+      );
+    }
+
+    const validatedData = parsed.data;
+    const docRef = await adminDb.collection("jobs").add({
+      ...validatedData,
+      createdAt: FieldValue.serverTimestamp(),
+      createdBy: decodedToken.uid,
+      isActive: true,
+    });
+
+    return NextResponse.json(
+      {
+        message: "Job opportunity created successfully!",
+        id: docRef.id,
+      },
+      { status: 201 }
+    );
+  } catch (error) {
+    console.error("Error creating job posting:", error);
+    return NextResponse.json(
+      { error: "Internal server error while creating job." },
+      { status: 500 }
+    );
+  }
+}

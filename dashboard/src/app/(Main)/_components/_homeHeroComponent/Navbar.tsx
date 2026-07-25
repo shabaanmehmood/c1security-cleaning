@@ -10,10 +10,17 @@ import {
   ChevronDown,
   Building2,
   MapPin,
-  ArrowRight
+  ArrowRight,
+  LogIn,
+  UserPlus,
+  LogOut,
+  Shield,
+  User as UserIcon,
 } from "lucide-react";
 
-// Mock data placeholders for mega menus
+import { useAuthStore } from "@/store/useAuthStore";
+import { AuthService } from "@/lib/auth.service";
+
 const SERVICES_DATA = [
   { id: "commercial", title: "Commercial Cleaning", shortDesc: "Office and corporate spaces" },
   { id: "medical", title: "Medical Cleaning", shortDesc: "Hospitals and clinics" },
@@ -38,19 +45,32 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [megaMenu, setMegaMenu] = useState<"services" | "locations" | null>(null);
 
+  const { user, setUser } = useAuthStore();
+  const isAuthenticated = Boolean(user);
+  const isAdmin = (user as any)?.role === "admin" || (user as any)?.customClaims?.role === "admin";
+
+  const handleLogout = async () => {
+    try {
+      if (AuthService?.logout) {
+        await AuthService.logout();
+      }
+      setUser(null);
+    } catch (err) {
+      console.error("Failed to log out:", err);
+    }
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 80);
     };
 
     handleScroll();
-
     window.addEventListener("scroll", handleScroll);
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile menu automatically when changing routes
   useEffect(() => {
     setIsOpen(false);
     setMegaMenu(null);
@@ -64,8 +84,9 @@ export default function Navbar() {
         duration: 0.6,
         ease: [0.22, 1, 0.36, 1],
       }}
-      className={`fixed inset-x-0 z-50 flex justify-center px-4 sm:px-6 transition-all duration-500 ${scrolled ? "top-4" : "top-0"
-        }`}
+      className={`fixed inset-x-0 z-50 flex justify-center px-3 sm:px-6 transition-all duration-500 ${
+        scrolled ? "top-3" : "top-0"
+      }`}
     >
       <motion.div
         layout
@@ -81,11 +102,12 @@ export default function Navbar() {
           justify-between
           transition-all
           duration-500
-          ${scrolled || isOpen
-            ? `
+          ${
+            scrolled || isOpen
+              ? `
                 rounded-3xl lg:rounded-full
-                px-6 lg:px-8
-                py-3
+                px-4 lg:px-6 xl:px-8
+                py-2.5 lg:py-3
                 bg-white/90
                 backdrop-blur-xl
                 border
@@ -93,9 +115,9 @@ export default function Navbar() {
                 shadow-xl
                 shadow-black/5
               `
-            : `
+              : `
                 px-2
-                py-6
+                py-5 lg:py-6
                 bg-transparent
                 border-transparent
                 shadow-none
@@ -103,31 +125,25 @@ export default function Navbar() {
           }
         `}
       >
-        {/* ---------------- Logo ---------------- */}
-
-        <Link
-          href="/"
-          className="flex items-center gap-2 shrink-0 z-50"
-        >
+        {/* Logo */}
+        <Link href="/" className="flex items-center gap-2 shrink-0 z-50">
           <Image
             src="/Logo.svg"
             alt="C1SCURITY Logo"
-            width={160}
-            height={40}
-            className="h-10 w-auto object-contain"
-            style={{ width: "auto" }}
+            width={140}
+            height={36}
+            className="h-8 lg:h-9 xl:h-10 w-auto object-contain"
             priority
           />
         </Link>
 
-        {/* ---------------- Desktop Navigation ---------------- */}
-
-        <nav className="hidden lg:flex items-center gap-8">
-          {/* Home Link */}
+        {/* Desktop Navigation */}
+        <nav className="hidden lg:flex items-center gap-4 xl:gap-7 text-sm xl:text-base">
           <Link href="/" className="group relative">
             <span
-              className={`font-medium transition-colors duration-300 ${pathname === "/" ? "text-blue-600" : "text-slate-700 group-hover:text-blue-600"
-                }`}
+              className={`font-medium transition-colors duration-300 ${
+                pathname === "/" ? "text-blue-600" : "text-slate-700 group-hover:text-blue-600"
+              }`}
             >
               Home
             </span>
@@ -140,7 +156,7 @@ export default function Navbar() {
             )}
           </Link>
 
-          {/* Mega Menu Services Dropdown */}
+          {/* Services Dropdown */}
           <div
             className="relative"
             onMouseEnter={() => setMegaMenu("services")}
@@ -148,16 +164,16 @@ export default function Navbar() {
           >
             <button className="flex items-center gap-1 font-medium text-slate-700 hover:text-blue-600 transition-colors py-1">
               <span>Services</span>
-              <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform duration-300 ${megaMenu === "services" ? "rotate-180 text-blue-600" : ""}`} />
+              <ChevronDown className={`w-3.5 h-3.5 text-slate-400 transition-transform duration-300 ${megaMenu === "services" ? "rotate-180 text-blue-600" : ""}`} />
             </button>
 
             {megaMenu === "services" && (
-              <div className="absolute top-full -left-20 w-[600px] mt-2 bg-white border border-slate-200/80 rounded-2xl p-3 z-50 shadow-2xl grid grid-cols-2 gap-1 animate-in fade-in duration-200">
+              <div className="absolute top-full -left-12 w-[560px] mt-2 bg-white border border-slate-200/80 rounded-2xl p-3 z-50 shadow-2xl grid grid-cols-2 gap-1 animate-in fade-in duration-200">
                 {SERVICES_DATA.map((service) => (
                   <Link
                     key={service.id}
                     href={`/services#${service.id}`}
-                    className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200 group/item"
+                    className="flex items-center gap-2.5 rounded-xl px-2.5 py-2 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200 group/item"
                   >
                     <div className="w-8 h-8 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600 shrink-0 group-hover/item:scale-105 transition-transform">
                       <Building2 className="w-4 h-4" />
@@ -172,7 +188,7 @@ export default function Navbar() {
                     </div>
                   </Link>
                 ))}
-                <div className="col-span-2 pt-3 mt-1 border-t border-slate-100 flex items-center justify-between text-xs px-2">
+                <div className="col-span-2 pt-2.5 mt-1 border-t border-slate-100 flex items-center justify-between text-xs px-2">
                   <span className="text-slate-500 font-medium">ISO 9001 & TGA Accredited Sanitisation</span>
                   <Link href="/services" className="text-blue-600 hover:text-blue-700 flex items-center gap-1 font-bold">
                     View All Services <ArrowRight className="w-3.5 h-3.5" />
@@ -182,7 +198,7 @@ export default function Navbar() {
             )}
           </div>
 
-          {/* Mega Menu Locations Dropdown */}
+          {/* Locations Dropdown */}
           <div
             className="relative"
             onMouseEnter={() => setMegaMenu("locations")}
@@ -190,20 +206,20 @@ export default function Navbar() {
           >
             <button className="flex items-center gap-1 font-medium text-slate-700 hover:text-blue-600 transition-colors py-1">
               <span>Locations</span>
-              <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform duration-300 ${megaMenu === "locations" ? "rotate-180 text-blue-600" : ""}`} />
+              <ChevronDown className={`w-3.5 h-3.5 text-slate-400 transition-transform duration-300 ${megaMenu === "locations" ? "rotate-180 text-blue-600" : ""}`} />
             </button>
 
             {megaMenu === "locations" && (
-              <div className="absolute top-full -left-32 w-[550px] mt-2 bg-white border border-slate-200/80 rounded-2xl p-3 z-50 shadow-2xl animate-in fade-in duration-200">
-                <div className="text-xs font-bold uppercase tracking-wider text-blue-600 mb-2 px-3 pt-1 flex items-center gap-2">
-                  <MapPin className="w-4 h-4" /> 20 Commercial Hubs Across Queensland
+              <div className="absolute top-full -left-20 w-[500px] mt-2 bg-white border border-slate-200/80 rounded-2xl p-3 z-50 shadow-2xl animate-in fade-in duration-200">
+                <div className="text-xs font-bold uppercase tracking-wider text-blue-600 mb-2 px-2 pt-1 flex items-center gap-2">
+                  <MapPin className="w-3.5 h-3.5" /> 20 Commercial Hubs Across Queensland
                 </div>
                 <div className="grid grid-cols-3 gap-1">
                   {CITIES.map((city) => (
                     <Link
                       key={city.slug}
                       href={`/${city.slug}`}
-                      className="flex items-center justify-between rounded-xl px-3 py-2 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200"
+                      className="flex items-center justify-between rounded-xl px-2.5 py-1.5 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200"
                     >
                       <span>{city.name}</span>
                       <span className="text-[10px] text-slate-400 font-mono">QLD</span>
@@ -214,11 +230,11 @@ export default function Navbar() {
             )}
           </div>
 
-          {/* Industries Link */}
           <Link href="/industries" className="group relative">
             <span
-              className={`font-medium transition-colors duration-300 ${pathname === "/industries" ? "text-blue-600" : "text-slate-700 group-hover:text-blue-600"
-                }`}
+              className={`font-medium transition-colors duration-300 ${
+                pathname === "/industries" ? "text-blue-600" : "text-slate-700 group-hover:text-blue-600"
+              }`}
             >
               Industries
             </span>
@@ -231,11 +247,28 @@ export default function Navbar() {
             )}
           </Link>
 
-          {/* About Link */}
+          <Link href="/career" className="group relative">
+            <span
+              className={`font-medium transition-colors duration-300 ${
+                pathname === "/careers" ? "text-blue-600" : "text-slate-700 group-hover:text-blue-600"
+              }`}
+            >
+              Careers
+            </span>
+            {pathname === "/career" && (
+              <motion.span
+                layoutId="navbar-active"
+                className="absolute -bottom-2 left-0 h-[2px] w-full rounded-full bg-blue-600"
+                transition={{ duration: 0.3 }}
+              />
+            )}
+          </Link>
+
           <Link href="/about" className="group relative">
             <span
-              className={`font-medium transition-colors duration-300 ${pathname === "/about" ? "text-blue-600" : "text-slate-700 group-hover:text-blue-600"
-                }`}
+              className={`font-medium transition-colors duration-300 ${
+                pathname === "/about" ? "text-blue-600" : "text-slate-700 group-hover:text-blue-600"
+              }`}
             >
               About
             </span>
@@ -247,48 +280,74 @@ export default function Navbar() {
               />
             )}
           </Link>
-
-          {/* Contact Link */}
-          <Link href="/contacts" className="group relative">
-            <span
-              className={`font-medium transition-colors duration-300 ${pathname === "/contacts" ? "text-blue-600" : "text-slate-700 group-hover:text-blue-600"
-                }`}
-            >
-              Contact
-            </span>
-            {pathname === "/contacts" && (
-              <motion.span
-                layoutId="navbar-active"
-                className="absolute -bottom-2 left-0 h-[2px] w-full rounded-full bg-blue-600"
-                transition={{ duration: 0.3 }}
-              />
-            )}
-          </Link>
         </nav>
 
-        {/* ---------------- CTA + CityButton (Desktop) ---------------- */}
-
-        <div className="hidden lg:flex items-center gap-4">
+        {/* CTA + Auth Buttons (Desktop) */}
+        <div className="hidden lg:flex items-center gap-2 xl:gap-3 text-xs xl:text-sm">
           <CityButton />
 
+          {isAuthenticated ? (
+            <>
+              {isAdmin ? (
+                <Link
+                  href="/admin"
+                  className="flex items-center gap-1.5 rounded-full bg-purple-50 px-3 xl:px-4 py-1.5 xl:py-2 font-medium text-purple-700 hover:bg-purple-100 transition-colors border border-purple-200"
+                >
+                  <Shield className="w-3.5 h-3.5 text-purple-600" />
+                  Admin
+                </Link>
+              ) : (
+                <Link
+                  href="/"
+                  className="flex items-center gap-1.5 rounded-full bg-slate-100 px-3 xl:px-4 py-1.5 xl:py-2 font-medium text-slate-700 hover:bg-slate-200 transition-colors"
+                >
+                  <UserIcon className="w-3.5 h-3.5 text-slate-500" />
+                  {user?.name ? user.name.split(" ")[0] : "Account"}
+                </Link>
+              )}
 
+              <button
+                onClick={handleLogout}
+                className="px-2 xl:px-3 py-1.5 font-medium text-slate-500 hover:text-red-600 transition-colors"
+              >
+                Log Out
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                href="/login"
+                className="px-2.5 xl:px-3.5 py-1.5 font-medium text-slate-700 hover:text-blue-600 transition-colors"
+              >
+                Log In
+              </Link>
+
+              <Link
+                href="/signup"
+                className="rounded-full border border-slate-300 px-3 xl:px-4 py-1.5 xl:py-2 font-medium text-slate-700 hover:border-blue-600 hover:text-blue-600 transition-colors"
+              >
+                Sign Up
+              </Link>
+            </>
+          )}
 
           <Link
             href="/get-a-quote"
             className="
+              shrink-0
               rounded-full
               bg-blue-600
-              px-6
-              py-3
+              px-4 xl:px-5
+              py-2 xl:py-2.5
               font-semibold
               text-white
-              shadow-lg
+              shadow-md
               shadow-blue-600/20
               transition-all
               duration-300
               hover:-translate-y-0.5
               hover:bg-blue-700
-              hover:shadow-xl
+              hover:shadow-lg
               hover:shadow-blue-600/30
             "
           >
@@ -296,8 +355,7 @@ export default function Navbar() {
           </Link>
         </div>
 
-        {/* ---------------- Mobile Hamburger Button ---------------- */}
-
+        {/* Mobile Hamburger Button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
           aria-label="Toggle Menu"
@@ -305,22 +363,24 @@ export default function Navbar() {
         >
           <div className="w-6 h-5 flex flex-col justify-between items-center relative">
             <span
-              className={`h-0.5 w-full bg-slate-800 rounded-full transition-all duration-300 ${isOpen ? "rotate-45 translate-y-2" : ""
-                }`}
+              className={`h-0.5 w-full bg-slate-800 rounded-full transition-all duration-300 ${
+                isOpen ? "rotate-45 translate-y-2" : ""
+              }`}
             />
             <span
-              className={`h-0.5 w-full bg-slate-800 rounded-full transition-all duration-300 ${isOpen ? "opacity-0" : "opacity-100"
-                }`}
+              className={`h-0.5 w-full bg-slate-800 rounded-full transition-all duration-300 ${
+                isOpen ? "opacity-0" : "opacity-100"
+              }`}
             />
             <span
-              className={`h-0.5 w-full bg-slate-800 rounded-full transition-all duration-300 ${isOpen ? "-rotate-45 -translate-y-2.5" : ""
-                }`}
+              className={`h-0.5 w-full bg-slate-800 rounded-full transition-all duration-300 ${
+                isOpen ? "-rotate-45 -translate-y-2.5" : ""
+              }`}
             />
           </div>
         </button>
 
-        {/* ---------------- Mobile Menu Drawer ---------------- */}
-
+        {/* Mobile Menu Drawer */}
         <AnimatePresence>
           {isOpen && (
             <motion.div
@@ -333,16 +393,18 @@ export default function Navbar() {
               <nav className="flex flex-col gap-4">
                 <Link
                   href="/"
-                  className={`text-lg font-medium transition-colors ${pathname === "/" ? "text-blue-600" : "text-slate-700"
-                    }`}
+                  className={`text-lg font-medium transition-colors ${
+                    pathname === "/" ? "text-blue-600" : "text-slate-700"
+                  }`}
                 >
                   Home
                 </Link>
 
                 <Link
                   href="/services"
-                  className={`text-lg font-medium transition-colors flex items-center justify-between ${pathname.startsWith("/services") ? "text-blue-600" : "text-slate-700"
-                    }`}
+                  className={`text-lg font-medium transition-colors flex items-center justify-between ${
+                    pathname.startsWith("/services") ? "text-blue-600" : "text-slate-700"
+                  }`}
                 >
                   <span>Services</span>
                   <span className="text-xs text-blue-600 font-bold">View All</span>
@@ -350,8 +412,9 @@ export default function Navbar() {
 
                 <Link
                   href="/industries"
-                  className={`text-lg font-medium transition-colors ${pathname === "/industries" ? "text-blue-600" : "text-slate-700"
-                    }`}
+                  className={`text-lg font-medium transition-colors ${
+                    pathname === "/industries" ? "text-blue-600" : "text-slate-700"
+                  }`}
                 >
                   Industries
                 </Link>
@@ -374,19 +437,21 @@ export default function Navbar() {
                 </div>
 
                 <Link
-                  href="/about"
-                  className={`text-lg font-medium transition-colors ${pathname === "/about" ? "text-blue-600" : "text-slate-700"
-                    }`}
+                  href="/career"
+                  className={`text-lg font-medium transition-colors ${
+                    pathname === "/careers" ? "text-blue-600" : "text-slate-700"
+                  }`}
                 >
-                  About
+                  Careers
                 </Link>
 
                 <Link
-                  href="/contacts"
-                  className={`text-lg font-medium transition-colors ${pathname === "/contacts" ? "text-blue-600" : "text-slate-700"
-                    }`}
+                  href="/about"
+                  className={`text-lg font-medium transition-colors ${
+                    pathname === "/about" ? "text-blue-600" : "text-slate-700"
+                  }`}
                 >
-                  Contact
+                  About
                 </Link>
               </nav>
 
@@ -397,7 +462,52 @@ export default function Navbar() {
                   <CityButton />
                 </div>
 
+                {isAuthenticated ? (
+                  <div className="flex flex-col gap-2">
+                    {isAdmin ? (
+                      <Link
+                        href="/admin"
+                        className="flex items-center justify-center gap-2 rounded-xl border border-purple-200 bg-purple-50 py-2.5 font-medium text-purple-700 hover:bg-purple-100 transition-colors"
+                      >
+                        <Shield className="w-4 h-4 text-purple-600" />
+                        Admin Dashboard
+                      </Link>
+                    ) : (
+                      <Link
+                        href="/"
+                        className="flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-slate-50 py-2.5 font-medium text-slate-700 hover:bg-slate-100 transition-colors"
+                      >
+                        <UserIcon className="w-4 h-4 text-slate-500" />
+                        {user?.name || "User Dashboard"}
+                      </Link>
+                    )}
 
+                    <button
+                      onClick={handleLogout}
+                      className="flex items-center justify-center gap-2 rounded-xl border border-red-200 bg-red-50 py-2.5 font-medium text-red-600 hover:bg-red-100 transition-colors"
+                    >
+                      <LogOut className="w-4 h-4" />
+                      Log Out
+                    </button>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-2 gap-3">
+                    <Link
+                      href="/login"
+                      className="flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-slate-50 py-2.5 font-medium text-slate-700 hover:bg-slate-100 transition-colors"
+                    >
+                      <LogIn className="w-4 h-4 text-slate-500" />
+                      Log In
+                    </Link>
+                    <Link
+                      href="/signup"
+                      className="flex items-center justify-center gap-2 rounded-xl border border-blue-200 bg-blue-50 py-2.5 font-medium text-blue-600 hover:bg-blue-100 transition-colors"
+                    >
+                      <UserPlus className="w-4 h-4 text-blue-600" />
+                      Sign Up
+                    </Link>
+                  </div>
+                )}
 
                 <Link
                   href="/get-a-quote"

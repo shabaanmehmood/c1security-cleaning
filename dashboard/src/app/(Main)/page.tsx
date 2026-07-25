@@ -4,10 +4,10 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import HomeHero from "./_components/_homeHeroComponent/finalHomeHero";
-import Features from "./_components/stackedFeature";
 import { ServicesSection } from "./_components/ServiceSection";
 import DocumentInfoCardDownload from "@/components/ui/DocumentInfoCardDownload";
 import MagneticButton from "@/components/ui/heyZaneButton";
+import IndustrialFeaturedServices from "./industries/_components/IndustrialFeatures";
 
 const statsContainerVariants = {
   hidden: { opacity: 0, y: 30 },
@@ -83,7 +83,7 @@ export default function Home() {
       </section>
 
       {/* 3. SERVICES FEATURE CARD */}
-      <Features />
+      <IndustrialFeaturedServices />
 
       {/* 4. CALL TO ACTION SECTION */}
       <section className="pt-30 sm:pt-28 pb-12 sm:pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
