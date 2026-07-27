@@ -3,8 +3,10 @@
 import React, { useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { jobSchema, JobFormValues } from "@/validators/addJob"; 
+import { jobSchema, JobFormValues } from "@/validators/addJob";
 import { createJob } from "@/lib/postfromAdmin";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 
 const QLD_LOCATIONS = [
   "Brisbane",
@@ -132,15 +134,21 @@ export default function AddJobForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg space-y-8">
+      <Link
+        href="/admin"
+        className="inline-flex w-fit items-center gap-2 rounded-md px-2 py-1 text-sm text-gray-600 transition hover:bg-gray-100 hover:text-black"
+      >
+        <ArrowLeft className="h-4 w-4" />
+        Back to Dashboard
+      </Link>
       <h2 className="text-2xl font-bold text-gray-800 border-b pb-4">Create New Cleaning Job Posting</h2>
 
       {status && (
         <div
-          className={`p-4 rounded-md text-sm font-medium ${
-            status.type === "success"
+          className={`p-4 rounded-md text-sm font-medium ${status.type === "success"
               ? "bg-green-50 text-green-700 border border-green-200"
               : "bg-red-50 text-red-700 border border-red-200"
-          }`}
+            }`}
         >
           {status.message}
         </div>

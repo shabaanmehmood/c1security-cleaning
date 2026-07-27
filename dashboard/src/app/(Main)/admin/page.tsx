@@ -1,10 +1,10 @@
 import React from 'react'
-import AddJobPage from './_components/addJob'
+import AdminDashboard from './_components/main'
 
 function page() {
   return (
     <div>
-        <AddJobPage/>
+        <AdminDashboard/>
     </div>
   )
 }
