@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { bucket } from "@/lib/fireBase-Admin";
+import { Readable } from "stream";
+import cloudinary from "@/lib/cloudinary";
 
 export const runtime = "nodejs";
 
@@ -8,8 +9,6 @@ export async function POST(request: Request) {
     const formData = await request.formData();
 
     const file = formData.get("file") as File | null;
-    const jobId = formData.get("jobId") as string | null;
-    const userId = formData.get("userId") as string | null;
 
     if (!file) {
       return NextResponse.json(
@@ -18,21 +17,6 @@ export async function POST(request: Request) {
       );
     }
 
-    if (!jobId) {
-      return NextResponse.json(
-        { error: "jobId is required." },
-        { status: 400 }
-      );
-    }
-
-    if (!userId) {
-      return NextResponse.json(
-        { error: "userId is required." },
-        { status: 400 }
-      );
-    }
-
-    // Allow only PDF
     if (file.type !== "application/pdf") {
       return NextResponse.json(
         { error: "Only PDF files are allowed." },
@@ -40,8 +24,7 @@ export async function POST(request: Request) {
       );
     }
 
-    
-    const MAX_SIZE = 1 * 1024 * 1024;
+    const MAX_SIZE = 1 * 1024 * 1024; // 1MB
 
     if (file.size > MAX_SIZE) {
       return NextResponse.json(
@@ -50,37 +33,31 @@ export async function POST(request: Request) {
       );
     }
 
-    const bytes = Buffer.from(await file.arrayBuffer());
+    const buffer = Buffer.from(await file.arrayBuffer());
 
-    const fileName = `${Date.now()}-${file.name}`;
+    const uploadResult = await new Promise<any>((resolve, reject) => {
+      const uploadStream = cloudinary.uploader.upload_stream(
+        {
+          folder: "resumes",
+          resource_type: "raw", // Required for PDFs
+          public_id: `${Date.now()}-${file.name.replace(".pdf", "")}`,
+        },
+        (error, result) => {
+          if (error) reject(error);
+          else resolve(result);
+        }
+      );
 
-    const storagePath = `resumes/${jobId}/${userId}/${fileName}`;
-
-    const storageFile = bucket.file(storagePath);
-
-    await storageFile.save(bytes, {
-      metadata: {
-        contentType: file.type,
-      },
-    });
-
-    
-    const [downloadURL] = await storageFile.getSignedUrl({
-      action: "read",
-      expires: "03-01-2500",
+      Readable.from(buffer).pipe(uploadStream);
     });
 
     return NextResponse.json(
       {
         success: true,
-
-        resumePath: storagePath,
-
-        resumeUrl: downloadURL,
+        resumeUrl: uploadResult.secure_url,
+        publicId: uploadResult.public_id,
       },
-      {
-        status: 200,
-      }
+      { status: 200 }
     );
   } catch (error) {
     console.error(error);
@@ -90,9 +67,7 @@ export async function POST(request: Request) {
         success: false,
         error: "Upload failed.",
       },
-      {
-        status: 500,
-      }
+      { status: 500 }
     );
   }
 }

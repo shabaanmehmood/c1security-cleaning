@@ -3,7 +3,15 @@
 import { notFound } from "next/navigation";
 import ApplicationForm from "../_components/ApplicationForm";
 import { getJobBySlug } from "@/lib/JobDetailBySlug";
+import { allJob } from "@/lib/allJob";
 
+export async function generateStaticParams() {
+    const jobs = await allJob();
+
+    return jobs.map(job => ({
+        slug: job.slug,
+    }));
+}
 interface ApplyPageProps {
   params: Promise<{
     slug: string;
@@ -22,52 +30,49 @@ export default async function ApplyPage({ params }: ApplyPageProps) {
   }
 
   return (
-    <main className="mx-auto max-w-6xl px-6 py-16">
-      <div className="mb-10">
-        <h1 className="text-4xl font-bold">
-          Apply for {job.title ?? "Position"}
-        </h1>
+    <main className="bg-slate-50">
+  {/* Hero */}
+  <section className="border-b border-slate-200 bg-gradient-to-br from-blue-950 via-blue-900 to-slate-900 text-white">
+    <div className="mx-auto max-w-6xl px-6 py-16">
+      <span className="rounded-full bg-white/10 px-4 py-1 text-sm font-medium backdrop-blur">
+        Career Opportunity
+      </span>
 
-        {job.company?.name && (
-          <p className="mt-3 text-gray-600">
-            {job.company.name}
-          </p>
-        )}
+      <h1 className="mt-5 text-5xl font-bold leading-tight">
+        Apply for <span className="text-blue-300">{job.title}</span>
+      </h1>
 
-        <div className="mt-4 flex flex-wrap gap-3 text-sm">
-          {job.city && (
-            <span className="rounded bg-blue-100 px-3 py-1">
-              {job.city}
+      {job.company?.name && (
+        <p className="mt-4 text-lg text-blue-100">
+          {job.company.name}
+        </p>
+      )}
+
+      <div className="mt-8 flex flex-wrap gap-3">
+        {[
+          job.city,
+          job.state,
+          job.country,
+          job.employmentType,
+          job.workplace,
+        ]
+          .filter(Boolean)
+          .map((item,index) => (
+            <span
+              key={`${item}-${index}`}
+              className="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm backdrop-blur"
+            >
+              {item}
             </span>
-          )}
-
-          {job.state && (
-            <span className="rounded bg-blue-100 px-3 py-1">
-              {job.state}
-            </span>
-          )}
-
-          {job.country && (
-            <span className="rounded bg-blue-100 px-3 py-1">
-              {job.country}
-            </span>
-          )}
-
-          {job.employmentType && (
-            <span className="rounded bg-blue-100 px-3 py-1">
-              {job.employmentType}
-            </span>
-          )}
-
-          {job.workplace && (
-            <span className="rounded bg-blue-100 px-3 py-1">
-              {job.workplace}
-            </span>
-          )}
-        </div>
+          ))}
       </div>
+    </div>
+  </section>
 
-      <ApplicationForm jobId={job.id} />
-    </main>
+  {/* Form */}
+  <section className="mx-auto max-w-6xl px-6 py-16">
+    <ApplicationForm jobId={job.id} jobSlug={job.slug} />
+  </section>
+</main>
   );
 }

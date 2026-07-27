@@ -40,6 +40,9 @@ export const applicationSchema = z.object({
 });
 
 export const applicationPayloadSchema = z.object({
+    jobId: z.string(),
+  jobSlug: z.string(),
+
   firstName: z
     .string()
     .min(2, "First name is required")
@@ -101,10 +104,6 @@ export const applicationPayloadSchema = z.object({
   resumeUrl: z
     .string()
     .url("Invalid resume URL"),
-
-  resumePath: z
-    .string()
-    .min(1, "Resume path is required"),
 });
 
 export type ApplicationPayload = z.infer<

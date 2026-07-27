@@ -28,22 +28,17 @@ export async function POST(request: NextRequest) {
     const data = result.data;
 
     const docRef = await adminDb.collection("job_applications").add({
+      jobId:data.jobId,
+      jobSlug:data.jobSlug,
       firstName: data.firstName,
       lastName: data.lastName,
       email: data.email,
       phoneNumber: data.phoneNumber,
-
       addressInformation: data.addressInformation,
-
       compliance: data.compliance,
-
       otherInformation: data.otherInformation,
-
       resumeUrl: data.resumeUrl,
-      resumePath: data.resumePath,
-
       status: "pending",
-
       createdAt: FieldValue.serverTimestamp(),
     });
 

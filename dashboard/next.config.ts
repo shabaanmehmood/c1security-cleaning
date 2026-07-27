@@ -1,7 +1,16 @@
-import type { NextConfig } from "next";
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  // Generates static HTML/CSS/JS in the 'out' folder during `npm run build`
+  output: 'export',
 
-const nextConfig: NextConfig = {
-  
+  // Optional: Trailing slashes help with static hosting routing
+  trailingSlash: true,
+
+  // Optional: Unoptimized images are required if using standard 'output: export' 
+  // without a custom image loader
+  images: {
+    unoptimized: true,
+  },
 };
 
-export default nextConfig;
+module.exports = nextConfig;

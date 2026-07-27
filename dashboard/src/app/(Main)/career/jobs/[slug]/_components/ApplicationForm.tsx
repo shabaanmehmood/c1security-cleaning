@@ -5,27 +5,22 @@ import {
   applicationSchema,
   ApplicationFormValues,
 } from "@/validators/ApplicationForm";
-"use client";
 import React, { useState } from "react";
 import { Loader2, Upload, CheckCircle2 } from "lucide-react";
-import { auth } from "@/lib/fireBase"; 
+import { auth } from "@/lib/fireBase";
 import { uploadFile } from "@/lib/uploadFile";
 import applicationFormPost from "@/lib/applicationFormPost";
 interface ApplicationFormProps {
   jobId: string;
+  jobSlug: string;
 }
-export default async function ApplicationForm({jobId}:ApplicationFormProps) {
+export default  function ApplicationForm({
+  jobId,
+  jobSlug,
+}: ApplicationFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
-  const user=auth.currentUser;
-  if(!user){
-    return (
-        <div className="text-center py-20">
-      Please login before applying.
-    </div>
-
-    );
-  }
+  const user = auth.currentUser;
   const {
     register,
     handleSubmit,
@@ -57,37 +52,38 @@ export default async function ApplicationForm({jobId}:ApplicationFormProps) {
       },
     },
   });
+ 
 
   const selectedFile = watch("resume");
-const onSubmit = async (data: ApplicationFormValues) => {
-  setIsSubmitting(true);
+  const onSubmit = async (data: ApplicationFormValues) => {
+    setIsSubmitting(true);
 
-  try {
-    const uploadFormData = new FormData();
+    try {
+      const uploadFormData = new FormData();
 
-    uploadFormData.append("file", data.resume);
-    uploadFormData.append("jobId", jobId);
-    uploadFormData.append("userId", user.uid);
+      uploadFormData.append("file", data.resume);
 
-    const uploadResult = await uploadFile(uploadFormData);
 
-    const { resume, ...formData } = data;
+      const uploadResult = await uploadFile(uploadFormData);
 
-    const result = await applicationFormPost({
-      ...formData,
-      resumeUrl: uploadResult.resumeUrl,
-      resumePath: uploadResult.resumePath,
-    });
+      const { resume, ...formData } = data;
 
-    console.log(result.message);
+      const result = await applicationFormPost({
+        ...formData,
+        jobId,
+        jobSlug,
+        resumeUrl: uploadResult.resumeUrl,
+      });
 
-    setSubmitSuccess(true);
-  } catch (err) {
-    console.error(err);
-  } finally {
-    setIsSubmitting(false);
-  }
-};
+      console.log(result.message);
+
+      setSubmitSuccess(true);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   if (submitSuccess) {
     return (
@@ -319,41 +315,41 @@ const onSubmit = async (data: ApplicationFormValues) => {
       </div>
 
       {/* Compliance Questions */}
-     {/* Compliance Questions */}
-<div className="space-y-4">
-  <h3 className="text-xl font-bold text-blue-950 border-b border-slate-100 pb-2">
-    Compliance Questions
-  </h3>
-  <div className="space-y-4">
-    {(
-      [
-        "compliance1",
-        "compliance2",
-        "compliance3",
-        "compliance4",
-        "compliance5",
-      ] as const
-    ).map((key, index) => {
-      return (
-        <div key={key}>
-          <label className="block text-xs font-bold text-blue-950 uppercase mb-1">
-            Compliance Question {index + 1} *
-          </label>
-          <input
-            type="text"
-            {...register(`compliance.${key}`)}
-            className="w-full px-4 py-2.5 bg-blue-50/40 border border-blue-100 rounded-xl text-sm text-blue-950 focus:outline-none"
-          />
-          {errors.compliance?.[key] && (
-            <p className="text-rose-500 text-xs mt-1">
-              {errors.compliance[key]?.message}
-            </p>
-          )}
+      {/* Compliance Questions */}
+      <div className="space-y-4">
+        <h3 className="text-xl font-bold text-blue-950 border-b border-slate-100 pb-2">
+          Compliance Questions
+        </h3>
+        <div className="space-y-4">
+          {(
+            [
+              "compliance1",
+              "compliance2",
+              "compliance3",
+              "compliance4",
+              "compliance5",
+            ] as const
+          ).map((key, index) => {
+            return (
+              <div key={key}>
+                <label className="block text-xs font-bold text-blue-950 uppercase mb-1">
+                  Compliance Question {index + 1} *
+                </label>
+                <input
+                  type="text"
+                  {...register(`compliance.${key}`)}
+                  className="w-full px-4 py-2.5 bg-blue-50/40 border border-blue-100 rounded-xl text-sm text-blue-950 focus:outline-none"
+                />
+                {errors.compliance?.[key] && (
+                  <p className="text-rose-500 text-xs mt-1">
+                    {errors.compliance[key]?.message}
+                  </p>
+                )}
+              </div>
+            );
+          })}
         </div>
-      );
-    })}
-  </div>
-</div>
+      </div>
 
       {/* Other Information */}
       <div className="space-y-4">

@@ -20,6 +20,7 @@ import {
 
 import { useAuthStore } from "@/store/useAuthStore";
 import { AuthService } from "@/lib/auth.service";
+import { useRouter } from "next/navigation";
 
 const SERVICES_DATA = [
   { id: "commercial", title: "Commercial Cleaning", shortDesc: "Office and corporate spaces" },
@@ -44,7 +45,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [megaMenu, setMegaMenu] = useState<"services" | "locations" | null>(null);
-
+    const router=useRouter();
   const { user, setUser } = useAuthStore();
   const isAuthenticated = Boolean(user);
   const isAdmin = (user as any)?.role === "admin" || (user as any)?.customClaims?.role === "admin";
@@ -53,7 +54,9 @@ export default function Navbar() {
     try {
       if (AuthService?.logout) {
         await AuthService.logout();
-      }
+      } 
+        router.replace("/");
+  router.refresh();
       setUser(null);
     } catch (err) {
       console.error("Failed to log out:", err);

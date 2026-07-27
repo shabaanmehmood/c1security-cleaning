@@ -2,7 +2,6 @@ import "server-only";
 import { initializeApp, getApps, cert } from "firebase-admin/app";
 import { getFirestore } from "firebase-admin/firestore";
 import { getAuth } from "firebase-admin/auth";
-import {getStorage} from "firebase-admin/storage";
 
 if (!getApps().length) {
   initializeApp({
@@ -11,10 +10,8 @@ if (!getApps().length) {
       clientEmail: process.env.NEXT_PRIVATE_FIREBASE_CLIENT_EMAIL,
       privateKey: process.env.NEXT_PRIVATE_FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n"),
     }),
-    storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
   });
 }
 
 export const adminDb = getFirestore();
-export const bucket =getStorage().bucket();
 export const adminAuth = getAuth();
