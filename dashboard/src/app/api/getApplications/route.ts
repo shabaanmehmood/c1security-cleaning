@@ -7,33 +7,44 @@ export async function GET() {
   try {
     const snapshot = await adminDb
       .collection("job_applications")
-      .orderBy("createdAt", "desc")
       .get();
 
     const jobs = snapshot.docs.map((doc) => {
       const data = doc.data();
-      
-      // Safely convert Firestore Timestamp or fallback to string/null
-      let formattedCreatedAt = null;
-      if (data.createdAt?.toDate) {
-        formattedCreatedAt = data.createdAt.toDate().toISOString();
-      } else if (typeof data.createdAt === "string") {
-        formattedCreatedAt = data.createdAt;
-      }
+
+      const formatTimestamp = (
+        value: unknown
+      ): string | null => {
+        if (
+          value &&
+          typeof value === "object" &&
+          "toDate" in value &&
+          typeof (value as { toDate: () => Date }).toDate === "function"
+        ) {
+          return (value as { toDate: () => Date }).toDate().toISOString();
+        }
+
+        if (typeof value === "string") {
+          return value;
+        }
+
+        return null;
+      };
 
       return {
         id: doc.id,
         ...data,
-        createdAt: formattedCreatedAt,
+        createdAt: formatTimestamp(data.createdAt),
+        expiresAt: formatTimestamp(data.expiresAt),
       };
     });
 
     return NextResponse.json(jobs);
   } catch (error) {
-    console.error("Error fetching jobs:", error);
-    // Corrected to return a proper 500 HTTP status code with error JSON
+    console.error("Error fetching applications:", error);
+
     return NextResponse.json(
-      { error: "Failed to fetch jobs" },
+      { error: "Failed to fetch applications" },
       { status: 500 }
     );
   }

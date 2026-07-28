@@ -1,9 +1,9 @@
 import getBaseUrl from "./getBaseUrl";
-import { ApplicationPayload } from "@/validators/ApplicationForm";
+import { ApplicationExtractedData} from "@/validators/ApplicationForm";
 
-export async function allApplications(): Promise<ApplicationPayload[]> {
+export async function allAcceptedApplications(): Promise<ApplicationExtractedData[]> {
   try {
-    const res = await fetch(`${getBaseUrl()}/api/getApplications`);
+    const res = await fetch(`${getBaseUrl()}/api/AcceptedApplications`);
 
     if (!res.ok) {
       return [];

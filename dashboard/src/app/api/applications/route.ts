@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { FieldValue } from "firebase-admin/firestore";
 
 import { adminDb } from "@/lib/fireBase-Admin";
-import { applicationPayloadSchema } from "@/validators/ApplicationForm"; 
-
+import { applicationPayloadSchema } from "@/validators/ApplicationForm";
+import { getJobExpireDate } from "@/lib/expireDateViaJobId";
 export const runtime = "nodejs";
 
 export async function POST(request: NextRequest) {
@@ -26,10 +26,19 @@ export async function POST(request: NextRequest) {
     }
 
     const data = result.data;
-
+    const expireAt = await getJobExpireDate(data.jobId);
+    if (!expireAt) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Job not found.",
+        },
+        { status: 404 }
+      );
+    }
     const docRef = await adminDb.collection("job_applications").add({
-      jobId:data.jobId,
-      jobSlug:data.jobSlug,
+      jobId: data.jobId,
+      jobSlug: data.jobSlug,
       firstName: data.firstName,
       lastName: data.lastName,
       email: data.email,
@@ -37,9 +46,11 @@ export async function POST(request: NextRequest) {
       addressInformation: data.addressInformation,
       compliance: data.compliance,
       otherInformation: data.otherInformation,
+      userId: data.userId,
       resumeUrl: data.resumeUrl,
       status: "pending",
       createdAt: FieldValue.serverTimestamp(),
+      expireAt: expireAt,
     });
 
     return NextResponse.json(

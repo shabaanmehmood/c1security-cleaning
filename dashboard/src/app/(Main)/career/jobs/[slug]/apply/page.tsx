@@ -23,6 +23,7 @@ export default async function ApplyPage({ params }: ApplyPageProps) {
 
   // Fetch job details by slug
   const job = await getJobBySlug(slug);
+  console.log(job)
 
   // Trigger Next.js 404 page if job doesn't exist
   if (!job) {

@@ -40,6 +40,7 @@ export const applicationSchema = z.object({
 });
 
 export const applicationPayloadSchema = z.object({
+  userId: z.string(),
     jobId: z.string(),
   jobSlug: z.string(),
 
@@ -105,6 +106,155 @@ export const applicationPayloadSchema = z.object({
     .string()
     .url("Invalid resume URL"),
 });
+export const applicationApiData = z.object({
+  userId: z.string(),
+    jobId: z.string(),
+  jobSlug: z.string(),
+
+  firstName: z
+    .string()
+    .min(2, "First name is required")
+    .max(50),
+
+  lastName: z
+    .string()
+    .min(2, "Last name is required")
+    .max(50),
+
+  email: z
+    .email("Invalid email address"),
+
+  phoneNumber: z
+    .string()
+    .min(8, "Phone number is required")
+    .max(20),
+
+  addressInformation: z.object({
+    addressLine1: z
+      .string()
+      .min(3, "Address is required"),
+
+    addressLine2: z
+      .string()
+      .optional(),
+
+    city: z
+      .string()
+      .min(2, "City is required"),
+
+    state: z
+      .string()
+      .min(2, "State is required"),
+
+    postcode: z
+      .string()
+      .min(3, "Postcode is required"),
+
+    country: z
+      .string()
+      .min(2, "Country is required"),
+  }),
+
+  compliance: z.object({
+    compliance1: z.string().min(1, "Required"),
+    compliance2: z.string().min(1, "Required"),
+    compliance3: z.string().min(1, "Required"),
+    compliance4: z.string().min(1, "Required"),
+    compliance5: z.string().min(1, "Required"),
+  }),
+
+  otherInformation: z.object({
+    coverLetter: z.string().optional(),
+    experience: z.string().optional(),
+    availability: z.string().optional(),
+  }),
+
+  resumeUrl: z
+    .string()
+    .url("Invalid resume URL"),
+});
+export const applicationExtractedData = z.object({
+  jobId: z.string(),
+  jobSlug: z.string(),
+  userId: z.string(),
+  firstName: z
+    .string()
+    .min(2, "First name is required")
+    .max(50),
+
+  lastName: z
+    .string()
+    .min(2, "Last name is required")
+    .max(50),
+
+  email: z
+    .email("Invalid email address"),
+
+  phoneNumber: z
+    .string()
+    .min(8, "Phone number is required")
+    .max(20),
+
+  addressInformation: z.object({
+    addressLine1: z
+      .string()
+      .min(3, "Address is required"),
+
+    addressLine2: z
+      .string()
+      .optional(),
+
+    city: z
+      .string()
+      .min(2, "City is required"),
+
+    state: z
+      .string()
+      .min(2, "State is required"),
+
+    postcode: z
+      .string()
+      .min(3, "Postcode is required"),
+
+    country: z
+      .string()
+      .min(2, "Country is required"),
+  }),
+
+  compliance: z.object({
+    compliance1: z.string().min(1, "Required"),
+    compliance2: z.string().min(1, "Required"),
+    compliance3: z.string().min(1, "Required"),
+    compliance4: z.string().min(1, "Required"),
+    compliance5: z.string().min(1, "Required"),
+  }),
+
+  otherInformation: z.object({
+    coverLetter: z.string().optional(),
+    experience: z.string().optional(),
+    availability: z.string().optional(),
+  }),
+
+  resumeUrl: z
+    .string()
+    .url("Invalid resume URL"),
+
+  status: z.enum([
+    "pending",
+    "accepted",
+    "rejected",
+    "reviewed",
+  ]),
+
+  createdAt: z.string().datetime(),
+});
+
+export type ApplicationExtractedData = z.infer<
+  typeof applicationExtractedData
+>;
+export type ApplicationApi = z.infer<
+  typeof applicationApiData
+>;
 
 export type ApplicationPayload = z.infer<
   typeof applicationPayloadSchema

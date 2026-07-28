@@ -4,6 +4,7 @@ import {
   FileText,
   ArrowRight,
   ShieldCheck,
+  CircleCheckBig,
 } from "lucide-react";
 
 export default function AdminDashboard() {
@@ -29,7 +30,7 @@ export default function AdminDashboard() {
         </div>
 
         {/* Cards */}
-        <div className="grid gap-8 md:grid-cols-2">
+        <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
 
           {/* Add Job */}
           <Link
@@ -79,6 +80,29 @@ export default function AdminDashboard() {
             </div>
           </Link>
 
+          {/* Accepted Applications */}
+          <Link
+            href="/admin/accepted"
+            className="group rounded-3xl border bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:border-green-500 hover:shadow-xl"
+          >
+            <div className="mb-8 flex h-16 w-16 items-center justify-center rounded-2xl bg-green-100">
+              <CircleCheckBig className="h-8 w-8 text-green-600" />
+            </div>
+
+            <h2 className="text-2xl font-bold">
+              Accepted Applications
+            </h2>
+
+            <p className="mt-3 text-slate-600">
+              View candidates who have been accepted for positions. Review their details,
+              contact information, and resumes at any time.
+            </p>
+
+            <div className="mt-8 flex items-center gap-2 font-semibold text-green-600">
+              Open
+              <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+            </div>
+          </Link>
         </div>
 
       </div>

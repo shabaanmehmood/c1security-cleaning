@@ -5,22 +5,27 @@ import {
   applicationSchema,
   ApplicationFormValues,
 } from "@/validators/ApplicationForm";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Loader2, Upload, CheckCircle2 } from "lucide-react";
 import { auth } from "@/lib/fireBase";
 import { uploadFile } from "@/lib/uploadFile";
 import applicationFormPost from "@/lib/applicationFormPost";
+import { onAuthStateChanged, User } from "firebase/auth";
+import Link from "next/link";
+
 interface ApplicationFormProps {
   jobId: string;
   jobSlug: string;
 }
-export default  function ApplicationForm({
+export default function ApplicationForm({
   jobId,
   jobSlug,
 }: ApplicationFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
-  const user = auth.currentUser;
+  const [user, setUser] = useState<User | null>(null);
+  const [authLoading, setAuthLoading] = useState(true);
+
   const {
     register,
     handleSubmit,
@@ -52,11 +57,23 @@ export default  function ApplicationForm({
       },
     },
   });
- 
+
 
   const selectedFile = watch("resume");
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+      setUser(firebaseUser);
+      setAuthLoading(false);
+    });
+
+    return unsubscribe;
+  }, []);
   const onSubmit = async (data: ApplicationFormValues) => {
     setIsSubmitting(true);
+     if (!user) {
+    alert("Please login first.");
+    return;
+  }
 
     try {
       const uploadFormData = new FormData();
@@ -71,6 +88,7 @@ export default  function ApplicationForm({
       const result = await applicationFormPost({
         ...formData,
         jobId,
+        userId: user.uid,
         jobSlug,
         resumeUrl: uploadResult.resumeUrl,
       });
@@ -85,21 +103,60 @@ export default  function ApplicationForm({
     }
   };
 
-  if (submitSuccess) {
-    return (
-      <div className="max-w-2xl mx-auto p-8 bg-white border border-blue-100 rounded-3xl text-center space-y-4 shadow-sm">
-        <CheckCircle2 className="w-12 h-12 text-emerald-500 mx-auto" />
-        <h2 className="text-2xl font-bold text-blue-950">
-          Application Submitted!
-        </h2>
-        <p className="text-slate-600">
-          Thank you for applying. We will review your application and get back
-          to you soon.
-        </p>
-      </div>
-    );
-  }
+// Success Screen
+if (submitSuccess) {
+  return (
+    <div className="max-w-2xl mx-auto p-8 bg-white border border-blue-100 rounded-3xl text-center space-y-4 shadow-sm">
+      <CheckCircle2 className="w-12 h-12 text-emerald-500 mx-auto" />
+      <h2 className="text-2xl font-bold text-blue-950">
+        Application Submitted!
+      </h2>
+      <p className="text-slate-600">
+        Thank you for applying. We will review your application and get back to
+        you soon.
+      </p>
+    </div>
+  );
+}
 
+// While Firebase is checking authentication
+if (authLoading) {
+  return (
+    <div className="max-w-2xl mx-auto rounded-3xl border border-blue-100 bg-white p-10 shadow-sm text-center">
+      <Loader2 className="mx-auto h-10 w-10 animate-spin text-blue-600" />
+
+      <h2 className="mt-4 text-2xl font-bold text-blue-950">
+        Checking Login...
+      </h2>
+
+      <p className="mt-2 text-slate-600">
+        Please wait while we verify your account.
+      </p>
+    </div>
+  );
+}
+
+// User is not logged in
+if (!user) {
+  return (
+    <div className="max-w-2xl mx-auto rounded-3xl border border-blue-100 bg-white p-10 shadow-sm text-center">
+      <h2 className="text-2xl font-bold text-blue-950 mb-3">
+        Please Login First
+      </h2>
+
+      <p className="text-slate-600 mb-8">
+        You must be logged in before you can apply for this job.
+      </p>
+
+      <Link
+        href="/login"
+        className="inline-flex items-center justify-center rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white transition hover:bg-blue-700"
+      >
+        Login
+      </Link>
+    </div>
+  );
+}
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -395,19 +452,20 @@ export default  function ApplicationForm({
       </div>
 
       {/* Submit Button */}
-      <button
-        type="submit"
-        disabled={isSubmitting}
-        className="w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all shadow-md shadow-blue-600/20 flex items-center justify-center gap-2 disabled:opacity-70"
-      >
-        {isSubmitting ? (
-          <>
-            <Loader2 className="w-5 h-5 animate-spin" /> Submitting...
-          </>
-        ) : (
-          "Submit Application"
-        )}
-      </button>
+  <button
+  type="submit"
+  disabled={isSubmitting}
+  className="w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all shadow-md shadow-blue-600/20 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+>
+  {isSubmitting ? (
+    <>
+      <Loader2 className="w-5 h-5 animate-spin" />
+      Submitting...
+    </>
+  ) : (
+    "Submit Application"
+  )}
+</button>
     </form>
   );
 }

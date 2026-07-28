@@ -5,13 +5,13 @@ export async function getJobBySlug(
   slug: string
 ): Promise<Job | null> {
   try {
-    const res = await fetch(`${getBaseUrl()}/api/jobs/${slug}`);
-
-    if (!res.ok) {
+    const ress = await fetch(`${getBaseUrl()}/api/jobs/${slug}`);
+    console.log(ress);
+    if (!ress.ok) {
       return null;
     }
 
-    return await res.json();
+    return await ress.json();
   } catch (error) {
     console.error(error);
     return null;

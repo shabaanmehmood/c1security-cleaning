@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { adminDb, adminAuth } from "@/lib/fireBase-Admin";
-import { FieldValue } from "firebase-admin/firestore";
-import { jobSchema } from "@/validators/addJob"; 
+import { FieldValue , Timestamp} from "firebase-admin/firestore";
+import { jobSchema } from "@/validators/addJob";
 
 export const dynamic = "force-dynamic";
 
@@ -14,7 +14,7 @@ export async function GET() {
 
     const jobs = snapshot.docs.map((doc) => {
       const data = doc.data();
-      
+
       // Safely convert Firestore Timestamp or fallback to string/null
       let formattedCreatedAt = null;
       if (data.createdAt?.toDate) {
@@ -22,7 +22,7 @@ export async function GET() {
       } else if (typeof data.createdAt === "string") {
         formattedCreatedAt = data.createdAt;
       }
-
+      console.log(data);
       return {
         id: doc.id,
         ...data,
@@ -89,8 +89,12 @@ export async function POST(request: Request) {
     }
 
     const validatedData = parsed.data;
+
+    const { expiresAt, ...data } = validatedData;
+
     const docRef = await adminDb.collection("jobs").add({
-      ...validatedData,
+      ...data,
+      expiresAt: Timestamp.fromDate(new Date(expiresAt)),
       createdAt: FieldValue.serverTimestamp(),
       createdBy: decodedToken.uid,
       isActive: true,

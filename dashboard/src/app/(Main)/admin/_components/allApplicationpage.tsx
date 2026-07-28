@@ -4,7 +4,7 @@ import { allApplications } from "@/lib/getApplications";
 
 export default async function ApplicationsPage() {
   const applications = await allApplications();
-
+  console.log(applications)
   return (
     <main className="p-6">
       {/* Back Button */}
@@ -29,9 +29,9 @@ export default async function ApplicationsPage() {
         </div>
       ) : (
         <div className="space-y-4">
-          {applications.map((application) => (
+          {applications.map((application,idx) => (
             <div
-              key={application.jobId}
+              key={`${application.jobId}-${idx}`}
               className="rounded-xl border p-5 shadow-sm"
             >
               <div className="grid gap-4 md:grid-cols-5">
@@ -55,14 +55,14 @@ export default async function ApplicationsPage() {
                 <div>
                   <p className="text-xs text-gray-500">Location</p>
                   <p>
-                    {application.addressInformation.city},{" "}
-                    {application.addressInformation.country}
+                    {application?.addressInformation?.city},{" "}
+                    {application?.addressInformation?.country}
                   </p>
                 </div>
 
                 <div className="flex items-center justify-end">
                   <Link
-                    href={`/admin/applications/${application.jobId}`}
+                    href={`/admin/applications/${application.userId}`}
                     className="rounded-md bg-black px-4 py-2 text-white transition hover:bg-gray-800"
                   >
                     View Details

@@ -1,11 +1,12 @@
+import { allJob } from '@/lib/allJob';
 import Jobs from './_components/availibleJobs'
 
-function page() {
+export default async function Page() {
+  const jobs = await allJob();
+
   return (
     <div>
-        <Jobs/>
+      <Jobs jobs={jobs} />
     </div>
-  )
+  );
 }
-
-export default page

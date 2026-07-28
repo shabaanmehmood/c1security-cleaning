@@ -38,7 +38,7 @@ export const jobSchema = z.object({
 
   postedDate: z.string().optional(),
 
-  expiresAt: z.string().optional(),
+  expiresAt: z.string(),
 
   vacancies: z.number().positive().optional(),
 

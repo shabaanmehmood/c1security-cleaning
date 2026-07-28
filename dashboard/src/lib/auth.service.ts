@@ -1,4 +1,4 @@
-import { 
+import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signInWithPopup,
@@ -6,17 +6,52 @@ import {
   sendPasswordResetEmail,
   onAuthStateChanged,
   User,
-  AuthError
+  AuthError,
+
 } from "firebase/auth";
 import { doc, setDoc, getDoc, serverTimestamp } from "firebase/firestore";
-import { auth, googleProvider, db } from "@/lib/fireBase"; 
+import { auth, googleProvider, db } from "@/lib/fireBase";
+export async function forgotPassword(email: string) {
+  try {
+    await sendPasswordResetEmail(auth, email);
 
+    return {
+      success: true,
+      message: "Password reset email sent successfully.",
+    };
+  } catch (error: any) {
+    console.error(error);
+
+    let message = "Something went wrong.";
+
+    switch (error.code) {
+      case "auth/user-not-found":
+        message = "No account found with this email.";
+        break;
+
+      case "auth/invalid-email":
+        message = "Invalid email address.";
+        break;
+
+      case "auth/too-many-requests":
+        message = "Too many attempts. Please try again later.";
+        break;
+    }
+
+    return {
+      success: false,
+      message,
+    };
+  }
+}
 /**
  * Creates or updates the user's document in Firestore.
  * Pass additional optional fields (like extra profile details) when available.
  */
+
+
 async function saveUserToFirestore(
-  user: User, 
+  user: User,
   additionalData: Record<string, any> = {}
 ) {
   const userRef = doc(db, "users", user.uid);
@@ -37,11 +72,11 @@ async function saveUserToFirestore(
   } else {
     // Existing user login: update last login timestamp and optional fields
     await setDoc(
-      userRef, 
-      { 
+      userRef,
+      {
         lastLoginAt: serverTimestamp(),
-        ...additionalData 
-      }, 
+        ...additionalData
+      },
       { merge: true }
     );
   }
@@ -66,13 +101,21 @@ export const AuthService = {
    * Register a new user with Email and Password and save their document in Firestore.
    */
   async signUpWithEmail(
-    email: string, 
-    pass: string, 
+    email: string,
+    pass: string,
     extraParams: { displayName?: string } = {}
   ): Promise<User> {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
       const user = userCredential.user;
+      const idToken = await user.getIdToken();
+      await fetch("/api/auth/session", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ idToken }),
+      });
 
       // Save complete user document to Firestore
       await saveUserToFirestore(user, extraParams);
@@ -90,6 +133,15 @@ export const AuthService = {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, pass);
       const user = userCredential.user;
+      const idToken = await user.getIdToken();
+
+      await fetch("/api/auth/session", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ idToken }),
+      });
 
       // Update last login timestamp in Firestore
       await saveUserToFirestore(user);
@@ -107,7 +159,15 @@ export const AuthService = {
     try {
       const userCredential = await signInWithPopup(auth, googleProvider);
       const user = userCredential.user;
+      const idToken = await user.getIdToken();
 
+      await fetch("/api/auth/session", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ idToken }),
+      });
       // Save user profile details from Google to Firestore
       await saveUserToFirestore(user);
 
@@ -134,6 +194,10 @@ export const AuthService = {
   async logout(): Promise<void> {
     try {
       await firebaseSignOut(auth);
+
+      await fetch("/api/auth/logout", {
+        method: "POST",
+      });
     } catch (error) {
       throw this.handleAuthError(error as AuthError);
     }

@@ -16,6 +16,7 @@ import {
   User as UserIcon,
   Check,
   X,
+  ArrowLeft,
 } from "lucide-react";
 
 import { signupSchema, SignupSchema } from "@/validators/Auth";
@@ -123,6 +124,13 @@ export default function SignupForm() {
 
   return (
     <div className="w-full max-w-lg rounded-3xl border border-blue-100 bg-white p-8 shadow-2xl shadow-blue-100/50">
+      <Link
+        href="/"
+        className="mb-6 inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100"
+      >
+        <ArrowLeft className="h-4 w-4" />
+        Back
+      </Link>
       {/* Header */}
       <div className="mb-8 text-center">
         <div className="flex justify-center items-center w-full">
