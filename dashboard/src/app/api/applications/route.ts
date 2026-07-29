@@ -4,6 +4,7 @@ import { FieldValue } from "firebase-admin/firestore";
 import { adminDb } from "@/lib/fireBase-Admin";
 import { applicationPayloadSchema } from "@/validators/ApplicationForm";
 import { getJobExpireDate } from "@/lib/expireDateViaJobId";
+import { revalidateTag } from "next/cache";
  export const runtime = "nodejs";
 
 export async function POST(request: NextRequest) {
@@ -52,7 +53,9 @@ export async function POST(request: NextRequest) {
       createdAt: FieldValue.serverTimestamp(),
       expireAt: expireAt,
     });
-
+       
+    revalidateTag("applications","max")
+  
     return NextResponse.json(
       {
         success: true,

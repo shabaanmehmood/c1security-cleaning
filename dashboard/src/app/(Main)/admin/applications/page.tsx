@@ -1,9 +1,12 @@
 import React from 'react'
 import ApplicationsPage from '../_components/allApplicationpage'
+import { allApplications } from '@/lib/getApplications';
 
-function page() {
+async function page() {
+    const applicatis = await allApplications();
+  console.log(applicatis)
   return (
-    <ApplicationsPage/>
+    <ApplicationsPage applications={applicatis}/>
   )
 }
 

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { adminDb } from "@/lib/fireBase-Admin";
-export const dynamic = "force-dynamic";
+import { revalidateTag } from "next/cache";
 interface Context {
   params: Promise<{
     slug: string;
@@ -19,16 +19,17 @@ export async function GET(
       .where("userId", "==", slug.trim())
       .limit(1)
       .get();
-
-    if (snapshot.empty) {
-      return NextResponse.json(
-        { error: "Application not found" },
-        { status: 404 }
-      );
-    }
-
-    const doc = snapshot.docs[0];
-
+      
+      if (snapshot.empty) {
+        return NextResponse.json(
+          { error: "Application not found" },
+          { status: 404 }
+        );
+      }
+      
+      const doc = snapshot.docs[0];
+      
+      revalidateTag("accepted","max")
     return NextResponse.json(
       {
         id: doc.id,

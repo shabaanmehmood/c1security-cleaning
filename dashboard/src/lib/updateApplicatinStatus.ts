@@ -1,3 +1,4 @@
+
 import getBaseUrl from "./getBaseUrl";
 
 export async function updateApplicationStatus(
@@ -11,6 +12,7 @@ export async function updateApplicationStatus(
       body: JSON.stringify({ status }),
     }
   );
+  
 
   if (!response.ok) {
     const error = await response.json();

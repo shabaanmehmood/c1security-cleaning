@@ -1,6 +1,5 @@
 import JobPage from "@/components/JobDescription/FinalPage";
 import { adminDb } from "@/lib/fireBase-Admin";
-export const dynamic="force-dynamic";
 export async function generateStaticParams() {
   try {
     const snapshot = await adminDb.collection("jobs").get();

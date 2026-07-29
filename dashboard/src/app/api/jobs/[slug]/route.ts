@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { adminDb } from "@/lib/fireBase-Admin";
-export const dynamic = "force-dynamic";
 
 interface Context {
   params: Promise<{

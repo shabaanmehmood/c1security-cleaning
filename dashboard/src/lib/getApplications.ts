@@ -3,7 +3,11 @@ import { ApplicationPayload } from "@/validators/ApplicationForm";
 
 export async function allApplications(): Promise<ApplicationPayload[]> {
   try {
-    const res = await fetch(`${getBaseUrl()}/api/getApplications`);
+    const res = await fetch(`${getBaseUrl()}/api/getApplications`,{
+      next:{
+        tags:["applications"]
+      }
+    });
 
     if (!res.ok) {
       return [];

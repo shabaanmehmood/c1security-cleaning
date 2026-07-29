@@ -3,7 +3,11 @@ import { ApplicationExtractedData} from "@/validators/ApplicationForm";
 
 export async function allAcceptedApplications(): Promise<ApplicationExtractedData[]> {
   try {
-    const res = await fetch(`${getBaseUrl()}/api/AcceptedApplications`);
+    const res = await fetch(`${getBaseUrl()}/api/AcceptedApplications`,{
+      next:{
+         tags:["accepted"]
+      }
+    });
 
     if (!res.ok) {
       return [];

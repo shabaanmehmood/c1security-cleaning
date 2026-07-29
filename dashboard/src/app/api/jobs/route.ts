@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { adminDb, adminAuth } from "@/lib/fireBase-Admin";
 import { FieldValue , Timestamp} from "firebase-admin/firestore";
 import { jobSchema } from "@/validators/addJob";
+import { revalidateTag } from "next/cache";
 
 export const dynamic = "force-dynamic";
 
@@ -99,6 +100,7 @@ export async function POST(request: Request) {
       createdBy: decodedToken.uid,
       isActive: true,
     });
+     revalidateTag("alljobs", "max");
 
     return NextResponse.json(
       {

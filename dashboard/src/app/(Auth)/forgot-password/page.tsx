@@ -10,7 +10,7 @@ interface FormData {
   email: string;
 }
 
-export default function ForgotPasswordPage() {
+export default async function ForgotPasswordPage() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [message, setMessage] = useState("");
@@ -25,7 +25,8 @@ export default function ForgotPasswordPage() {
     setLoading(true);
 
     const result = await forgotPassword(data.email);
-
+       
+    console.log("Reset email sent");
     setLoading(false);
 
     setMessage(result.message);

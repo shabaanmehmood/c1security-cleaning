@@ -3,7 +3,9 @@ import getBaseUrl from "./getBaseUrl";
 
 export async function allJob(): Promise<Job[]> {
   try {
-    const res = await fetch(`${getBaseUrl()}/api/jobs`);
+    const res = await fetch(`${getBaseUrl()}/api/jobs`,{ next:{
+        tags:["alljobs"]
+      }});
 
     if (!res.ok) {
       return [];

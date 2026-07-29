@@ -1,7 +1,6 @@
 import { adminDb } from "@/lib/fireBase-Admin";
 import { NextResponse } from "next/server";
 
-export const dynamic = "force-dynamic";
 
 export async function GET() {
   try {

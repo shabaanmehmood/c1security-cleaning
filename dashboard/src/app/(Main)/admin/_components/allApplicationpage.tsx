@@ -1,10 +1,17 @@
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { allApplications } from "@/lib/getApplications";
+import { Applications } from "@/types/application";
 
-export default async function ApplicationsPage() {
-  const applications = await allApplications();
-  console.log(applications)
+
+interface ApplicationsPageProps {
+  applications: Applications;
+}
+
+
+export default function ApplicationsPage({
+  applications,
+}: ApplicationsPageProps) {
+
   return (
     <main className="p-6">
       {/* Back Button */}
@@ -17,7 +24,10 @@ export default async function ApplicationsPage() {
       </Link>
 
       <div className="mb-8">
-        <h1 className="text-3xl font-bold">Applications</h1>
+        <h1 className="text-3xl font-bold">
+          Applications
+        </h1>
+
         <p className="text-muted-foreground">
           Total Applications: {applications.length}
         </p>
@@ -29,36 +39,53 @@ export default async function ApplicationsPage() {
         </div>
       ) : (
         <div className="space-y-4">
-          {applications.map((application,idx) => (
+          {applications.map((application, idx) => (
             <div
               key={`${application.jobId}-${idx}`}
               className="rounded-xl border p-5 shadow-sm"
             >
               <div className="grid gap-4 md:grid-cols-5">
+
                 <div>
-                  <p className="text-xs text-gray-500">Applicant</p>
+                  <p className="text-xs text-gray-500">
+                    Applicant
+                  </p>
+
                   <p className="font-semibold">
                     {application.firstName} {application.lastName}
                   </p>
                 </div>
 
+
                 <div>
-                  <p className="text-xs text-gray-500">Job</p>
+                  <p className="text-xs text-gray-500">
+                    Job
+                  </p>
+
                   <p>{application.jobSlug}</p>
                 </div>
 
+
                 <div>
-                  <p className="text-xs text-gray-500">Email</p>
+                  <p className="text-xs text-gray-500">
+                    Email
+                  </p>
+
                   <p>{application.email}</p>
                 </div>
 
+
                 <div>
-                  <p className="text-xs text-gray-500">Location</p>
+                  <p className="text-xs text-gray-500">
+                    Location
+                  </p>
+
                   <p>
-                    {application?.addressInformation?.city},{" "}
-                    {application?.addressInformation?.country}
+                    {application.addressInformation.city},{" "}
+                    {application.addressInformation.country}
                   </p>
                 </div>
+
 
                 <div className="flex items-center justify-end">
                   <Link
@@ -68,11 +95,13 @@ export default async function ApplicationsPage() {
                     View Details
                   </Link>
                 </div>
+
               </div>
             </div>
           ))}
         </div>
       )}
+
     </main>
   );
 }
