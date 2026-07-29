@@ -4,7 +4,6 @@ import { FieldValue , Timestamp} from "firebase-admin/firestore";
 import { jobSchema } from "@/validators/addJob";
 import { revalidateTag } from "next/cache";
 
-export const dynamic = "force-dynamic";
 
 export async function GET() {
   try {
