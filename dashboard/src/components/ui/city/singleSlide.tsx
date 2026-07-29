@@ -7,10 +7,10 @@ import {
   useScroll,
   useTransform,
 } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, LucideIcon } from "lucide-react";
 
 export interface SlideItem {
-  icon: string;
+  icon: LucideIcon;
   title: string;
   description: string;
   image: string;
@@ -103,13 +103,11 @@ function Slide({ feature, index, total }: SlideProps) {
               transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
               className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-cyan-500 shadow-lg shadow-blue-500/30"
             >
-              <Image
-                src={feature.icon}
-                alt={feature.title}
-                width={32}
-                height={32}
-                className="object-contain brightness-0 invert"
-              />
+              
+              {(() => {
+                const Icon = feature.icon;
+                return <Icon className="h-8 w-8 text-white" />;
+              })()}
             </motion.div>
 
             <span className="mb-2 text-xs font-bold uppercase tracking-[0.3em] text-blue-600">
