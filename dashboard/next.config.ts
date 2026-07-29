@@ -4,5 +4,9 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  serverExternalPackages: [
+    "firebase-admin",
+    "jwks-rsa",
+  ],
 };
 export default nextConfig;
