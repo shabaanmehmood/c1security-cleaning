@@ -7,12 +7,8 @@ import QuoteForm from "@/app/(Main)/get-a-quote/_component/quoteForm";
 import { Sparkles, ShieldCheck, CheckCircle2 } from "lucide-react";
 import ServicePage from "@/components/ui/Service/field/ServicePage";
 import IndustrialFeaturedServices from "../industries/_components/IndustrialFeatures";
-interface DivProp{
-Div1:string;
-Div2:string;
-Div3:string;
-}
-export default function ServicesPage(DivContent:DivProp ) {
+
+export default function ServicesPage() {
   const [quoteModalOpen, setQuoteModalOpen] = useState(false);
 
   return (
