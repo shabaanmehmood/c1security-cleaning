@@ -1,5 +1,5 @@
 // app/career/jobs/[slug]/apply/page.tsx
-
+export const dynamic = "force-dynamic";
 import { notFound } from "next/navigation";
 import ApplicationForm from "../_components/ApplicationForm";
 import { getJobBySlug } from "@/lib/JobDetailBySlug";

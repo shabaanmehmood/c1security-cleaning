@@ -1,3 +1,5 @@
+
+export const dynamic = "force-dynamic";
 import { allAcceptedApplications } from "@/lib/getAcceptedApplications";
 import AcceptedApplication from "../_components/AcceptedApplication";
 

@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { getApplicationByid } from "@/lib/jobApplicationByJobId";
 import Application from "./_components/SpecificApplicationDescription";
 

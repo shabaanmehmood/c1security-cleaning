@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { allJob } from '@/lib/allJob';
 import Jobs from './_components/availibleJobs'
 
