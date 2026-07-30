@@ -4,18 +4,16 @@ import { FieldValue , Timestamp} from "firebase-admin/firestore";
 import { jobSchema } from "@/validators/addJob";
 import { revalidateTag } from "next/cache";
 
-
+export const runtime = "nodejs";
 export async function GET() {
   try {
     const snapshot = await adminDb
       .collection("jobs")
       .orderBy("createdAt", "desc")
       .get();
-
     const jobs = snapshot.docs.map((doc) => {
       const data = doc.data();
 
-      // Safely convert Firestore Timestamp or fallback to string/null
       let formattedCreatedAt = null;
       if (data.createdAt?.toDate) {
         formattedCreatedAt = data.createdAt.toDate().toISOString();
@@ -23,6 +21,7 @@ export async function GET() {
         formattedCreatedAt = data.createdAt;
       }
       console.log(data);
+
       return {
         id: doc.id,
         ...data,
@@ -31,14 +30,17 @@ export async function GET() {
     });
 
     return NextResponse.json(jobs);
-  } catch (error) {
-    console.error("Error fetching jobs:", error);
-    // Corrected to return a proper 500 HTTP status code with error JSON
-    return NextResponse.json(
-      { error: "Failed to fetch jobs" },
-      { status: 500 }
-    );
-  }
+  }catch (error:any) {
+  console.error("Error fetching jobs:", error);
+
+  return NextResponse.json(
+    {
+      error: error.message,
+      stack: error.stack
+    },
+    { status: 500 }
+  );
+}
 }
 
 export async function POST(request: Request) {
@@ -91,6 +93,9 @@ export async function POST(request: Request) {
     const validatedData = parsed.data;
 
     const { expiresAt, ...data } = validatedData;
+    console.log("expiresAt:", expiresAt);
+console.log("Date:", new Date(expiresAt));
+console.log("isValid:", !isNaN(new Date(expiresAt).getTime()));
 
     const docRef = await adminDb.collection("jobs").add({
       ...data,
