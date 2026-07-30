@@ -5,43 +5,6 @@ import { jobSchema } from "@/validators/addJob";
 import { revalidateTag } from "next/cache";
 
 export const runtime = "nodejs";
-export async function GET() {
-  try {
-    const snapshot = await adminDb
-      .collection("jobs")
-      .orderBy("createdAt", "desc")
-      .get();
-    const jobs = snapshot.docs.map((doc) => {
-      const data = doc.data();
-
-      let formattedCreatedAt = null;
-      if (data.createdAt?.toDate) {
-        formattedCreatedAt = data.createdAt.toDate().toISOString();
-      } else if (typeof data.createdAt === "string") {
-        formattedCreatedAt = data.createdAt;
-      }
-      console.log(data);
-
-      return {
-        id: doc.id,
-        ...data,
-        createdAt: formattedCreatedAt,
-      };
-    });
-
-    return NextResponse.json(jobs);
-  }catch (error:any) {
-  console.error("Error fetching jobs:", error);
-
-  return NextResponse.json(
-    {
-      error: error.message,
-      stack: error.stack
-    },
-    { status: 500 }
-  );
-}
-}
 
 export async function POST(request: Request) {
   try {

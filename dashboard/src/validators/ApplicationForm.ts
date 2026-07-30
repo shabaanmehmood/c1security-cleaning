@@ -247,6 +247,7 @@ export const applicationExtractedData = z.object({
   ]),
 
   createdAt: z.string().datetime(),
+  expiresAt:z.string().optional(),
 });
 
 export type ApplicationExtractedData = z.infer<

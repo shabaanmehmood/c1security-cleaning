@@ -1,5 +1,5 @@
 export const dynamic = "force-dynamic";
-import { getApplicationByid } from "@/lib/jobApplicationByJobId";
+import { getApplicationById } from "@/lib/jobApplicationByJobId";
 import Application from "./_components/SpecificApplicationDescription";
 
 
@@ -12,7 +12,7 @@ async function page({ params }: Props) {
     const { slug } = await params;
 
        console.log("Slug:", slug);
-    const data = await getApplicationByid(slug);
+    const data = await getApplicationById(slug);
     if (!data) {
         throw new Error("JobId not found");
     }

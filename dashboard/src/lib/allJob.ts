@@ -1,20 +1,39 @@
 import { Job } from "@/types/JobDescription";
-import getBaseUrl from "./getBaseUrl";
+import { adminDb } from "./fireBase-Admin";
+import { DocumentData } from "firebase-admin/firestore";
+
+function formatTimestamp(value: any): string {
+  if (value?.toDate) {
+    return value.toDate().toISOString();
+  }
+
+  if (typeof value === "string") {
+    return value;
+  }
+
+  return "";
+}
 
 export async function allJob(): Promise<Job[]> {
   try {
-    const res = await fetch(`${getBaseUrl()}/api/jobs`,{ next:{
-        tags:["alljobs"]
-      }});
+    const snapshot = await adminDb
+      .collection("jobs")
+      .orderBy("createdAt", "desc")
+      .get();
 
-    if (!res.ok) {
-      return [];
-    }
+    return snapshot.docs.map((doc) => {
+      const data = doc.data() as DocumentData &
+        Omit<Job, "createdAt" | "expiresAt">;
 
-    const data = await res.json();
-    return data;
+      return {
+        ...data,
+        id: doc.id,
+        createdAt: formatTimestamp((doc.data() as DocumentData).createdAt),
+        expiresAt: formatTimestamp((doc.data() as DocumentData).expiresAt),
+      };
+    });
   } catch (error) {
-    console.error(error);
+    console.error("Error fetching jobs:", error);
     return [];
   }
 }

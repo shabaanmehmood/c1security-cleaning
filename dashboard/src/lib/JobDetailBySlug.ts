@@ -1,19 +1,31 @@
+import { adminDb } from "./fireBase-Admin";
 import { Job } from "@/types/JobDescription";
-import getBaseUrl from "./getBaseUrl";
 
 export async function getJobBySlug(
   slug: string
 ): Promise<Job | null> {
   try {
-    const ress = await fetch(`${getBaseUrl()}/api/jobs/${slug}`);
-    console.log(ress);
-    if (!ress.ok) {
+    const snapshot = await adminDb
+      .collection("jobs")
+      .where("slug", "==", slug)
+      .where("isActive", "==", true)
+      .limit(1)
+      .get();
+
+    if (snapshot.empty) {
       return null;
     }
 
-    return await ress.json();
+    const doc = snapshot.docs[0];
+    const data = doc.data();
+
+    return {
+      ...data,
+      id: doc.id,
+      expiresAt: data.expiresAt?.toDate?.().toISOString() ?? "",
+    } as Job;
   } catch (error) {
-    console.error(error);
+    console.error("Error fetching job:", error);
     return null;
   }
 }

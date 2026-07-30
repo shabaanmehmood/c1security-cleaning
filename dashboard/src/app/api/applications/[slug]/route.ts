@@ -7,45 +7,7 @@ interface Context {
   }>;
 }
 
-export async function GET(
-  request: Request,
-  { params }: Context
-) {
-  try {
-    const { slug } = await params;
-     
-    const snapshot = await adminDb
-      .collection("job_applications")
-      .where("userId", "==", slug.trim())
-      .limit(1)
-      .get();
-      
-      if (snapshot.empty) {
-        return NextResponse.json(
-          { error: "Application not found" },
-          { status: 404 }
-        );
-      }
-      
-      const doc = snapshot.docs[0];
-      
-      revalidateTag("accepted","max")
-    return NextResponse.json(
-      {
-        id: doc.id,
-        ...doc.data(),
-      },
-      { status: 200 }
-    );
-  } catch (error) {
-    console.error(error);
 
-    return NextResponse.json(
-      { error: "Failed to fetch application" },
-      { status: 500 }
-    );
-  }
-}
 
 export async function PATCH(
   request: Request,

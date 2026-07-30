@@ -1,23 +1,42 @@
-import getBaseUrl from "./getBaseUrl";
-import { ApplicationExtractedData} from "@/validators/ApplicationForm";
+import { adminDb } from "./fireBase-Admin";
+import { ApplicationExtractedData } from "@/validators/ApplicationForm";
+
+function formatTimestamp(value: unknown): string | null {
+  if (
+    value &&
+    typeof value === "object" &&
+    "toDate" in value &&
+    typeof (value as { toDate: () => Date }).toDate === "function"
+  ) {
+    return (value as { toDate: () => Date }).toDate().toISOString();
+  }
+
+  if (typeof value === "string") {
+    return value;
+  }
+
+  return null;
+}
 
 export async function allAcceptedApplications(): Promise<ApplicationExtractedData[]> {
   try {
-    const res = await fetch(`${getBaseUrl()}/api/AcceptedApplications`,{
-      next:{
-         tags:["accepted"]
-      }
+    const snapshot = await adminDb
+      .collection("job_applications")
+      .where("status", "==", "accepted")
+      .get();
+
+    return snapshot.docs.map((doc) => {
+      const data = doc.data() as ApplicationExtractedData;
+
+      return {
+        ...data,
+        id: doc.id,
+        createdAt: formatTimestamp(data.createdAt)??"",
+        expiresAt: formatTimestamp(data.expiresAt)??"",
+      };
     });
-
-    if (!res.ok) {
-      return [];
-    }
-
-    const data = await res.json();
-    console.log(data)
-    return data;
   } catch (error) {
-    console.error(error);
+    console.error("Error fetching applications:", error);
     return [];
   }
 }

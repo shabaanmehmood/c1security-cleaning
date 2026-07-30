@@ -1,20 +1,28 @@
-import getBaseUrl from "./getBaseUrl";
+import { adminDb } from "./fireBase-Admin";
 import { ApplicationExtractedData } from "@/validators/ApplicationForm";
 
-export async function getApplicationByid(
-  slug: string
+export async function getApplicationById(
+  userId: string
 ): Promise<ApplicationExtractedData | null> {
   try {
-    console.log(slug)
-    const ress = await fetch(`${getBaseUrl()}/api/applications/${slug}`);
-    console.log(ress);
-    if (!ress.ok) {
+    const snapshot = await adminDb
+      .collection("job_applications")
+      .where("userId", "==", userId.trim())
+      .limit(1)
+      .get();
+
+    if (snapshot.empty) {
       return null;
     }
 
-    return await ress.json();
+    const doc = snapshot.docs[0];
+    const data = doc.data() as ApplicationExtractedData;
+
+    return {
+      ...data,
+    };
   } catch (error) {
-    console.error(error);
+    console.error("Error fetching application:", error);
     return null;
   }
 }
