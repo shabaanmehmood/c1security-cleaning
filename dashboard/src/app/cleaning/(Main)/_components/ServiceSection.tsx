@@ -136,7 +136,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenQuoteMod
               className="scroll-mt-28 p-8 rounded-3xl relative flex flex-col justify-between group bg-slate-900/90 border border-slate-800 hover:border-blue-500/60 hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-300"
             >
               {/* Card body wrapped inside dynamic route link */}
-              <Link href={`/services/${service.id}`} className="block h-full">
+              <Link href={`cleaning/services/${service.id}`} className="block h-full">
                 <div>
                   <div className="flex items-center justify-between mb-6">
                     {/* Blue Logo/Icon Container */}

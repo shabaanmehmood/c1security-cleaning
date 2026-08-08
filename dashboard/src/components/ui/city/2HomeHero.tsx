@@ -28,7 +28,7 @@ export default function HeroBannerCard({
 
         {/* TOP RIGHT PINNED BUTTON (Interactive Motion & Link) */}
         <div className="absolute top-6 right-6 sm:top-8 sm:right-8 z-10">
-          <Link href="/get-a-quote">
+          <Link href="/cleaning/get-a-quote">
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}

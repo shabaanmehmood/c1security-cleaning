@@ -46,7 +46,7 @@ const ContactSection = () => {
 
   const onSubmit = (data: ContactFormValues) => {
     const serviceID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID as string;
-    const templateID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID as string;
+    const templateID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_2_ID as string;
     const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY as string;
 
     setIsLoading(true);

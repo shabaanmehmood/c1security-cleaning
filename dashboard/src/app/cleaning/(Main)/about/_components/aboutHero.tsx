@@ -46,14 +46,14 @@ export default function AboutHero() {
 
             <div className="mt-10 flex flex-wrap gap-4">
 
-              <Link href="/get-a-quote">
+              <Link href="/cleaning/get-a-quote">
                 <Button size="lg" className="gap-2">
                   Get a Free Quote
                   <ArrowRight className="h-4 w-4" />
                 </Button>
               </Link>
 
-              <Link href="/contact">
+              <Link href="cleaning/contacts">
                 <Button
                   size="lg"
                   variant="outline"

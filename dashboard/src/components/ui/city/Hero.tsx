@@ -47,7 +47,7 @@ export default function HomeHero({ title, description, city }: HomeHeroProps) {
 
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 pt-2">
-              <Link href="/get-a-quote" className="w-full sm:w-auto">
+              <Link href="/cleaning/get-a-quote" className="w-full sm:w-auto">
                 <Button
                   size="lg"
                   className="w-full sm:w-auto rounded-full bg-blue-600 hover:bg-blue-700 text-white shadow-xl shadow-blue-600/30 px-8 py-6 text-base font-semibold transition-all duration-200"
@@ -57,7 +57,7 @@ export default function HomeHero({ title, description, city }: HomeHeroProps) {
                 </Button>
               </Link>
 
-              <Link href="/services" className="w-full sm:w-auto">
+              <Link href="/cleaning/services" className="w-full sm:w-auto">
                 <Button
                   variant="outline"
                   size="lg"

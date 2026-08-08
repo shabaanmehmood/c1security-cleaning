@@ -2,8 +2,8 @@
 
 import React, { useState } from "react";
 
-import { ServicesSection } from "@/app/(Main)/_components/ServiceSection";
-import QuoteForm from "@/app/(Main)/get-a-quote/_component/quoteForm";
+import { ServicesSection } from "@/app/cleaning/(Main)/_components/ServiceSection";
+import QuoteForm from "@/app/cleaning/(Main)/get-a-quote/_component/quoteForm";
 import { Sparkles, ShieldCheck, CheckCircle2 } from "lucide-react";
 import ServicePage from "@/components/ui/Service/field/ServicePage";
 import IndustrialFeaturedServices from "../industries/_components/IndustrialFeatures";

@@ -121,7 +121,7 @@ export default function CityButton() {
                 return (
                   <Link
                     key={city}
-                    href={`/${slug}`}
+                    href={`/cleaning/${slug}`}
                     onClick={() => setIsOpen(false)}
                     className="flex items-center rounded-xl px-3 py-2 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 font-medium transition-colors duration-200"
                   >

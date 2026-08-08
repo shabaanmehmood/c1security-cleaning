@@ -61,7 +61,7 @@ export default function Faq({
           </div>
 
           {/* Top-Right Action Button */}
-          <Link href="/get-a-quote" className="shrink-0">
+          <Link href="/cleaning/get-a-quote" className="shrink-0">
             <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}>
               <Button
                 size="sm"
@@ -100,7 +100,7 @@ export default function Faq({
           <p className="text-xs sm:text-sm text-blue-900/70">
             Still have questions? Our team is available 24/7 to assist you.
           </p>
-          <Link href="/contacts">
+          <Link href="/cleaning/contacts">
             <Button
               variant="outline"
               size="sm"

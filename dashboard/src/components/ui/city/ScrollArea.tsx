@@ -33,7 +33,7 @@ export default function SplitScrollCard({
 
         {/* TOP RIGHT PINNED BUTTON */}
         <div className="absolute top-4 right-4 z-20">
-          <Link href="/get-a-quote">
+          <Link href="/cleaning/get-a-quote">
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}

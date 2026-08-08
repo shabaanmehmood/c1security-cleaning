@@ -129,15 +129,15 @@ export default function Navbar() {
 
         {/* Desktop Navigation */}
         <nav className="hidden lg:flex items-center gap-4 xl:gap-7 text-sm xl:text-base">
-          <Link href="/cleaning" className="group relative">
+          <Link href="/" className="group relative">
             <span
               className={`font-medium transition-colors duration-300 ${
-                pathname === "/cleaning" ? "text-blue-600" : "text-slate-700 group-hover:text-blue-600"
+                pathname === "/" ? "text-blue-600" : "text-slate-700 group-hover:text-blue-600"
               }`}
             >
-              Home
+              {`<- Home`}
             </span>
-            {pathname === "/cleaning" && (
+            {pathname === "/" && (
               <motion.span
                 layoutId="navbar-active"
                 className="absolute -bottom-2 left-0 h-[2px] w-full rounded-full bg-blue-600"

@@ -75,7 +75,7 @@ function StackedCard({
       >
         {/* Top Left Button */}
         <button
-          onClick={() => router.push(`/services/${feature.id}`)}
+          onClick={() => router.push(`/cleaning/services/${feature.id}`)}
           className="
   absolute
   right-5

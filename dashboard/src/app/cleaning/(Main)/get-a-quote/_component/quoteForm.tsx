@@ -26,7 +26,6 @@ export default function QuoteForm() {
   async function onSubmit(data: QuoteFormData) {
     try {
       const ress = await submitQuote(data);
-      console.log(ress);
       alert("Quote request submitted successfully!");
       reset();
     } catch (error) {

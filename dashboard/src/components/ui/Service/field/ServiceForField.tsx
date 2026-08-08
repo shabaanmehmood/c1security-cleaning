@@ -2,8 +2,8 @@
 
 import React, { useState } from "react";
 
-import { ServicesSection } from "@/app/(Main)/_components/ServiceSection";
-import QuoteForm from "@/app/(Main)/get-a-quote/_component/quoteForm";
+import { ServicesSection } from "@/app/cleaning/(Main)/_components/ServiceSection";
+import QuoteForm from "@/app/cleaning/(Main)/get-a-quote/_component/quoteForm";
 import { Sparkles } from "lucide-react";
 import ServicePage from "@/components/ui/Service/field/ServicePage";
 import HomeHero, { HomeHeroProps } from "@/components/ui/city/Hero";

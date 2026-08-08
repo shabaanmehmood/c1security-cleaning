@@ -133,7 +133,7 @@ export default function SwappingCards({
             <span>Swap Positions</span>
           </Button>
 
-          <Link href="/get-a-quote">
+          <Link href="/cleaning/get-a-quote">
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button
                 size="sm"

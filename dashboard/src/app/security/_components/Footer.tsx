@@ -48,14 +48,14 @@ const Footer: React.FC = () => {
         >
           <ul className="flex space-x-8 text-lg font-medium">
             <li className="relative px-3 py-1 transition-colors hover:text-yellow-400 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-yellow-400 after:transition-all after:duration-300 hover:after:w-full">
-              <Link href="/contractor">Contractor</Link>
+              <Link href="/security/contractor">Contractor</Link>
             </li>
             <li className="relative px-3 py-1 transition-colors hover:text-yellow-400 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-yellow-400 after:transition-all after:duration-300 hover:after:w-full">
-              <Link href="/guardPage">Guard</Link>
+              <Link href="/security/guardPage">Guard</Link>
             </li>
             {/* ✅ New Contact Us Link */}
             <li className="relative px-3 py-1 transition-colors hover:text-yellow-400 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-yellow-400 after:transition-all after:duration-300 hover:after:w-full">
-              <Link href="/contact">Contact Us</Link>
+              <Link href="/security/contact">Contact Us</Link>
             </li>
           </ul>
         </motion.nav>
