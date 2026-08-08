@@ -3,16 +3,16 @@ import { Mail, Phone, MapPin } from "lucide-react";
 import { FaFacebook, FaXTwitter, FaInstagram, FaLinkedin } from "react-icons/fa6";
 const footerNavigation = {
   services: [
-    { name: "Commercial Cleaning", href: "/services" },
-    { name: "Security Guarding", href: "/services" },
-    { name: "Office Maintenance", href: "/services" },
-    { name: "Industrial Sanitation", href: "/services" },
+    { name: "Commercial Cleaning", href: "/cleanin/services" },
+    { name: "Security Guarding", href: "/cleanin/services" },
+    { name: "Office Maintenance", href: "/cleanin/services" },
+    { name: "Industrial Sanitation", href: "/cleanin/services" },
   ],
   company: [
-    { name: "About Us", href: "/about" },
-    { name: "Industries", href: "/industries" },
-    { name: "Contact", href: "/contact" },
-    { name: "Get a Quote", href: "/get-a-quote" },
+    { name: "About Us", href: "/cleanin/about" },
+    { name: "Industries", href: "/cleanin/industries" },
+    { name: "Contact", href: "/cleanin/contacts" },
+    { name: "Get a Quote", href: "/cleanin/get-a-quote" },
   ],
   legal: [
     { name: "Privacy Policy", href: "#" },

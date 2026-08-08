@@ -56,7 +56,7 @@ export default function Jobs({ jobs }: JobsProps) {
 
                 <div className="shrink-0">
                   <Link
-                    href={`/career/jobs/${job.slug}`}
+                    href={`/cleaning/career/jobs/${job.slug}`}
                     className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold px-5 py-2.5 rounded-xl transition-all shadow-md shadow-blue-600/20"
                   >
                     See Details

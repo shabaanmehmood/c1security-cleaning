@@ -30,7 +30,7 @@ export default function JoinUsBanner() {
         {/* Call to Action Button */}
         <div className="pt-2">
           <Link
-            href="/career/jobs"
+            href="/cleaning/career/jobs"
             className="inline-flex items-center gap-2.5 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-bold text-base px-8 py-4 rounded-2xl shadow-lg shadow-blue-600/25 transition-all hover:scale-[1.02] active:scale-[0.98]"
           >
             <Briefcase className="w-5 h-5" />

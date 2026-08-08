@@ -54,7 +54,6 @@ const AustraliaMap: React.FC = () => {
 
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
-  // 🧠 Fetch and cache all cities ONCE
   useEffect(() => {
     const loadCities = async () => {
       try {

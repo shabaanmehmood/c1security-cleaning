@@ -1,34 +1,13 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "../globals.css";
-import RootBackground from "@/components/ui/rootbackground";
-import { AuthListener } from "@/components/auth/authListner";
-const inter = Inter({
-  subsets: ["latin"],
-});
+import React from "react";
 
-export const metadata: Metadata = {
-  title: "C1SCURITY-CLEANING",
-  description: "Professional Commercial Cleaning Services",
-  icons: {
-    icon: "/MainLogo.svg", 
-    shortcut: "/Logo.svg",
-    apple: "/main.svg",
-  },
-};
-
-export default function RootLayout({
+export default function SubLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <RootBackground/>
-        <AuthListener />
-        {children}
-      </body>
-    </html>
+    <div className="min-h-screen">
+      <main>{children}</main>
+    </div>
   );
 }

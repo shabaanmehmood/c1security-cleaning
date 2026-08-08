@@ -107,7 +107,7 @@ export default function JobSidebar({
 
           <div className="pt-5">
             <Link
-              href={`/career/jobs/${slug}/apply`}
+              href={`/cleaning/career/jobs/${slug}/apply`}
               className="group flex w-full items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 to-cyan-500 px-6 py-4 font-semibold text-white transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-500/30"
             >
               Apply Now
@@ -167,7 +167,7 @@ export default function JobSidebar({
         </p>
 
         <Link
-          href="/contacts"
+          href="/cleaning/contacts"
           className="mt-6 inline-flex items-center font-semibold text-cyan-300 hover:text-cyan-200"
         >
           Contact Recruitment

@@ -47,21 +47,8 @@ export default function Navbar() {
   const [megaMenu, setMegaMenu] = useState<"services" | "locations" | null>(null);
     const router=useRouter();
   const { user, setUser } = useAuthStore();
-  const isAuthenticated = Boolean(user);
-  const isAdmin = (user as any)?.role === "admin" || (user as any)?.customClaims?.role === "admin";
+  
 
-  const handleLogout = async () => {
-    try {
-      if (AuthService?.logout) {
-        await AuthService.logout();
-      } 
-        router.replace("/");
-  router.refresh();
-      setUser(null);
-    } catch (err) {
-      console.error("Failed to log out:", err);
-    }
-  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -129,7 +116,7 @@ export default function Navbar() {
         `}
       >
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 shrink-0 z-50">
+        <Link href="/cleaning" className="flex items-center gap-2 shrink-0 z-50">
           <Image
             src="/Logo.svg"
             alt="C1SCURITY Logo"
@@ -142,15 +129,15 @@ export default function Navbar() {
 
         {/* Desktop Navigation */}
         <nav className="hidden lg:flex items-center gap-4 xl:gap-7 text-sm xl:text-base">
-          <Link href="/" className="group relative">
+          <Link href="/cleaning" className="group relative">
             <span
               className={`font-medium transition-colors duration-300 ${
-                pathname === "/" ? "text-blue-600" : "text-slate-700 group-hover:text-blue-600"
+                pathname === "/cleaning" ? "text-blue-600" : "text-slate-700 group-hover:text-blue-600"
               }`}
             >
               Home
             </span>
-            {pathname === "/" && (
+            {pathname === "/cleaning" && (
               <motion.span
                 layoutId="navbar-active"
                 className="absolute -bottom-2 left-0 h-[2px] w-full rounded-full bg-blue-600"
@@ -175,7 +162,7 @@ export default function Navbar() {
                 {SERVICES_DATA.map((service) => (
                   <Link
                     key={service.id}
-                    href={`/services#${service.id}`}
+                    href={`/cleaning/services#${service.id}`}
                     className="flex items-center gap-2.5 rounded-xl px-2.5 py-2 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200 group/item"
                   >
                     <div className="w-8 h-8 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600 shrink-0 group-hover/item:scale-105 transition-transform">
@@ -193,7 +180,7 @@ export default function Navbar() {
                 ))}
                 <div className="col-span-2 pt-2.5 mt-1 border-t border-slate-100 flex items-center justify-between text-xs px-2">
                   <span className="text-slate-500 font-medium">ISO 9001 & TGA Accredited Sanitisation</span>
-                  <Link href="/services" className="text-blue-600 hover:text-blue-700 flex items-center gap-1 font-bold">
+                  <Link href="/cleaning/services" className="text-blue-600 hover:text-blue-700 flex items-center gap-1 font-bold">
                     View All Services <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>
@@ -221,7 +208,7 @@ export default function Navbar() {
                   {CITIES.map((city) => (
                     <Link
                       key={city.slug}
-                      href={`/${city.slug}`}
+                      href={`/cleaning/${city.slug}`}
                       className="flex items-center justify-between rounded-xl px-2.5 py-1.5 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200"
                     >
                       <span>{city.name}</span>
@@ -233,15 +220,15 @@ export default function Navbar() {
             )}
           </div>
 
-          <Link href="/industries" className="group relative">
+          <Link href="/cleaning/industries" className="group relative">
             <span
               className={`font-medium transition-colors duration-300 ${
-                pathname === "/industries" ? "text-blue-600" : "text-slate-700 group-hover:text-blue-600"
+                pathname === "/cleaning/industries" ? "text-blue-600" : "text-slate-700 group-hover:text-blue-600"
               }`}
             >
               Industries
             </span>
-            {pathname === "/industries" && (
+            {pathname === "/cleaning/industries" && (
               <motion.span
                 layoutId="navbar-active"
                 className="absolute -bottom-2 left-0 h-[2px] w-full rounded-full bg-blue-600"
@@ -250,15 +237,15 @@ export default function Navbar() {
             )}
           </Link>
 
-          <Link href="/career" className="group relative">
+          <Link href="/cleaning/career" className="group relative">
             <span
               className={`font-medium transition-colors duration-300 ${
-                pathname === "/careers" ? "text-blue-600" : "text-slate-700 group-hover:text-blue-600"
+                pathname === "/cleaning/careers" ? "text-blue-600" : "text-slate-700 group-hover:text-blue-600"
               }`}
             >
               Careers
             </span>
-            {pathname === "/career" && (
+            {pathname === "/cleaning/career" && (
               <motion.span
                 layoutId="navbar-active"
                 className="absolute -bottom-2 left-0 h-[2px] w-full rounded-full bg-blue-600"
@@ -267,15 +254,15 @@ export default function Navbar() {
             )}
           </Link>
 
-          <Link href="/about" className="group relative">
+          <Link href="/cleaning/about" className="group relative">
             <span
               className={`font-medium transition-colors duration-300 ${
-                pathname === "/about" ? "text-blue-600" : "text-slate-700 group-hover:text-blue-600"
+                pathname === "/cleaning/about" ? "text-blue-600" : "text-slate-700 group-hover:text-blue-600"
               }`}
             >
               About
             </span>
-            {pathname === "/about" && (
+            {pathname === "/cleaning/about" && (
               <motion.span
                 layoutId="navbar-active"
                 className="absolute -bottom-2 left-0 h-[2px] w-full rounded-full bg-blue-600"
@@ -289,53 +276,11 @@ export default function Navbar() {
         <div className="hidden lg:flex items-center gap-2 xl:gap-3 text-xs xl:text-sm">
           <CityButton />
 
-          {isAuthenticated ? (
-            <>
-              {isAdmin ? (
-                <Link
-                  href="/admin"
-                  className="flex items-center gap-1.5 rounded-full bg-purple-50 px-3 xl:px-4 py-1.5 xl:py-2 font-medium text-purple-700 hover:bg-purple-100 transition-colors border border-purple-200"
-                >
-                  <Shield className="w-3.5 h-3.5 text-purple-600" />
-                  Admin
-                </Link>
-              ) : (
-                <Link
-                  href="/"
-                  className="flex items-center gap-1.5 rounded-full bg-slate-100 px-3 xl:px-4 py-1.5 xl:py-2 font-medium text-slate-700 hover:bg-slate-200 transition-colors"
-                >
-                  <UserIcon className="w-3.5 h-3.5 text-slate-500" />
-                  {user?.name ? user.name.split(" ")[0] : "Account"}
-                </Link>
-              )}
-
-              <button
-                onClick={handleLogout}
-                className="px-2 xl:px-3 py-1.5 font-medium text-slate-500 hover:text-red-600 transition-colors"
-              >
-                Log Out
-              </button>
-            </>
-          ) : (
-            <>
-              <Link
-                href="/login"
-                className="px-2.5 xl:px-3.5 py-1.5 font-medium text-slate-700 hover:text-blue-600 transition-colors"
-              >
-                Log In
-              </Link>
-
-              <Link
-                href="/signup"
-                className="rounded-full border border-slate-300 px-3 xl:px-4 py-1.5 xl:py-2 font-medium text-slate-700 hover:border-blue-600 hover:text-blue-600 transition-colors"
-              >
-                Sign Up
-              </Link>
-            </>
-          )}
+          
+            
 
           <Link
-            href="/get-a-quote"
+            href="/cleaning/get-a-quote"
             className="
               shrink-0
               rounded-full
@@ -395,18 +340,18 @@ export default function Navbar() {
             >
               <nav className="flex flex-col gap-4">
                 <Link
-                  href="/"
+                  href="/cleaning"
                   className={`text-lg font-medium transition-colors ${
-                    pathname === "/" ? "text-blue-600" : "text-slate-700"
+                    pathname === "/cleaning" ? "text-blue-600" : "text-slate-700"
                   }`}
                 >
                   Home
                 </Link>
 
                 <Link
-                  href="/services"
+                  href="/cleaning/services"
                   className={`text-lg font-medium transition-colors flex items-center justify-between ${
-                    pathname.startsWith("/services") ? "text-blue-600" : "text-slate-700"
+                    pathname.startsWith("/cleaning/services") ? "text-blue-600" : "text-slate-700"
                   }`}
                 >
                   <span>Services</span>
@@ -414,9 +359,9 @@ export default function Navbar() {
                 </Link>
 
                 <Link
-                  href="/industries"
+                  href="/cleaning/industries"
                   className={`text-lg font-medium transition-colors ${
-                    pathname === "/industries" ? "text-blue-600" : "text-slate-700"
+                    pathname === "/cleaning/industries" ? "text-blue-600" : "text-slate-700"
                   }`}
                 >
                   Industries
@@ -430,7 +375,7 @@ export default function Navbar() {
                     {CITIES.map((c) => (
                       <Link
                         key={c.slug}
-                        href={`/${c.slug}`}
+                        href={`/cleaning/${c.slug}`}
                         className="flex items-center rounded-xl px-3 py-2 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 font-medium transition-colors duration-200"
                       >
                         {c.name}
@@ -440,18 +385,18 @@ export default function Navbar() {
                 </div>
 
                 <Link
-                  href="/career"
+                  href="/cleaning/career"
                   className={`text-lg font-medium transition-colors ${
-                    pathname === "/careers" ? "text-blue-600" : "text-slate-700"
+                    pathname === "/cleaning/careers" ? "text-blue-600" : "text-slate-700"
                   }`}
                 >
                   Careers
                 </Link>
 
                 <Link
-                  href="/about"
+                  href="/cleaning/about"
                   className={`text-lg font-medium transition-colors ${
-                    pathname === "/about" ? "text-blue-600" : "text-slate-700"
+                    pathname === "/cleaning/about" ? "text-blue-600" : "text-slate-700"
                   }`}
                 >
                   About
@@ -465,55 +410,9 @@ export default function Navbar() {
                   <CityButton />
                 </div>
 
-                {isAuthenticated ? (
-                  <div className="flex flex-col gap-2">
-                    {isAdmin ? (
-                      <Link
-                        href="/admin"
-                        className="flex items-center justify-center gap-2 rounded-xl border border-purple-200 bg-purple-50 py-2.5 font-medium text-purple-700 hover:bg-purple-100 transition-colors"
-                      >
-                        <Shield className="w-4 h-4 text-purple-600" />
-                        Admin Dashboard
-                      </Link>
-                    ) : (
-                      <Link
-                        href="/"
-                        className="flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-slate-50 py-2.5 font-medium text-slate-700 hover:bg-slate-100 transition-colors"
-                      >
-                        <UserIcon className="w-4 h-4 text-slate-500" />
-                        {user?.name || "User Dashboard"}
-                      </Link>
-                    )}
-
-                    <button
-                      onClick={handleLogout}
-                      className="flex items-center justify-center gap-2 rounded-xl border border-red-200 bg-red-50 py-2.5 font-medium text-red-600 hover:bg-red-100 transition-colors"
-                    >
-                      <LogOut className="w-4 h-4" />
-                      Log Out
-                    </button>
-                  </div>
-                ) : (
-                  <div className="grid grid-cols-2 gap-3">
-                    <Link
-                      href="/login"
-                      className="flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-slate-50 py-2.5 font-medium text-slate-700 hover:bg-slate-100 transition-colors"
-                    >
-                      <LogIn className="w-4 h-4 text-slate-500" />
-                      Log In
-                    </Link>
-                    <Link
-                      href="/signup"
-                      className="flex items-center justify-center gap-2 rounded-xl border border-blue-200 bg-blue-50 py-2.5 font-medium text-blue-600 hover:bg-blue-100 transition-colors"
-                    >
-                      <UserPlus className="w-4 h-4 text-blue-600" />
-                      Sign Up
-                    </Link>
-                  </div>
-                )}
-
+              
                 <Link
-                  href="/get-a-quote"
+                  href="/cleaning/get-a-quote"
                   className="w-full text-center rounded-full bg-blue-600 py-3 font-semibold text-white shadow-lg shadow-blue-600/20 hover:bg-blue-700"
                 >
                   Get a Quote

@@ -120,7 +120,7 @@ export default function JobHero({
               className="mt-12 flex flex-wrap gap-5"
             >
               <Link
-                href={`/career/jobs/${slug}/apply`}
+                href={`/cleaning/career/jobs/${slug}/apply`}
                 className="group inline-flex items-center rounded-2xl bg-blue-600 px-8 py-4 font-semibold text-white transition-all duration-300 hover:-translate-y-1 hover:bg-blue-700 hover:shadow-xl hover:shadow-blue-500/25"
               >
                 Apply Now
@@ -189,7 +189,7 @@ export default function JobHero({
               />
 
               <Link
-                href={`/career/jobs/${slug}/apply`}
+                href={`/cleaning/career/jobs/${slug}/apply`}
                 className="mt-10 flex w-full items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 to-cyan-500 py-4 font-semibold text-white transition hover:scale-[1.02]"
               >
                 Apply for this Position
