@@ -1,5 +1,5 @@
 import Footer from "@/components/ui/footer";
-import Navbar from "@/app/(Main)/_components/_homeHeroComponent/Navbar";
+import Navbar from "@/app/cleaning/(Main)/_components/_homeHeroComponent/Navbar";
 export default function MainLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen flex flex-col">

@@ -2,7 +2,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import FeatureCard from "../../../components/ui/featurecard";
+import FeatureCard from "@/components/ui/featurecard";
 import { ShieldCheck, Sparkles, Clock } from "lucide-react"; // swap for your actual icons
 
 const features = [
