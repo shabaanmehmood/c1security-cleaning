@@ -1,17 +1,40 @@
 import "server-only";
-import { initializeApp, getApps, cert } from "firebase-admin/app";
-import { getFirestore } from "firebase-admin/firestore";
-import { getAuth } from "firebase-admin/auth";
+import { initializeApp, getApps, cert, App } from "firebase-admin/app";
+import { getFirestore, Firestore } from "firebase-admin/firestore";
+import { getAuth, Auth } from "firebase-admin/auth";
 
-if (!getApps().length) {
-  initializeApp({
+function initAdmin(): App {
+  if (getApps().length > 0) {
+    return getApps()[0];
+  }
+
+  const projectId = process.env.FIREBASE_PROJECT_ID;
+  const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
+  let privateKey = process.env.FIREBASE_PRIVATE_KEY;
+
+  if (!projectId || !clientEmail || !privateKey) {
+    console.error("❌ Firebase Admin Initialization Failed: Missing process.env variables!", {
+      projectId: !!projectId,
+      clientEmail: !!clientEmail,
+      privateKey: !!privateKey,
+    });
+  }
+
+  // Handle both double-escaped strings and quotes properly
+  if (privateKey) {
+    privateKey = privateKey.replace(/^"(.*)"$/, "$1").replace(/\\n/g, "\n");
+  }
+
+  return initializeApp({
     credential: cert({
-      projectId: process.env.FIREBASE_PROJECT_ID,
-      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-      privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n"),
+      projectId,
+      clientEmail,
+      privateKey,
     }),
   });
 }
 
-export const adminDb = getFirestore();
-export const adminAuth = getAuth();
+const adminApp = initAdmin();
+
+export const adminDb: Firestore = getFirestore(adminApp);
+export const adminAuth: Auth = getAuth(adminApp);

@@ -5,6 +5,7 @@ import { ApplicationExtractedData } from "@/validators/ApplicationForm";
 import { updateApplicationStatus } from "@/lib/updateApplicatinStatus";
 import { deleteApplication } from "@/lib/rejectApplications";
 import { useRouter } from "next/navigation";
+import { ArrowLeft } from "lucide-react";
 
 interface ApplicationProps {
   application: ApplicationExtractedData;
@@ -26,6 +27,7 @@ export default function Application({ application }: ApplicationProps) {
     await deleteApplication(application.userId);
     router.push("/admin/applications"); // or wherever your list page is
   };
+
   const statusColor =
     application.status === "accepted"
       ? "bg-green-100 text-green-700"
@@ -35,6 +37,17 @@ export default function Application({ application }: ApplicationProps) {
 
   return (
     <div className="mx-auto max-w-6xl rounded-2xl border border-gray-200 bg-white p-8 shadow-sm">
+      {/* Back Button */}
+      <div className="mb-6">
+        <button
+          onClick={() => router.back()}
+          className="inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-gray-50 px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100 hover:text-gray-900"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          <span>Back</span>
+        </button>
+      </div>
+
       {/* Header */}
       <div className="mb-8 flex flex-col gap-6 border-b pb-8 lg:flex-row lg:items-center lg:justify-between">
         <div>
@@ -43,19 +56,16 @@ export default function Application({ application }: ApplicationProps) {
           </h1>
 
           <p className="mt-2 text-gray-600">
-            <span className="font-semibold">Job:</span>{" "}
-            {application.jobSlug}
+            <span className="font-semibold">Job:</span> {application.jobSlug}
           </p>
 
           <p className="text-gray-600">
-            <span className="font-semibold">Job ID:</span>{" "}
-            {application.jobId}
+            <span className="font-semibold">Job ID:</span> {application.jobId}
           </p>
 
           {application.createdAt && (
             <p className="mt-2 text-sm text-gray-500">
-              Applied on{" "}
-              {new Date(application.createdAt).toLocaleString()}
+              Applied on {new Date(application.createdAt).toLocaleString()}
             </p>
           )}
 
@@ -67,39 +77,41 @@ export default function Application({ application }: ApplicationProps) {
         </div>
 
         <div className="flex flex-wrap gap-3">
-  <a
-    href={`https://docs.google.com/gview?embedded=true&url=${encodeURIComponent(application.resumeUrl)}`}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="rounded-lg bg-blue-600 px-5 py-3 font-medium text-white transition hover:bg-blue-700"
-  >
-    View Resume
-  </a>
+          <a
+            href={`https://docs.google.com/gview?embedded=true&url=${encodeURIComponent(
+              application.resumeUrl
+            )}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded-lg bg-blue-600 px-5 py-3 font-medium text-white transition hover:bg-blue-700"
+          >
+            View Resume
+          </a>
 
-  <a
-    href={application.resumeUrl}
-    download
-    className="rounded-lg bg-slate-700 px-5 py-3 font-medium text-white transition hover:bg-slate-800"
-  >
-    Download Resume
-  </a>
+          <a
+            href={application.resumeUrl}
+            download
+            className="rounded-lg bg-slate-700 px-5 py-3 font-medium text-white transition hover:bg-slate-800"
+          >
+            Download Resume
+          </a>
 
-  <button
-    onClick={handleAccept}
-    disabled={application.status === "accepted"}
-    className="rounded-lg bg-green-600 px-5 py-3 font-medium text-white transition hover:bg-green-700 disabled:cursor-not-allowed disabled:opacity-50"
-  >
-    Accept
-  </button>
+          <button
+            onClick={handleAccept}
+            disabled={application.status === "accepted"}
+            className="rounded-lg bg-green-600 px-5 py-3 font-medium text-white transition hover:bg-green-700 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            Accept
+          </button>
 
-  <button
-    onClick={handleReject}
-    disabled={application.status === "rejected"}
-    className="rounded-lg bg-red-600 px-5 py-3 font-medium text-white transition hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-50"
-  >
-    Reject
-  </button>
-</div>
+          <button
+            onClick={handleReject}
+            disabled={application.status === "rejected"}
+            className="rounded-lg bg-red-600 px-5 py-3 font-medium text-white transition hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            Reject
+          </button>
+        </div>
       </div>
 
       {/* Personal Information */}
@@ -119,20 +131,12 @@ export default function Application({ application }: ApplicationProps) {
 
         <Info
           label="Address Line 2"
-          value={
-            application.addressInformation.addressLine2 || "-"
-          }
+          value={application.addressInformation.addressLine2 || "-"}
         />
 
-        <Info
-          label="City"
-          value={application.addressInformation.city}
-        />
+        <Info label="City" value={application.addressInformation.city} />
 
-        <Info
-          label="State"
-          value={application.addressInformation.state}
-        />
+        <Info label="State" value={application.addressInformation.state} />
 
         <Info
           label="Postcode"
@@ -202,13 +206,9 @@ interface SectionProps {
 function Section({ title, children }: SectionProps) {
   return (
     <section className="mb-10">
-      <h2 className="mb-5 text-2xl font-semibold text-gray-900">
-        {title}
-      </h2>
+      <h2 className="mb-5 text-2xl font-semibold text-gray-900">{title}</h2>
 
-      <div className="grid gap-5 md:grid-cols-2">
-        {children}
-      </div>
+      <div className="grid gap-5 md:grid-cols-2">{children}</div>
     </section>
   );
 }
@@ -221,9 +221,7 @@ interface InfoProps {
 function Info({ label, value }: InfoProps) {
   return (
     <div>
-      <p className="mb-2 text-sm font-medium text-gray-500">
-        {label}
-      </p>
+      <p className="mb-2 text-sm font-medium text-gray-500">{label}</p>
 
       <div className="rounded-lg border border-gray-200 bg-gray-50 p-4">
         {value || "-"}
@@ -240,9 +238,7 @@ interface TextBlockProps {
 function TextBlock({ title, text }: TextBlockProps) {
   return (
     <div>
-      <h2 className="mb-3 text-2xl font-semibold text-gray-900">
-        {title}
-      </h2>
+      <h2 className="mb-3 text-2xl font-semibold text-gray-900">{title}</h2>
 
       <div className="min-h-[120px] whitespace-pre-wrap rounded-lg border border-gray-200 bg-gray-50 p-5">
         {text || "No information provided."}

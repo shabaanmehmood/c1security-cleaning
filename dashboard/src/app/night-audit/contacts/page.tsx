@@ -1,9 +1,9 @@
 import React from 'react'
-import HomePage from './_components/home'
+import Contact from '../_component/contacts'
 
 function page() {
   return (
-    <HomePage/>
+    <Contact/>
   )
 }
 

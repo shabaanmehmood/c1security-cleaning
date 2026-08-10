@@ -108,7 +108,7 @@ export default function Home() {
             </p>
 
             <div className="mt-8 flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 justify-center sm:justify-start">
-              <Link href="/get-a-quote" className="w-full sm:w-auto">
+              <Link href="/cleaning/get-a-quote" className="w-full sm:w-auto">
                 <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
                   <Button
                     size="lg"
@@ -119,7 +119,7 @@ export default function Home() {
                 </motion.div>
               </Link>
 
-              <Link href="/contact" className="w-full sm:w-auto">
+              <Link href="/cleaning/contacts" className="w-full sm:w-auto">
                 <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
                   <Button
                     size="lg"

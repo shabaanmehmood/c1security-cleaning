@@ -3,7 +3,7 @@ import { adminDb } from "./fireBase-Admin";
 import { DocumentData } from "firebase-admin/firestore";
 
 function formatTimestamp(value: any): string {
-  if (value?.toDate) {
+  if (value?.toDate && typeof value.toDate === "function") {
     return value.toDate().toISOString();
   }
 
@@ -22,18 +22,17 @@ export async function allJob(): Promise<Job[]> {
       .get();
 
     return snapshot.docs.map((doc) => {
-      const data = doc.data() as DocumentData &
-        Omit<Job, "createdAt" | "expiresAt">;
+      const data = doc.data() as DocumentData;
 
       return {
-        ...data,
+        ...(data as Omit<Job, "id" | "createdAt" | "expiresAt">),
         id: doc.id,
-        createdAt: formatTimestamp((doc.data() as DocumentData).createdAt),
-        expiresAt: formatTimestamp((doc.data() as DocumentData).expiresAt),
-      };
+        createdAt: formatTimestamp(data.createdAt),
+        expiresAt: formatTimestamp(data.expiresAt),
+      } as Job;
     });
   } catch (error) {
-    console.error("Error fetching jobs:", error);
+    console.error("Error fetching jobs from Firestore:", error);
     return [];
   }
 }

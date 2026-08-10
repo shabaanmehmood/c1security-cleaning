@@ -3,6 +3,7 @@ import {
   BriefcaseBusiness,
   FileText,
   ArrowRight,
+  ArrowLeft,
   ShieldCheck,
   CircleCheckBig,
 } from "lucide-react";
@@ -11,15 +12,27 @@ export default function AdminDashboard() {
   return (
     <main className="min-h-screen bg-slate-100">
       <div className="mx-auto max-w-7xl px-6 py-10">
-
+        
         {/* Header */}
         <div className="mb-12">
-          <div className="inline-flex items-center gap-3 rounded-full bg-blue-100 px-4 py-2 text-blue-700">
-            <ShieldCheck className="h-5 w-5" />
-            <span className="font-medium">Admin Dashboard</span>
+          
+          {/* Go Back Button & Admin Badge */}
+          <div className="flex items-center gap-3 mb-6">
+            <Link
+              href="/"
+              className="inline-flex items-center gap-1.5 rounded-full bg-white px-3.5 py-1.5 text-sm font-medium text-slate-700 shadow-sm border border-slate-200 transition-colors hover:bg-slate-50 hover:text-slate-900"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              <span>Back</span>
+            </Link>
+
+            <div className="inline-flex items-center gap-2 rounded-full bg-blue-100 px-3.5 py-1.5 text-sm font-medium text-blue-700">
+              <ShieldCheck className="h-4 w-4" />
+              <span>Admin Dashboard</span>
+            </div>
           </div>
 
-          <h1 className="mt-5 text-5xl font-bold tracking-tight">
+          <h1 className="text-5xl font-bold tracking-tight text-slate-900">
             Welcome Admin 👋
           </h1>
 

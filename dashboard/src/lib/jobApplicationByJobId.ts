@@ -17,7 +17,7 @@ export async function getApplicationById(
 
     const doc = snapshot.docs[0];
     const data = doc.data() as ApplicationExtractedData;
-
+      console.log(data);
     return {
       ...data,
     };

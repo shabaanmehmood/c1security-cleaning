@@ -118,7 +118,7 @@ export default function Navbar() {
         {/* Logo */}
         <Link href="/cleaning" className="flex items-center gap-2 shrink-0 z-50">
           <Image
-            src="/Logo.svg"
+            src="/C1_navbar_logo.png"
             alt="C1SECURITY Logo"
             width={140}
             height={36}

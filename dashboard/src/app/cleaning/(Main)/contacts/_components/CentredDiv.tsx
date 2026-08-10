@@ -16,9 +16,9 @@ export const detailedContactData: ContactProps = {
   title: "Enterprise Solutions & Global Corporate Operations Headquarters",
   description:
     "Our central operations hub connects business leaders, strategic partners, and enterprise clients worldwide. Whether you are exploring custom platform deployments, enterprise-grade security integrations, or seeking dedicated support from our senior engineering leads, our cross-functional team is available round-the-clock to assist you with tailored solutions.",
-  phoneNumber: "+1 (800) 555-0199 / Ext. 402",
-  email: "enterprise.global-support@company.example.com",
-  address: "100 Innovation Boulevard, Suite 500, Technology District, San Francisco, CA 94105, USA",
+  phoneNumber: "+61 487 190 645",
+  email: "tac.solutions.inc@gmail.com",
+  address: "10 Sanur street marsden 4132 Queensland, Australia",
 };
 
 export default function Contact({

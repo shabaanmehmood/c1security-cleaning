@@ -31,7 +31,7 @@ const Footer: React.FC = () => {
           className="flex items-center justify-center"
         >
           <Image
-            src="/tac-icon.png"
+            src="/C1_navbar_logo_white.png"
             alt="Logo"
             width={160}
             height={120}

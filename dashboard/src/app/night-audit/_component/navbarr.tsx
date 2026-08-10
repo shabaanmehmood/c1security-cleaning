@@ -1,11 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { RiMenuFill } from "react-icons/ri";
+import { Home, Info, PhoneCall, FileText } from "lucide-react";
+
 import {
   Sheet,
   SheetContent,
@@ -13,27 +15,22 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Button } from "./ui/button";
+import { Button } from "../../security/_components/ui/button";
 
-const NAV_LINKS = [{ href: "/", label: "<- Home", icon: "🏠" },
-  { href: "/security/contractor", label: "Contractor", icon: "🧰" },
-  { href: "/security/guardPage", label: "Guard", icon: "🛡️" },
+const NAV_LINKS = [
+  { href: "/", label: "<- Home", icon: Home },
+  { href: "/night-audit/about", label: "About", icon: Info },
+  { href: "/night-audit/contacts", label: "Contact", icon: PhoneCall },
 ];
 
 const Navbar = () => {
-  const [isMounted, setIsMounted] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
   const pathname = usePathname();
   const { scrollY, scrollYProgress } = useScroll();
 
-  // Prevent hydration mismatch
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  // Handle auto-closing menu on screen resize
+  // Close mobile drawer on desktop resize
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 640) setIsOpen(false);
@@ -42,7 +39,7 @@ const Navbar = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Optimized framer-motion scroll handler (doesn't trigger React state re-renders on every scroll pixel)
+  // Smooth navbar hiding on scroll down, revealing on scroll up
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious() ?? 0;
     if (latest > previous && latest > 80) {
@@ -51,8 +48,6 @@ const Navbar = () => {
       setHidden(false);
     }
   });
-
-  if (!isMounted) return null;
 
   return (
     <motion.nav
@@ -63,14 +58,14 @@ const Navbar = () => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
         {/* Brand Logo */}
-        <Link href="/security" className="flex items-center">
+        <Link href="/night-audit" className="flex items-center group">
           <Image
             src="/C1_navbar_logo.png"
             alt="Control-1 Security Logo"
             width={120}
             height={40}
             priority
-            className="h-8 w-auto object-contain"
+            className="h-8 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
           />
         </Link>
 
@@ -82,19 +77,25 @@ const Navbar = () => {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`o-outfit text-lg font-semibold transition-colors duration-200 ${isActive
-                    ? "text-blue-700"
-                    : "text-blue-950 hover:text-blue-700"
-                  }`}
+                className={`o-outfit text-base font-semibold transition-colors duration-200 relative py-1 ${
+                  isActive ? "text-blue-700" : "text-slate-700 hover:text-blue-700"
+                }`}
               >
                 {link.label}
+                {isActive && (
+                  <motion.span
+                    layoutId="activeNavIndicator"
+                    className="absolute bottom-0 left-0 right-0 h-[2px] bg-blue-700 rounded-full"
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  />
+                )}
               </Link>
             );
           })}
 
-          <Link href="/security/contact">
+          <Link href="/night-audit/get-a-qoutes">
             <Button className="bg-blue-800 hover:bg-blue-700 text-white o-outfit text-base px-5 py-2 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md cursor-pointer">
-              Contact Us
+              Get a Quote
             </Button>
           </Link>
         </div>
@@ -102,7 +103,7 @@ const Navbar = () => {
         {/* Mobile Navigation Trigger */}
         <div className="sm:hidden flex items-center">
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
-            <SheetTrigger className="p-2 rounded-lg text-blue-950 hover:bg-slate-100 hover:text-blue-700 transition-colors focus:outline-none">
+            <SheetTrigger className="p-2 rounded-lg text-slate-800 hover:bg-slate-100 hover:text-blue-700 transition-colors focus:outline-none">
               <RiMenuFill size={26} />
             </SheetTrigger>
 
@@ -114,45 +115,47 @@ const Navbar = () => {
                 <SheetHeader className="text-left pb-6 border-b border-slate-100">
                   <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
                   <Link
-                    href="/security"
+                    href="/night-audit"
                     onClick={() => setIsOpen(false)}
                     className="inline-block"
                   >
                     <Image
-                      src="/tac-logo.png"
+                      src="/C1_navbar_logo.png"
                       alt="Control-1 Security Logo"
                       width={130}
                       height={45}
-                      className="h-10 w-auto object-contain" // 👈 Added h-10 and object-contain
+                      className="h-10 w-auto object-contain"
                     />
-                    </Link>
+                  </Link>
                 </SheetHeader>
 
                 {/* Mobile Links */}
-                <div className="flex flex-col gap-3 mt-6">
+                <div className="flex flex-col gap-2 mt-6">
                   {NAV_LINKS.map((link) => {
                     const isActive = pathname === link.href;
+                    const Icon = link.icon;
                     return (
                       <Link
                         key={link.href}
                         href={link.href}
                         onClick={() => setIsOpen(false)}
-                        className={`o-outfit text-lg font-semibold px-3 py-2 rounded-lg flex items-center gap-3 transition-all duration-200 ${isActive
-                            ? "bg-blue-100/70 text-blue-800"
-                            : "text-blue-950 hover:bg-slate-100 hover:text-blue-700 hover:translate-x-1"
-                          }`}
+                        className={`o-outfit text-base font-semibold px-3 py-2.5 rounded-xl flex items-center gap-3 transition-all duration-200 ${
+                          isActive
+                            ? "bg-blue-100/70 text-blue-800 font-bold"
+                            : "text-slate-700 hover:bg-slate-100 hover:text-blue-700 hover:translate-x-1"
+                        }`}
                       >
-                        <span>{link.icon}</span>
+                        <Icon className="w-5 h-5 opacity-80" />
                         <span>{link.label}</span>
                       </Link>
                     );
                   })}
 
-                  <div className="my-2 border-t border-slate-200/60" />
+                  <div className="my-3 border-t border-slate-200/60" />
 
-                  <Link href="/security/contact" onClick={() => setIsOpen(false)}>
-                    <Button className="w-full bg-blue-800 hover:bg-blue-700 text-white text-lg py-5 rounded-xl shadow-md transition-all o-outfit">
-                      Contact Us
+                  <Link href="/night-audit/get-a-qoutes" onClick={() => setIsOpen(false)}>
+                    <Button className="w-full bg-blue-800 hover:bg-blue-700 text-white text-base py-5 rounded-xl shadow-md transition-all o-outfit">
+                      Get a Quote
                     </Button>
                   </Link>
                 </div>
@@ -169,7 +172,7 @@ const Navbar = () => {
 
       {/* Animated Scroll Progress Indicator */}
       <motion.div
-        className="h-[2px] bg-indigo-600 origin-left"
+        className="h-[2px] bg-blue-600 origin-left"
         style={{ scaleX: scrollYProgress }}
       />
     </motion.nav>

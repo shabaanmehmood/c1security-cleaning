@@ -14,11 +14,12 @@ export default function LayoutContent({
   // Checks if the route starts with /security or /cleaning
   // This handles: /security, /security/, /security/sub-page, etc.
   const shouldHideNavbarAndFooter =
-    pathname.startsWith("/security") || pathname.startsWith("/cleaning");
+    pathname.startsWith("/security") || pathname.startsWith("/cleaning")|| pathname.startsWith("/night-audit");
+  const shouldHideNavbar=pathname.startsWith("/security") || pathname.startsWith("/cleaning")||pathname.startsWith("/admin")|| pathname.startsWith("/night-audit") ;
 
   return (
     <>
-      {!shouldHideNavbarAndFooter && <Navbar />}
+      {!shouldHideNavbar && <Navbar />}
 
       <div
         className={

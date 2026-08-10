@@ -14,9 +14,9 @@ export const metadata: Metadata = {
   title: "C1SCURITY-CLEANING",
   description: "Professional Commercial Cleaning Services",
   icons: {
-    icon: "/MainLogo.svg",
-    shortcut: "/Logo.svg",
-    apple: "/main.svg",
+    icon: "/favvvvvv.png",
+    shortcut: "/favvvvvv.png",
+    apple: "/favvvvvv.png",
   },
 };
 
@@ -28,7 +28,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <RootBackground />
         <AuthListener />
         <LayoutContent>{children}</LayoutContent>
       </body>

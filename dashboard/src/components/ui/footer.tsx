@@ -3,16 +3,16 @@ import { Mail, Phone, MapPin } from "lucide-react";
 import { FaFacebook, FaXTwitter, FaInstagram, FaLinkedin } from "react-icons/fa6";
 const footerNavigation = {
   services: [
-    { name: "Commercial Cleaning", href: "/cleanin/services" },
-    { name: "Security Guarding", href: "/cleanin/services" },
-    { name: "Office Maintenance", href: "/cleanin/services" },
-    { name: "Industrial Sanitation", href: "/cleanin/services" },
+    { name: "Commercial Cleaning", href: "/cleaning/services" },
+    { name: "Security Guarding", href: "/cleaning/services" },
+    { name: "Office Maintenance", href: "/cleaning/services" },
+    { name: "Industrial Sanitation", href: "/cleaning/services" },
   ],
   company: [
-    { name: "About Us", href: "/cleanin/about" },
-    { name: "Industries", href: "/cleanin/industries" },
-    { name: "Contact", href: "/cleanin/contacts" },
-    { name: "Get a Quote", href: "/cleanin/get-a-quote" },
+    { name: "About Us", href: "/cleaning/about" },
+    { name: "Industries", href: "/cleaning/industries" },
+    { name: "Contact", href: "/cleaning/contacts" },
+    { name: "Get a Quote", href: "/cleaning/get-a-quote" },
   ],
   legal: [
     { name: "Privacy Policy", href: "#" },
@@ -46,15 +46,15 @@ export default function Footer() {
             <div className="space-y-3 text-sm text-slate-400">
               <div className="flex items-center gap-3">
                 <MapPin className="h-4 w-4 text-blue-500 shrink-0" />
-                <span>123 Business Way, Suite 100, City, ST 12345</span>
+                <span>10 Sanur street marsden 4132 Queensland, Australia</span>
               </div>
               <div className="flex items-center gap-3">
                 <Phone className="h-4 w-4 text-blue-500 shrink-0" />
-                <span>+1 (555) 000-0000</span>
+                <span>+61 487 190 645</span>
               </div>
               <div className="flex items-center gap-3">
                 <Mail className="h-4 w-4 text-blue-500 shrink-0" />
-                <span>info@c1scuritycleaning.com</span>
+                <span>tac.solutions.inc@gmail.com</span>
               </div>
             </div>
           </div>
