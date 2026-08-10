@@ -340,9 +340,9 @@ export default function Navbar() {
             >
               <nav className="flex flex-col gap-4">
                 <Link
-                  href="/cleaning"
+                  href="/"
                   className={`text-lg font-medium transition-colors ${
-                    pathname === "/cleaning" ? "text-blue-600" : "text-slate-700"
+                    pathname === "/" ? "text-blue-600" : "text-slate-700"
                   }`}
                 >
                   Home
