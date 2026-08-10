@@ -12,11 +12,81 @@ import {
   FaEnvelope,
   FaMapMarkerAlt,
 } from "react-icons/fa";
+import {
+  ShieldCheck,
+  Radar,
+  KeyRound,
+  Building2,
+  PartyPopper,
+  Zap,
+  LucideIcon,
+} from "lucide-react";
 
 import { Button } from "../../_components/ui/button";
 import { Input } from "../../_components/ui/input";
 import { Label } from "../../_components/ui/label";
 import { Textarea } from "../../_components/ui/textarea";
+
+// Type definition for categories
+interface ServiceCategory {
+  title: string;
+  icon: LucideIcon;
+  tags: string[];
+}
+
+const SERVICE_CATEGORIES: ServiceCategory[] = [
+  {
+    title: "Site & Asset Security",
+    icon: ShieldCheck,
+    tags: [
+      "Asset Protection",
+      "Construction Site Security",
+      "Industrial Security",
+      "Warehouse Security",
+      "Vacant Property Security",
+    ],
+  },
+  {
+    title: "Mobile Security",
+    icon: Radar,
+    tags: ["Mobile Patrols", "Random Patrols", "Lock-Up & Unlock", "Alarm Response"],
+  },
+  {
+    title: "Access & Gatehouse",
+    icon: KeyRound,
+    tags: [
+      "Gatehouse Security",
+      "Access Control",
+      "Visitor Management",
+      "Vehicle & Contractor Management",
+    ],
+  },
+  {
+    title: "Commercial Security",
+    icon: Building2,
+    tags: ["Corporate Security", "Retail Security", "Concierge Security", "CCTV Monitoring"],
+  },
+  {
+    title: "Event & Crowd Security",
+    icon: PartyPopper,
+    tags: [
+      "Event Security",
+      "Crowd Control",
+      "Entry Management",
+      "VIP & Back-of-House Security",
+    ],
+  },
+  {
+    title: "Flexible Security",
+    icon: Zap,
+    tags: [
+      "Ad Hoc Security",
+      "Emergency Security",
+      "Short-Notice Security",
+      "Temporary Security Coverage",
+    ],
+  },
+];
 
 const contactSchema = z.object({
   firstname: z.string().min(2, "First name is required"),
@@ -26,6 +96,8 @@ const contactSchema = z.object({
     .string()
     .min(10, "Phone number is too short")
     .max(15, "Phone number is too long"),
+  serviceCategory: z.string().min(1, "Please select a service category"),
+  specificService: z.string().optional(),
   subject: z.string().min(3, "Subject is required"),
   message: z.string().min(5, "Message is too short"),
 });
@@ -38,11 +110,18 @@ const ContactSection = () => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
     reset,
   } = useForm<ContactFormValues>({
     resolver: zodResolver(contactSchema),
   });
+
+  // Watch selected category to reactively populate tags/sub-services
+  const selectedCategoryTitle = watch("serviceCategory");
+  const selectedCategory = SERVICE_CATEGORIES.find(
+    (cat) => cat.title === selectedCategoryTitle
+  );
 
   const onSubmit = (data: ContactFormValues) => {
     const serviceID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID as string;
@@ -120,7 +199,7 @@ const ContactSection = () => {
                 <span>
                   <strong>Email:</strong>{" "}
                   <a
-                    href="mailto:support@secureforce.com"
+                    href="mailto:tac.solutions.inc@gmail.com"
                     className="underline text-blue-600"
                   >
                     tac.solutions.inc@gmail.com
@@ -200,6 +279,45 @@ const ContactSection = () => {
                 </p>
               )}
             </div>
+
+            {/* 🏷️ Service Category Selection */}
+            <div className="mb-6">
+              <Label className="mb-2 o-outfit">Service Category</Label>
+              <select
+                {...register("serviceCategory")}
+                className="w-full flex h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                <option value="">Select a Category...</option>
+                {SERVICE_CATEGORIES.map((cat) => (
+                  <option key={cat.title} value={cat.title}>
+                    {cat.title}
+                  </option>
+                ))}
+              </select>
+              {errors.serviceCategory && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.serviceCategory.message}
+                </p>
+              )}
+            </div>
+
+            {/* 🎯 Specific Service Selection (Populates depending on chosen Category) */}
+            {selectedCategory && (
+              <div className="mb-6">
+                <Label className="mb-2 o-outfit">Specific Service (Optional)</Label>
+                <select
+                  {...register("specificService")}
+                  className="w-full flex h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  <option value="">Select a specific service...</option>
+                  {selectedCategory.tags.map((tag) => (
+                    <option key={tag} value={tag}>
+                      {tag}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
 
             <div className="mb-6">
               <Label className="mb-2 o-outfit">Subject</Label>

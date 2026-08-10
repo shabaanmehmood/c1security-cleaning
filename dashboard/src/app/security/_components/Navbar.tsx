@@ -16,6 +16,7 @@ import {
 import { Button } from "./ui/button";
 
 const NAV_LINKS = [{ href: "/", label: "<- Home", icon: "🏠" },
+  { href: "/security/services", label: "Services", icon: "⚙️" },
   { href: "/security/contractor", label: "Contractor", icon: "🧰" },
   { href: "/security/guardPage", label: "Guard", icon: "🛡️" },
 ];

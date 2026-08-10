@@ -35,8 +35,8 @@ export default function Footer() {
           
           {/* Brand Column */}
           <div className="space-y-6">
-            <Link href="/" className="text-2xl font-bold tracking-tight text-white">
-              C1SCURITY-<span className="text-blue-500">CLEANING</span>
+            <Link href="/cleaning" className="text-2xl font-bold tracking-tight text-white">
+              C1-SERVICES-<span className="text-blue-500">CLEANING</span>
             </Link>
             <p className="text-sm leading-6 text-slate-400 max-w-sm">
               Providing top-tier security and commercial cleaning solutions tailored to keep your business safe, clean, and professional.
