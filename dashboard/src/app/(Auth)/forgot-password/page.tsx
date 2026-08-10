@@ -4,13 +4,13 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Loader2, Mail, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
-import { forgotPassword } from "@/lib/auth.service";
+import { AuthService } from "@/lib/auth.service";
 
 interface FormData {
   email: string;
 }
 
-export default async function ForgotPasswordPage() {
+export default function ForgotPasswordPage() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [message, setMessage] = useState("");
@@ -23,22 +23,23 @@ export default async function ForgotPasswordPage() {
 
   const onSubmit = async (data: FormData) => {
     setLoading(true);
+    setMessage("");
 
-    const result = await forgotPassword(data.email);
-       
-    console.log("Reset email sent");
-    setLoading(false);
-
-    setMessage(result.message);
-
-    if (result.success) {
+    try {
+      await AuthService.resetPassword(data.email);
+      
+      console.log("Reset email sent successfully");
       setSuccess(true);
+    } catch (error: any) {
+      setMessage(error.message || "An unexpected error occurred. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
   if (success) {
     return (
-      <div className="flex min-h-screen items-center justify-center  p-6">
+      <div className="flex min-h-screen items-center justify-center p-6">
         <div className="w-full max-w-md rounded-3xl bg-white p-10 shadow-lg border">
           <div className="flex justify-center">
             <CheckCircle2 className="h-16 w-16 text-green-500" />
@@ -49,7 +50,7 @@ export default async function ForgotPasswordPage() {
           </h1>
 
           <p className="mt-4 text-center text-slate-600">
-            We've sent you a password reset email.
+            We've sent you a password reset email. Please check your inbox.
           </p>
 
           <Link
@@ -66,7 +67,6 @@ export default async function ForgotPasswordPage() {
   return (
     <div className="flex min-h-screen items-center justify-center p-6">
       <div className="w-full max-w-md rounded-3xl border bg-white p-8 shadow-lg">
-
         <h1 className="text-center text-3xl font-bold text-blue-950">
           Forgot Password
         </h1>
@@ -105,12 +105,13 @@ export default async function ForgotPasswordPage() {
           </div>
 
           {message && (
-            <div className="rounded-lg bg-slate-100 p-3 text-center text-sm">
+            <div className="rounded-lg bg-red-50 text-red-600 border border-red-200 p-3 text-center text-sm">
               {message}
             </div>
           )}
 
           <button
+            type="submit"
             disabled={loading}
             className="flex w-full items-center justify-center rounded-xl bg-blue-600 py-3 font-semibold text-white hover:bg-blue-700 disabled:opacity-60"
           >
@@ -131,7 +132,6 @@ export default async function ForgotPasswordPage() {
         >
           Back to Login
         </Link>
-
       </div>
     </div>
   );

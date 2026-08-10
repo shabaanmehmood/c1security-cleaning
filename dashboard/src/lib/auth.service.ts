@@ -7,49 +7,14 @@ import {
   onAuthStateChanged,
   User,
   AuthError,
-
 } from "firebase/auth";
 import { doc, setDoc, getDoc, serverTimestamp } from "firebase/firestore";
 import { auth, googleProvider, db } from "@/lib/fireBase";
-export async function forgotPassword(email: string) {
-  try {
-    await sendPasswordResetEmail(auth, email);
+import { UserProfile } from "@/store/useAuthStore";
 
-    return {
-      success: true,
-      message: "Password reset email sent successfully.",
-    };
-  } catch (error: any) {
-    console.error(error);
-
-    let message = "Something went wrong.";
-
-    switch (error.code) {
-      case "auth/user-not-found":
-        message = "No account found with this email.";
-        break;
-
-      case "auth/invalid-email":
-        message = "Invalid email address.";
-        break;
-
-      case "auth/too-many-requests":
-        message = "Too many attempts. Please try again later.";
-        break;
-    }
-
-    return {
-      success: false,
-      message,
-    };
-  }
-}
 /**
- * Creates or updates the user's document in Firestore.
- * Pass additional optional fields (like extra profile details) when available.
+ * Internal helper to save/update user document in Firestore.
  */
-
-
 async function saveUserToFirestore(
   user: User,
   additionalData: Record<string, any> = {}
@@ -75,11 +40,25 @@ async function saveUserToFirestore(
       userRef,
       {
         lastLoginAt: serverTimestamp(),
-        ...additionalData
+        ...additionalData,
       },
       { merge: true }
     );
   }
+}
+
+/**
+ * Internal helper to set session cookies on your Next.js backend.
+ */
+async function syncSessionCookie(user: User) {
+  const idToken = await user.getIdToken();
+  await fetch("/api/auth/session", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ idToken }),
+  });
 }
 
 export const AuthService = {
@@ -98,6 +77,22 @@ export const AuthService = {
   },
 
   /**
+   * Fetch user profile data from Firestore.
+   */
+  async getUserProfile(uid: string): Promise<UserProfile> {
+    const userDoc = await getDoc(doc(db, "users", uid));
+
+    if (!userDoc.exists()) {
+      throw new Error("User profile not found.");
+    }
+
+    return {
+      uid,
+      ...userDoc.data(),
+    } as UserProfile;
+  },
+
+  /**
    * Register a new user with Email and Password and save their document in Firestore.
    */
   async signUpWithEmail(
@@ -108,16 +103,8 @@ export const AuthService = {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
       const user = userCredential.user;
-      const idToken = await user.getIdToken();
-      await fetch("/api/auth/session", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ idToken }),
-      });
 
-      // Save complete user document to Firestore
+      await syncSessionCookie(user);
       await saveUserToFirestore(user, extraParams);
 
       return user;
@@ -133,17 +120,8 @@ export const AuthService = {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, pass);
       const user = userCredential.user;
-      const idToken = await user.getIdToken();
 
-      await fetch("/api/auth/session", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ idToken }),
-      });
-
-      // Update last login timestamp in Firestore
+      await syncSessionCookie(user);
       await saveUserToFirestore(user);
 
       return user;
@@ -159,16 +137,8 @@ export const AuthService = {
     try {
       const userCredential = await signInWithPopup(auth, googleProvider);
       const user = userCredential.user;
-      const idToken = await user.getIdToken();
 
-      await fetch("/api/auth/session", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ idToken }),
-      });
-      // Save user profile details from Google to Firestore
+      await syncSessionCookie(user);
       await saveUserToFirestore(user);
 
       return user;
@@ -189,7 +159,7 @@ export const AuthService = {
   },
 
   /**
-   * Sign out the active user.
+   * Sign out the active user and clear session cookies.
    */
   async logout(): Promise<void> {
     try {
@@ -209,7 +179,7 @@ export const AuthService = {
   handleAuthError(error: AuthError): Error {
     let message = "An unexpected error occurred.";
 
-    switch (error.code) {
+    switch (error?.code) {
       case "auth/email-already-in-use":
         message = "This email is already registered.";
         break;
@@ -227,8 +197,11 @@ export const AuthService = {
       case "auth/popup-closed-by-user":
         message = "Google login popup was closed before finishing.";
         break;
+      case "auth/too-many-requests":
+        message = "Too many failed attempts. Please try again later.";
+        break;
     }
 
     return new Error(message);
-  }
+  },
 };

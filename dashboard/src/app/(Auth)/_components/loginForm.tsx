@@ -4,10 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { useAuthStore } from "@/store/useAuthStore";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "@/lib/fireBase";
 import {
   Eye,
   EyeOff,
@@ -16,19 +13,20 @@ import {
   Lock,
   ArrowLeft,
 } from "lucide-react";
-
-import { loginSchema, LoginSchema } from "@/validators/Auth";
-import { AuthService } from "@/lib/auth.service"; 
 import Image from "next/image";
+
+import { useAuthStore } from "@/store/useAuthStore";
+import { loginSchema, LoginSchema } from "@/validators/Auth";
+import { AuthService } from "@/lib/auth.service";
 
 export default function LoginForm() {
   const router = useRouter();
+
   const [showPassword, setShowPassword] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
   const [authError, setAuthError] = useState<string | null>(null);
 
-  // Zustand Store integrations
-  const setUser = useAuthStore((state: any) => state.setUser);
+  const setUser = useAuthStore((state) => state.setUser);
 
   const {
     register,
@@ -39,73 +37,134 @@ export default function LoginForm() {
     mode: "onTouched",
   });
 
-  /**
-   * Helper function to check role from Firestore and navigate appropriately
-   */
+  async function createServerSession(user: {
+    getIdToken: () => Promise<string>;
+  }) {
+    const idToken = await user.getIdToken();
+
+    const response = await fetch("/api/auth/session", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        idToken,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to create authentication session.");
+    }
+  }
   async function handlePostLoginNavigation(uid: string) {
     try {
-      const userDocRef = doc(db, "users", uid);
-      const userSnap = await getDoc(userDocRef);
+      const response = await fetch(`/api/auth/role?uid=${uid}`, {
+        method: "GET",
+        cache: "no-store",
+      });
 
-      if (userSnap.exists() && userSnap.data().role === "admin") {
+      if (!response.ok) {
+        router.push("/");
+        return;
+      }
+
+      const data = await response.json();
+
+      if (data.role === "admin") {
         router.push("/admin");
       } else {
         router.push("/");
       }
-    } catch (error) {
-      // Fallback navigation if Firestore fetch fails
+    } catch {
       router.push("/");
     }
   }
 
-  async function onSubmit(data: LoginSchema) {
-    setAuthError(null);
-    try {
-      // 1. Authenticate user & sync/update in Firestore
-      const user = await AuthService.signInWithEmail(data.email, data.password);
-      
-      // 2. Update Zustand store state
-      setUser(user);
+async function onSubmit(data: LoginSchema) {
+  setAuthError(null);
 
-      // 3. Navigate according to user role
-      await handlePostLoginNavigation(user.uid);
-    } catch (err: any) {
-      setAuthError(err.message || "Failed to sign in. Please try again.");
+  try {
+    // Firebase User
+    const firebaseUser = await AuthService.signInWithEmail(
+      data.email,
+      data.password
+    );
+
+    // Create server session using Firebase User
+    await createServerSession(firebaseUser);
+
+    // Get your application UserProfile
+    const userProfile = await AuthService.getUserProfile(
+      firebaseUser.uid
+    );
+
+    // Zustand expects UserProfile
+    setUser(userProfile);
+
+    // Server-side AdminLayout will verify authorization
+    if (userProfile.role === "admin") {
+      router.push("/admin");
+    } else {
+      router.push("/");
     }
+  } catch (err: unknown) {
+    setAuthError(
+      err instanceof Error
+        ? err.message
+        : "Failed to sign in. Please try again."
+    );
   }
+}
 
-  async function handleGoogleSignIn() {
-    setAuthError(null);
-    setGoogleLoading(true);
-    try {
-      // 1. Authenticate with Google & sync/update in Firestore
-      const user = await AuthService.signInWithGoogle();
+async function handleGoogleSignIn() {
+  setAuthError(null);
+  setGoogleLoading(true);
 
-      // 2. Update Zustand store state
-      setUser(user);
+  try {
+    const firebaseUser = await AuthService.signInWithGoogle();
 
-      // 3. Navigate according to user role
-      await handlePostLoginNavigation(user.uid);
-    } catch (err: any) {
-      setAuthError(err.message || "Failed to sign in with Google.");
-    } finally {
-      setGoogleLoading(false);
+    // Create HTTP-only session cookie
+    await createServerSession(firebaseUser);
+
+    // Get application profile
+    const userProfile = await AuthService.getUserProfile(
+      firebaseUser.uid
+    );
+
+    // Store UserProfile, not Firebase User
+    setUser(userProfile);
+
+    if (userProfile.role === "admin") {
+      router.push("/admin");
+    } else {
+      router.push("/");
     }
+  } catch (err: unknown) {
+    setAuthError(
+      err instanceof Error
+        ? err.message
+        : "Failed to sign in with Google."
+    );
+  } finally {
+    setGoogleLoading(false);
   }
+}
 
   return (
     <div className="w-full max-w-md rounded-3xl border border-blue-100 bg-white p-8 shadow-2xl shadow-blue-100/50">
+      {/* Back */}
       <Link
-              href="/"
-              className="mb-6 inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              Back
-            </Link>
+        href="/"
+        className="mb-6 inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100"
+      >
+        <ArrowLeft className="h-4 w-4" />
+        Back
+      </Link>
+
       {/* Header */}
       <div className="mb-8 text-center">
-        <div className="flex justify-center items-center w-full">
-          <Link href="/" className="flex items-center gap-2 shrink-0 z-50">
+        <div className="flex w-full items-center justify-center">
+          <Link href="/" className="z-50 flex shrink-0 items-center gap-2">
             <Image
               src="/Logo.svg"
               alt="C1SCURITY Logo"
@@ -116,6 +175,7 @@ export default function LoginForm() {
             />
           </Link>
         </div>
+
         <h1 className="mt-4 text-3xl font-bold text-slate-900">
           Welcome Back
         </h1>
@@ -125,14 +185,14 @@ export default function LoginForm() {
         </p>
       </div>
 
-      {/* Global Error */}
+      {/* Error */}
       {authError && (
         <div className="mb-6 rounded-xl border border-red-200 bg-red-50 p-3 text-center text-sm font-medium text-red-600">
           {authError}
         </div>
       )}
 
-      {/* Google Login */}
+      {/* Google */}
       <button
         type="button"
         onClick={handleGoogleSignIn}
@@ -192,7 +252,7 @@ export default function LoginForm() {
               {...register("email")}
               type="email"
               placeholder="john@example.com"
-              className="w-full rounded-xl border border-slate-200 bg-white py-3 pl-11 pr-4 text-slate-900 placeholder:text-slate-400 outline-none transition-all focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+              className="w-full rounded-xl border border-slate-200 bg-white py-3 pl-11 pr-4 text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
             />
           </div>
 
@@ -219,12 +279,12 @@ export default function LoginForm() {
               {...register("password")}
               type={showPassword ? "text" : "password"}
               placeholder="••••••••"
-              className="w-full rounded-xl border border-slate-200 bg-white py-3 pl-11 pr-12 text-slate-900 placeholder:text-slate-400 outline-none transition-all focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+              className="w-full rounded-xl border border-slate-200 bg-white py-3 pl-11 pr-12 text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
             />
 
             <button
               type="button"
-              onClick={() => setShowPassword(!showPassword)}
+              onClick={() => setShowPassword((prev) => !prev)}
               className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 transition hover:text-blue-600"
             >
               {showPassword ? (
@@ -242,9 +302,9 @@ export default function LoginForm() {
           )}
         </div>
 
-        {/* Remember Me */}
+        {/* Remember me */}
         <div className="flex items-center justify-between text-sm">
-          <label className="flex items-center gap-2 text-slate-600 cursor-pointer">
+          <label className="flex cursor-pointer items-center gap-2 text-slate-600">
             <input
               type="checkbox"
               className="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
