@@ -125,14 +125,14 @@ export default function Home() {
             className="mt-9 flex flex-wrap items-center justify-center gap-4"
           >
             <a
-              href="/get-a-quote"
+              href="/night-audit/get-a-qoutes"
               className="group inline-flex items-center gap-2 font-['Inter'] text-sm font-medium px-6 py-3 rounded-full bg-[#C9A24B] text-[#0A0F1D] hover:bg-[#E4C878] transition-colors"
             >
               Get a Quote
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
             </a>
             <a
-              href="/contact"
+              href="/night-audit/contact"
               className="inline-flex items-center gap-2 font-['Inter'] text-sm font-medium px-6 py-3 rounded-full border border-[#33405F] text-[#F3EEE3] hover:border-[#C9A24B] transition-colors"
             >
               Talk to our team

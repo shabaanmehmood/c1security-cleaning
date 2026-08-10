@@ -61,11 +61,15 @@ const serviceCards = [
 
 export default function HomePage() {
   return (
-    <main className="flex min-h-screen flex-col items-center p-4 sm:p-6 md:p-8 bg-slate-50 overflow-x-hidden">
-      <HomeHero />
+    <main className="flex min-h-screen flex-col items-center gap-y-12 sm:gap-y-16 p-4 sm:p-6 md:p-8 bg-slate-50 overflow-x-hidden">
+      
+      {/* Hero Section Wrapper */}
+      <section className="w-full flex justify-center">
+        <HomeHero />
+      </section>
 
-      {/* Stats Bar */}
-      <section className="py-6 sm:py-8 px-2 sm:px-4 flex justify-center w-full">
+      {/* Stats Bar Section */}
+      <section className="w-full py-4 px-2 sm:px-4 flex justify-center">
         <motion.div
           variants={statsContainerVariants}
           initial="hidden"
@@ -97,7 +101,7 @@ export default function HomePage() {
       </section>
 
       {/* Interactive Service Selector Cards */}
-      <section className="w-full max-w-6xl py-8 sm:py-12 px-2 sm:px-4">
+      <section className="w-full max-w-6xl py-4 px-2 sm:px-4">
         <div className="text-center mb-8 sm:mb-10">
           <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight sm:text-4xl">
             Our Core Services
@@ -153,8 +157,16 @@ export default function HomePage() {
         </div>
       </section>
 
-      <FeaturedServices />
-      <QuoteCardsSection />
+      {/* Featured Services Wrapper */}
+      <section className="w-full max-w-6xl relative z-10">
+        <FeaturedServices />
+      </section>
+
+      {/* Quote Cards Section Wrapper */}
+      <section className="w-full max-w-6xl relative z-10">
+        <QuoteCardsSection />
+      </section>
+      
     </main>
   );
 }
