@@ -4,7 +4,12 @@ import { BrevoClient } from "@getbrevo/brevo";
 const brevo = new BrevoClient({
   apiKey: process.env.BREVO_API_KEY!,
 });
-
+export async function GET() {
+  return NextResponse.json({
+    brevoKeyExists: Boolean(process.env.BREVO_API_KEY),
+    vercelEnv: process.env.VERCEL_ENV,
+  });
+}
 export async function POST(request: Request) {
   try {
     const {
