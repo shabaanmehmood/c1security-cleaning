@@ -48,7 +48,7 @@ export default function Left() {
         <HeroAnimation delay={0.3}>
           <div className="mt-10 flex flex-wrap gap-4">
 
-            <Link href="/get-a-quote">
+            <Link href="/cleaning/get-a-quote">
               <Button
                 size="lg"
                 className="rounded-full bg-blue-600 px-8 py-6 text-base shadow-lg shadow-blue-500/25 transition-all hover:-translate-y-1 hover:bg-blue-700"
@@ -59,7 +59,7 @@ export default function Left() {
               </Button>
             </Link>
 
-            <Link href="/services">
+            <Link href="/cleaning/services">
               <Button
                 size="lg"
                 variant="outline"

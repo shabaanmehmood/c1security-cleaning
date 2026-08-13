@@ -9,7 +9,7 @@ const FOOTER_LINKS = {
     { id:1,href: "/", label: "Home" },
     { id:2,href: "/night-audit/about", label: "About Us" },
     { id:3,href: "/night-audit/contact", label: "Contact Us" },
-    { id:4,href: "/night-audit/get-a-quote", label: "Get a Quote" },
+    { id:4,href: "/night-audit/get-a-qoutes", label: "Get a Quote" },
   ],
   services: [
     { id:1,href: "/", label: "Commercial Security" },
@@ -98,7 +98,7 @@ export default function Footer() {
               <li className="flex items-center gap-3">
                 <Phone className="w-5 h-5 text-blue-500 shrink-0" />
                 <a
-                  href="tel:1300000000"
+                  href="+61 487 190 645"
                   className="hover:text-white transition-colors"
                 >
                   +61 487 190 645
@@ -107,7 +107,7 @@ export default function Footer() {
               <li className="flex items-center gap-3">
                 <Mail className="w-5 h-5 text-blue-500 shrink-0" />
                 <a
-                  href="mailto:info@control1security.com.au"
+                  href="mailto:tac.solutions.inc@gmail.com"
                   className="hover:text-white transition-colors"
                 >
                   tac.solutions.inc@gmail.com
@@ -122,10 +122,10 @@ export default function Footer() {
         <div className="mt-12 pt-8 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
           <p>© {new Date().getFullYear()} Control-1 Security. All rights reserved.</p>
           <div className="flex items-center gap-6">
-            <Link href="/privacy-policy" className="hover:text-slate-400 transition-colors">
+            <Link href="/about" className="hover:text-slate-400 transition-colors">
               Privacy Policy
             </Link>
-            <Link href="/terms-of-service" className="hover:text-slate-400 transition-colors">
+            <Link href="/contacts-of-service" className="hover:text-slate-400 transition-colors">
               Terms of Service
             </Link>
           </div>

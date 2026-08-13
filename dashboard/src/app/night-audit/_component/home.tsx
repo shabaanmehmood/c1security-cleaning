@@ -132,7 +132,7 @@ export default function Home() {
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
             </a>
             <a
-              href="/night-audit/contact"
+              href="/night-audit/contacts"
               className="inline-flex items-center gap-2 font-['Inter'] text-sm font-medium px-6 py-3 rounded-full border border-[#33405F] text-[#F3EEE3] hover:border-[#C9A24B] transition-colors"
             >
               Talk to our team
@@ -304,13 +304,13 @@ export default function Home() {
             </p>
             <div className="relative flex flex-wrap items-center justify-center gap-4">
               <a
-                href="/get-a-quote"
+                href="/night-audit/get-a-qoutes"
                 className="inline-flex items-center gap-2 font-['Inter'] text-sm font-medium px-6 py-3 rounded-full bg-[#C9A24B] text-[#0A0F1D] hover:bg-[#E4C878] transition-colors"
               >
                 Get a Quote <ArrowRight className="w-4 h-4" />
               </a>
               <a
-                href="/contact"
+                href="/night-audit/contacts"
                 className="inline-flex items-center gap-2 font-['Inter'] text-sm font-medium px-6 py-3 rounded-full border border-[#33405F] text-[#F3EEE3] hover:border-[#C9A24B] transition-colors"
               >
                 <Phone className="w-4 h-4" /> Contact us
