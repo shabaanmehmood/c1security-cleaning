@@ -120,10 +120,10 @@ const ContactSection = () => {
                 <span>
                   <strong>Email:</strong>{" "}
                   <a
-                    href="mailto:support@secureforce.com"
+                    href="mailto:info@c1services.com.au"
                     className="underline text-blue-600"
                   >
-                    tac.solutions.inc@gmail.com
+                  info@c1services.com.au
                   </a>
                 </span>
               </li>

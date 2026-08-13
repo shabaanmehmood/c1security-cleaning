@@ -17,7 +17,7 @@ export const detailedContactData: ContactProps = {
   description:
     "Our central operations hub connects business leaders, strategic partners, and enterprise clients worldwide. Whether you are exploring custom platform deployments, enterprise-grade security integrations, or seeking dedicated support from our senior engineering leads, our cross-functional team is available round-the-clock to assist you with tailored solutions.",
   phoneNumber: "+61 487 190 645",
-  email: "tac.solutions.inc@gmail.com",
+  email: "info@c1services.com.au",
   address: "10 Sanur street marsden 4132 Queensland, Australia",
 };
 

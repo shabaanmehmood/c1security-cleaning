@@ -93,8 +93,8 @@ const defaultBgItems: BackgroundScrollItem[] = [
 ];
 
 function ServicePage({
-  title = "C1-SCURITY",
-  imageSrc = "/MainLog.png",
+  title = "C1-Services",
+  imageSrc = "/favvvvvv.png",
   bgItems = defaultBgItems,
   glassContent,
   className = "",

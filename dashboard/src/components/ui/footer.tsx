@@ -54,7 +54,7 @@ export default function Footer() {
               </div>
               <div className="flex items-center gap-3">
                 <Mail className="h-4 w-4 text-blue-500 shrink-0" />
-                <span>tac.solutions.inc@gmail.com</span>
+                <span>info@c1services.com.au</span>
               </div>
             </div>
           </div>
