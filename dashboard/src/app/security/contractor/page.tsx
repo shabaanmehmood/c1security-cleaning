@@ -34,7 +34,7 @@ const ContractorPage: React.FC = () => {
           title="Manage Your Workforce Seamlessly"
           subtitle="Hire, assign, and monitor guards — all from one place."
           ctaText="Join as Contractor"
-          ctaLink="/contact"
+          ctaLink="/security/contact"
         />
 
         {/* Stepper Section */}
