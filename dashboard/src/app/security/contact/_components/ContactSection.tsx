@@ -123,29 +123,25 @@ const ContactSection = () => {
     (cat) => cat.title === selectedCategoryTitle
   );
 
-  async function onSubmit(data: ContactFormValues) {
-    setIsLoading(true);
-    try {
-      const response = await fetch("/api/ScurityForm", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+  const onSubmit = (data: ContactFormValues) => {
+      const serviceID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID as string;
+      const templateID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_2_ID as string;
+      const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY as string;
+  
+      setIsLoading(true);
+  
+      emailjs.send(serviceID, templateID, data, publicKey).then(
+        () => {
+          alert("Your message has been sent successfully!");
+          reset();
+          setIsLoading(false);
         },
-        body: JSON.stringify(data),
-      });
-
-      if (!response.ok) {
-        throw new Error("Sending failed");
-      }
-
-      alert("Sending succeeded!");
-      reset();
-    } catch (error) {
-      alert("Sending failed");
-    } finally {
-      setIsLoading(false);
-    }
-  }
+        () => {
+          alert("Failed to send message. Please try again later.");
+          setIsLoading(false);
+        }
+      );
+    };
 
   return (
     <section className="relative py-28 bg-gradient-to-br from-blue-50 via-white to-blue-100 overflow-hidden">
