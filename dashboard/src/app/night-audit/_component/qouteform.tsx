@@ -2,7 +2,6 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { submitQuote } from "@/utils/axois";
 import { motion } from "framer-motion";
 import { Loader2, Send } from "lucide-react";
 
@@ -12,6 +11,8 @@ import {
   services,
   cities,
 } from "@/validators/quoteFormValidator";
+import api from "@/utils/axois";
+import axios from "axios";
 
 export default function QuoteForm() {
   const {
@@ -23,16 +24,27 @@ export default function QuoteForm() {
     resolver: zodResolver(QuoteSchema),
   });
 
-  async function onSubmit(data: QuoteFormData) {
+  const onSubmit = async (data: QuoteFormData) => {
     try {
-      const ress = await submitQuote(data);
-      alert("Quote request submitted successfully!");
+      const response = await api.post("/api/Email/nightaudit", data);
+  
+      alert(
+        response.data?.message ||
+          "Quote request sent successfully. We'll get back to you shortly."
+      );
+  
       reset();
     } catch (error) {
-      console.error(error);
-      alert("Failed to submit the quote.");
+      if (axios.isAxiosError(error)) {
+        alert(
+          error.response?.data?.message ||
+            "Something went wrong. Please try again."
+        );
+      } else {
+        alert("Something went wrong. Please try again.");
+      }
     }
-  }
+  };
 
   return (
     <section className="py-20 ">
