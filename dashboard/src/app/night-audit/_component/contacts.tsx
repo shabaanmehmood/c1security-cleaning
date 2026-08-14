@@ -17,6 +17,8 @@ import { Button } from "@/app/security/_components/ui/button";
 import { Input } from "@/app/security/_components/ui/input";
 import { Label } from "@/app/security/_components/ui/label";
 import { Textarea } from "@/app/security/_components/ui/textarea";
+import api from "@/utils/axois";
+import axios from "axios";
 
 const contactSchema = z.object({
   firstname: z.string().min(2, "First name is required"),
@@ -44,25 +46,28 @@ const ContactSection = () => {
     resolver: zodResolver(contactSchema),
   });
 
-  const onSubmit = (data: ContactFormValues) => {
-    const serviceID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID as string;
-    const templateID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_2_ID as string;
-    const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY as string;
-
-    setIsLoading(true);
-
-    emailjs.send(serviceID, templateID, data, publicKey).then(
-      () => {
-        alert("Your message has been sent successfully!");
-        reset();
-        setIsLoading(false);
-      },
-      () => {
-        alert("Failed to send message. Please try again later.");
-        setIsLoading(false);
+   const onSubmit = async (data: ContactFormValues) => {
+    try {
+      const response = await api.post("/api/Email/nightaudit", data);
+  
+      alert(
+        response.data?.message ||
+          "Quote request sent successfully. We'll get back to you shortly."
+      );
+  
+      reset();
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        alert(
+          error.response?.data?.message ||
+            "Something went wrong. Please try again."
+        );
+      } else {
+        alert("Something went wrong. Please try again.");
       }
-    );
+    }
   };
+  
 
   return (
     <section className="relative py-28 bg-gradient-to-br from-blue-50 via-white to-blue-100 overflow-hidden">

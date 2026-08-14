@@ -1,11 +1,13 @@
-
+// lib/brevo.ts
 
 import { BrevoClient } from "@getbrevo/brevo";
 
-if (!process.env.BREVO_API_KEY) {
+const apiKey = process.env.BREVO_API_KEY;
+
+if (!apiKey) {
   throw new Error("BREVO_API_KEY is not configured");
 }
 
 export const brevo = new BrevoClient({
-  apiKey: process.env.BREVO_API_KEY,
+  apiKey,
 });
