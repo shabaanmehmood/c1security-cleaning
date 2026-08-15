@@ -11,80 +11,61 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.c1services.com.au"),
+  metadataBase: new URL("https://c1services.com.au"),
 
   title: {
-    default: "C1 Security & Cleaning | Professional Services",
-    template: "%s | C1 Security & Cleaning",
+    default: "C1 Services | Commercial Cleaning & Security Services",
+    template: "%s | C1 Services",
   },
 
   description:
-    "C1 Security & Cleaning provides professional commercial cleaning, security, and facility services across Australia.",
+    "C1 Services provides professional commercial cleaning, security and facility maintenance services across Brisbane, Gold Coast and surrounding areas.",
+  
+  
+   icons: {
+    icon: "/c1-services-icon-32x32.png", 
+    shortcut: "/c1-services-icon-192x192.png",
+    apple: "/c1-services-icon-180x180.png",
+  },
 
   keywords: [
     "commercial cleaning",
-    "professional cleaning services",
+    "commercial cleaners",
     "security services",
-    "commercial security",
-    "facility services",
-    "C1 Security & Cleaning",
+    "facility maintenance",
+    "cleaning services Brisbane",
+    "cleaning services Gold Coast",
+    "C1 Services",
   ],
 
-  authors: [{ name: "C1 Security & Cleaning" }],
-  creator: "C1 Security & Cleaning",
-  publisher: "C1 Security & Cleaning",
+  alternates: {
+    canonical: "https://c1services.com.au",
+  },
 
-  applicationName: "C1 Security & Cleaning",
+  openGraph: {
+    title: "C1 Services | Commercial Cleaning & Security Services",
+    description:
+      "Professional commercial cleaning, security and facility maintenance services across Brisbane, Gold Coast and surrounding areas.",
+    url: "https://c1services.com.au",
+    siteName: "C1 Services",
+    type: "website",
+    locale: "en_AU",
+  },
 
-  icons: {
-    icon: [
-      {
-        url: "/favvvvvv.png",
-        type: "image/png",
-      },
-    ],
-    shortcut: "/favvvvvv.png",
-    apple: "/favvvvvv.png",
+  twitter: {
+    card: "summary_large_image",
+    title: "C1 Services | Commercial Cleaning & Security Services",
+    description:
+      "Professional commercial cleaning, security and facility maintenance services across Brisbane, Gold Coast and surrounding areas.",
   },
 
   robots: {
     index: true,
     follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-      "max-video-preview": -1,
-    },
   },
-
-  openGraph: {
-    type: "website",
-    locale: "en_AU",
-    url: "https://www.c1services.com.au",
-    siteName: "C1 Security & Cleaning",
-    title: "C1 Security & Cleaning | Professional Services",
-    description:
-      "Professional commercial cleaning, security, and facility services across Australia.",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "C1 Security & Cleaning",
-      },
-    ],
-  },
-
-  twitter: {
-    card: "summary_large_image",
-    title: "C1 Security & Cleaning | Professional Services",
-    description:
-      "Professional commercial cleaning, security, and facility services across Australia.",
-    images: ["/og-image.png"],
-  },
+ 
 };
+
 
 export default function RootLayout({
   children,

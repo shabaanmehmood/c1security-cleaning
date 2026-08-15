@@ -8,7 +8,16 @@ import StatsSection from "./_components/homePage/StatsSection";
 import WhoWeAre from "./_components/homePage/WhoWeAre";
 import Navbar from "./_components/Navbar";
 import { Component } from "./_components/parallax-scroll-feature-section";
+import type { Metadata } from "next";
 
+export const metadata: Metadata = {
+  title: "Security Services",
+  description:
+    "Professional security services for businesses, properties and facilities across Brisbane, Gold Coast and surrounding areas. Reliable security solutions from C1 Services.",
+  alternates: {
+    canonical: "https://c1services.com.au/security",
+  },
+};
 export default function Home() {
   return (
     <>
@@ -20,7 +29,6 @@ export default function Home() {
         googlePlayImg="/google-play.png"
         googlePlayLink="https://play.google.com/store/apps/developer?id=C1+Security"
         appStoreImg="/apple-store.png"
-        appStoreLink="https://apps.apple.com"
       />
 
       <WhoWeAre />

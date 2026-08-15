@@ -8,7 +8,16 @@ import { ServicesSection } from "./_components/ServiceSection";
 import DocumentInfoCardDownload from "@/components/ui/DocumentInfoCardDownload";
 import MagneticButton from "@/components/ui/heyZaneButton";
 import IndustrialFeaturedServices from "./industries/_components/IndustrialFeatures";
+import { Metadata } from "next";
 
+export const metadata: Metadata = {
+  title: "Commercial Cleaning Services",
+  description:
+    "Professional commercial cleaning services for businesses across Brisbane, Gold Coast and surrounding areas. Reliable cleaning solutions tailored to your workplace.",
+  alternates: {
+    canonical: "https://c1services.com.au/cleaning/",
+  },
+};
 const statsContainerVariants = {
   hidden: { opacity: 0, y: 30 },
   visible: {
