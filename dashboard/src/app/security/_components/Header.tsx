@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
@@ -26,6 +26,8 @@ export default function Header({
   appStoreImg,
   appStoreLink,
 }: HeaderProps) {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <header className="relative top-10 bg-blue-900 text-white overflow-hidden">
       <div
@@ -60,7 +62,7 @@ export default function Header({
             {description}
           </motion.p>
 
-          {/* ✅ App Store Buttons Section */}
+          {/* App Store Buttons Section */}
           {(googlePlayImg || appStoreImg) && (
             <motion.div
               className="flex flex-col sm:flex-row gap-6 items-center justify-center md:justify-start mt-6"
@@ -90,15 +92,30 @@ export default function Header({
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.97 }}
                 >
-                  <Link href={appStoreLink || "#"} target="_blank">
-                    <Image
-                      src={appStoreImg}
-                      alt="Download on the App Store"
-                      width={140}
-                      height={60}
-                      className="rounded-lg shadow-md hover:shadow-lg transition-all duration-300"
-                    />
-                  </Link>
+                  {appStoreLink ? (
+                    <Link href={appStoreLink} target="_blank">
+                      <Image
+                        src={appStoreImg}
+                        alt="Download on the App Store"
+                        width={140}
+                        height={60}
+                        className="rounded-lg shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer"
+                      />
+                    </Link>
+                  ) : (
+                    <button
+                      onClick={() => setIsOpen(true)}
+                      className="focus:outline-none"
+                    >
+                      <Image
+                        src={appStoreImg}
+                        alt="Download on the App Store"
+                        width={140}
+                        height={60}
+                        className="rounded-lg shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer"
+                      />
+                    </button>
+                  )}
                 </motion.div>
               )}
             </motion.div>

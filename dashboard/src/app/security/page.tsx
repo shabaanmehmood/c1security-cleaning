@@ -18,7 +18,7 @@ export default function Home() {
         description="Control-1 Security connects guards and contractors on a single trusted platform for seamless job posting, hiring, and monitoring."
         imageSrc="/header.png"
         googlePlayImg="/google-play.png"
-        googlePlayLink="https://play.google.com/store"
+        googlePlayLink="https://play.google.com/store/apps/developer?id=C1+Security"
         appStoreImg="/apple-store.png"
         appStoreLink="https://apps.apple.com"
       />
