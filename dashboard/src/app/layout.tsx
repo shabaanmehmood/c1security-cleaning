@@ -23,11 +23,13 @@ export const metadata: Metadata = {
   
   
    icons: {
-    icon: "/c1-services-icon-32x32.png", 
+    icon: [
+      { url: "/c1-services-icon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/c1-services-icon-192x192.png", sizes: "192x192", type: "image/png" },
+    ],
     shortcut: "/c1-services-icon-192x192.png",
     apple: "/c1-services-icon-180x180.png",
   },
-
   keywords: [
     "commercial cleaning",
     "commercial cleaners",
