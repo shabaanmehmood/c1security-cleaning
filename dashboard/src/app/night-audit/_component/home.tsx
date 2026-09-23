@@ -103,29 +103,21 @@ const WHO_WE_SUPPORT = [
 export default function Home() {
   return (
     <div className="min-h-screen overflow-hidden bg-white font-sans text-slate-900">
-      {/* HERO */}
+      {/* =========================================================
+          HERO
+      ========================================================= */}
       <section className="relative overflow-hidden px-6 pb-28 pt-36 sm:pt-40">
-        {/* Background decoration */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1 }}
-          className="pointer-events-none absolute -right-40 -top-40 h-[500px] w-[500px] rounded-full bg-blue-100/70 blur-3xl"
-        />
+        {/* Decorative background */}
+        <div className="pointer-events-none absolute -right-40 -top-40 h-[500px] w-[500px] rounded-full bg-blue-100/70 blur-3xl" />
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1.2, delay: 0.2 }}
-          className="pointer-events-none absolute -bottom-40 -left-40 h-[450px] w-[450px] rounded-full bg-[#C9A24B]/10 blur-3xl"
-        />
+        <div className="pointer-events-none absolute -bottom-40 -left-40 h-[450px] w-[450px] rounded-full bg-[#C9A24B]/10 blur-3xl" />
 
         <div className="relative z-10 mx-auto max-w-5xl text-center">
           <motion.p
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="mb-6 text-[11px] font-semibold uppercase tracking-[0.22em] text-blue-700"
+            className="mb-6 inline-flex rounded-full border border-blue-100 bg-blue-50 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-blue-700"
           >
             Hospitality Staffing · Australia-wide
           </motion.p>
@@ -140,12 +132,9 @@ export default function Home() {
             }}
             className="text-[2.6rem] font-bold leading-[1.08] tracking-tight text-slate-950 sm:text-6xl"
           >
-            Reliable Night Audit &amp; Concierge staff,
-            <span className="text-blue-700">
-              {" "}
-              for whatever hour
-            </span>{" "}
-            the guest needs you.
+            Reliable Night Audit & Concierge staff,
+            <span className="text-blue-700"> for whatever hour</span> the
+            guest needs you.
           </motion.h1>
 
           <motion.p
@@ -168,7 +157,7 @@ export default function Home() {
           >
             <a
               href="/night-audit/get-a-qoutes"
-              className="group inline-flex items-center gap-2 rounded-full bg-blue-700 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-700/20 transition-colors hover:bg-blue-800"
+              className="group inline-flex items-center gap-2 rounded-full bg-blue-700 px-7 py-3.5 text-sm font-semibold text-white shadow-xl shadow-blue-700/20 transition-all hover:-translate-y-0.5 hover:bg-blue-800"
             >
               Get a Quote
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -176,7 +165,7 @@ export default function Home() {
 
             <a
               href="/night-audit/contacts"
-              className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-6 py-3 text-sm font-semibold text-slate-700 transition-all hover:border-blue-300 hover:text-blue-700"
+              className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-7 py-3.5 text-sm font-semibold text-slate-700 shadow-sm transition-all hover:border-blue-300 hover:text-blue-700"
             >
               Talk to our team
             </a>
@@ -195,19 +184,34 @@ export default function Home() {
         <Skyline />
       </section>
 
-      {/* SERVICES */}
-      <section className="bg-slate-50 px-6 py-24">
-        <div className="mx-auto max-w-6xl">
+      {/* =========================================================
+          SERVICES — BLUE COMPONENT
+      ========================================================= */}
+      <section className="relative overflow-hidden bg-[#071B3A] px-6 py-24 text-white">
+        {/* Background glow */}
+        <div className="pointer-events-none absolute -right-40 -top-40 h-[500px] w-[500px] rounded-full bg-blue-500/10 blur-3xl" />
+
+        <div className="pointer-events-none absolute -bottom-40 -left-40 h-[400px] w-[400px] rounded-full bg-[#C9A24B]/10 blur-3xl" />
+
+        <div className="relative z-10 mx-auto max-w-6xl">
           <Reveal>
-            <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-blue-700">
+            <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-blue-300">
               Staffing solutions
             </p>
           </Reveal>
 
           <Reveal index={1}>
-            <h2 className="mb-14 max-w-xl text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">
-              Every role your front desk needs, day or night.
-            </h2>
+            <div className="mb-14 flex flex-col justify-between gap-5 lg:flex-row lg:items-end">
+              <h2 className="max-w-2xl text-3xl font-bold tracking-tight sm:text-4xl">
+                Every role your front desk needs,
+                <span className="text-blue-300"> day or night.</span>
+              </h2>
+
+              <p className="max-w-md text-sm leading-relaxed text-blue-100/70">
+                Flexible hospitality staffing designed around your property,
+                your guests and your operational requirements.
+              </p>
+            </div>
           </Reveal>
 
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -219,20 +223,195 @@ export default function Home() {
                 className="h-full"
               >
                 <motion.div
-                  whileHover={{ y: -6 }}
+                  whileHover={{ y: -7 }}
                   transition={{ duration: 0.25 }}
-                  className="group h-full rounded-2xl border border-slate-200 bg-white p-7 shadow-sm transition-all hover:border-blue-200 hover:shadow-xl hover:shadow-slate-200/50"
+                  className="group relative h-full overflow-hidden rounded-2xl border border-white/10 bg-white/[0.07] p-7 backdrop-blur-sm transition-all hover:border-blue-300/40 hover:bg-white/[0.11]"
                 >
-                  <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 transition-colors group-hover:bg-blue-700">
-                    <s.icon className="h-5 w-5 text-blue-700 transition-colors group-hover:text-white" />
+                  {/* Accent */}
+                  <div className="absolute right-0 top-0 h-20 w-20 rounded-bl-full bg-blue-500/10 transition-all group-hover:bg-blue-400/20" />
+
+                  <div className="relative">
+                    <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-blue-500/15 ring-1 ring-blue-300/10">
+                      <s.icon className="h-5 w-5 text-blue-300" />
+                    </div>
+
+                    <h3 className="mb-3 text-xl font-bold text-white">
+                      {s.title}
+                    </h3>
+
+                    <p className="text-sm leading-relaxed text-blue-100/70">
+                      {s.copy}
+                    </p>
+
+                    <div className="mt-6 h-px w-10 bg-blue-400/50 transition-all group-hover:w-16" />
+                  </div>
+                </motion.div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* =========================================================
+          RESPONSIBILITIES
+      ========================================================= */}
+      <section className="px-6 py-24">
+        <div className="mx-auto max-w-6xl">
+          <Reveal>
+            <div className="mb-14 max-w-2xl">
+              <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-blue-700">
+                Professional support
+              </p>
+
+              <h2 className="text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">
+                The right people for every guest interaction.
+              </h2>
+            </div>
+          </Reveal>
+
+          <div className="grid gap-6 lg:grid-cols-2">
+            {/* Night Auditor */}
+            <Reveal from="left">
+              <div className="relative h-full overflow-hidden rounded-3xl bg-[#071B3A] p-8 text-white shadow-xl shadow-blue-950/10 sm:p-9">
+                <div className="absolute -right-20 -top-20 h-56 w-56 rounded-full bg-blue-500/10 blur-3xl" />
+
+                <div className="relative">
+                  <div className="mb-7 flex items-center gap-3">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-400/10 ring-1 ring-blue-300/20">
+                      <Moon className="h-5 w-5 text-blue-300" />
+                    </div>
+
+                    <div>
+                      <p className="text-[10px] font-semibold uppercase tracking-widest text-blue-300">
+                        Overnight operations
+                      </p>
+
+                      <h3 className="text-2xl font-bold">
+                        Night Auditor
+                      </h3>
+                    </div>
                   </div>
 
-                  <h3 className="mb-2 text-xl font-bold text-slate-950">
-                    {s.title}
-                  </h3>
+                  <p className="mb-7 text-sm leading-relaxed text-blue-100/70">
+                    A Night Auditor combines front office, guest service and
+                    financial administration responsibilities to keep the
+                    property running smoothly through the night.
+                  </p>
 
-                  <p className="text-sm leading-relaxed text-slate-600">
-                    {s.copy}
+                  <ul className="space-y-3">
+                    {NIGHT_AUDIT_DUTIES.map((d, i) => (
+                      <Reveal
+                        key={d}
+                        index={i}
+                        distance={10}
+                        className="flex items-start gap-2.5"
+                      >
+                        <li className="flex items-start gap-2.5 text-sm leading-relaxed text-blue-50/80">
+                          <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-blue-300" />
+                          {d}
+                        </li>
+                      </Reveal>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </Reveal>
+
+            {/* Concierge */}
+            <Reveal from="right">
+              <div className="relative h-full overflow-hidden rounded-3xl border border-slate-200 bg-white p-8 shadow-lg shadow-slate-200/40 sm:p-9">
+                <div className="absolute -right-20 -top-20 h-56 w-56 rounded-full bg-[#C9A24B]/10 blur-3xl" />
+
+                <div className="relative">
+                  <div className="mb-7 flex items-center gap-3">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#C9A24B]/10">
+                      <ConciergeBell className="h-5 w-5 text-[#B18A35]" />
+                    </div>
+
+                    <div>
+                      <p className="text-[10px] font-semibold uppercase tracking-widest text-[#B18A35]">
+                        Guest experience
+                      </p>
+
+                      <h3 className="text-2xl font-bold text-slate-950">
+                        Concierge
+                      </h3>
+                    </div>
+                  </div>
+
+                  <p className="mb-7 text-sm leading-relaxed text-slate-600">
+                    Often the first point of contact for guests, concierge
+                    staff provide personalised assistance and help guests
+                    make the most of their stay.
+                  </p>
+
+                  <ul className="space-y-3">
+                    {CONCIERGE_DUTIES.map((d, i) => (
+                      <Reveal
+                        key={d}
+                        index={i}
+                        distance={10}
+                        className="flex items-start gap-2.5"
+                      >
+                        <li className="flex items-start gap-2.5 text-sm leading-relaxed text-slate-600">
+                          <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#B18A35]" />
+                          {d}
+                        </li>
+                      </Reveal>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* =========================================================
+          WHY US — SOFT BLUE COMPONENT
+      ========================================================= */}
+      <section className="relative overflow-hidden bg-blue-50/60 px-6 py-24">
+        <div className="pointer-events-none absolute right-0 top-0 h-72 w-72 rounded-full bg-blue-200/30 blur-3xl" />
+
+        <div className="relative z-10 mx-auto max-w-6xl">
+          <Reveal>
+            <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-blue-700">
+              Why choose us
+            </p>
+          </Reveal>
+
+          <Reveal index={1}>
+            <div className="mb-14 flex flex-col justify-between gap-5 lg:flex-row lg:items-end">
+              <h2 className="max-w-2xl text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">
+                Staff who are more than qualified —
+                <span className="text-blue-700"> they're reliable.</span>
+              </h2>
+
+              <p className="max-w-md text-sm leading-relaxed text-slate-600">
+                Professional people who understand that hospitality is about
+                consistency, communication and trust.
+              </p>
+            </div>
+          </Reveal>
+
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {WHY_US.map((w, i) => (
+              <Reveal
+                key={w.text}
+                index={i}
+                from="up"
+                distance={16}
+              >
+                <motion.div
+                  whileHover={{ y: -4 }}
+                  className="flex h-full items-start gap-4 rounded-2xl border border-blue-100 bg-white p-5 shadow-sm transition-shadow hover:shadow-lg hover:shadow-blue-100/50"
+                >
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-blue-50">
+                    <w.icon className="h-5 w-5 text-blue-700" />
+                  </div>
+
+                  <p className="pt-2 text-sm font-medium leading-relaxed text-slate-700">
+                    {w.text}
                   </p>
                 </motion.div>
               </Reveal>
@@ -241,131 +420,20 @@ export default function Home() {
         </div>
       </section>
 
-      {/* RESPONSIBILITIES */}
-      <section className="px-6 py-24">
-        <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-2">
-          {/* Night Auditor */}
-          <Reveal from="left">
-            <div className="h-full rounded-3xl border border-slate-200 bg-white p-8 shadow-sm sm:p-9">
-              <div className="mb-6 flex items-center gap-3">
-                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50">
-                  <Moon className="h-5 w-5 text-blue-700" />
-                </div>
-
-                <h3 className="text-2xl font-bold text-slate-950">
-                  Night Auditor
-                </h3>
-              </div>
-
-              <p className="mb-6 text-sm leading-relaxed text-slate-600">
-                A Night Auditor combines front office, guest service and
-                financial administration responsibilities to keep the property
-                running smoothly through the night.
-              </p>
-
-              <ul className="space-y-3">
-                {NIGHT_AUDIT_DUTIES.map((d, i) => (
-                  <Reveal
-                    key={d}
-                    index={i}
-                    distance={10}
-                    className="flex items-start gap-2.5"
-                  >
-                    <li className="flex items-start gap-2.5 text-sm leading-relaxed text-slate-600">
-                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-blue-700" />
-                      {d}
-                    </li>
-                  </Reveal>
-                ))}
-              </ul>
-            </div>
-          </Reveal>
-
-          {/* Concierge */}
-          <Reveal from="right">
-            <div className="h-full rounded-3xl border border-slate-200 bg-white p-8 shadow-sm sm:p-9">
-              <div className="mb-6 flex items-center gap-3">
-                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#C9A24B]/10">
-                  <ConciergeBell className="h-5 w-5 text-[#B18A35]" />
-                </div>
-
-                <h3 className="text-2xl font-bold text-slate-950">
-                  Concierge
-                </h3>
-              </div>
-
-              <p className="mb-6 text-sm leading-relaxed text-slate-600">
-                Often the first point of contact for guests, concierge staff
-                provide personalised assistance and help guests make the most
-                of their stay.
-              </p>
-
-              <ul className="space-y-3">
-                {CONCIERGE_DUTIES.map((d, i) => (
-                  <Reveal
-                    key={d}
-                    index={i}
-                    distance={10}
-                    className="flex items-start gap-2.5"
-                  >
-                    <li className="flex items-start gap-2.5 text-sm leading-relaxed text-slate-600">
-                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#B18A35]" />
-                      {d}
-                    </li>
-                  </Reveal>
-                ))}
-              </ul>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* WHY US */}
-      <section className="bg-slate-50 px-6 py-24">
-        <div className="mx-auto max-w-6xl">
-          <Reveal>
-            <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-blue-700">
-              Why choose us
-            </p>
-          </Reveal>
-
-          <Reveal index={1}>
-            <h2 className="mb-14 max-w-2xl text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">
-              Staff who are more than qualified — they're reliable.
-            </h2>
-          </Reveal>
-
-          <div className="grid gap-x-8 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
-            {WHY_US.map((w, i) => (
-              <Reveal
-                key={w.text}
-                index={i}
-                from="up"
-                distance={16}
-                className="flex items-start gap-3"
-              >
-                <motion.div
-                  whileHover={{ scale: 1.08 }}
-                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white shadow-sm"
-                >
-                  <w.icon className="h-5 w-5 text-blue-700" />
-                </motion.div>
-
-                <p className="pt-2 text-sm leading-relaxed text-slate-600">
-                  {w.text}
-                </p>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* WHO WE SUPPORT — marquee */}
-      <section className="overflow-hidden bg-white py-20">
+      {/* =========================================================
+          WHO WE SUPPORT
+      ========================================================= */}
+      <section className="overflow-hidden bg-white py-24">
         <Reveal className="px-6">
-          <p className="mb-8 text-center text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
-            Who we support
-          </p>
+          <div className="mx-auto mb-10 max-w-6xl text-center">
+            <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-blue-700">
+              Who we support
+            </p>
+
+            <h2 className="text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">
+              Built for hospitality businesses.
+            </h2>
+          </div>
         </Reveal>
 
         <div className="relative">
@@ -385,7 +453,7 @@ export default function Home() {
             {[...WHO_WE_SUPPORT, ...WHO_WE_SUPPORT].map((label, i) => (
               <span
                 key={label + i}
-                className="whitespace-nowrap rounded-full border border-slate-200 bg-slate-50 px-5 py-2.5 text-sm text-slate-600 transition-colors hover:border-blue-200 hover:text-blue-700"
+                className="whitespace-nowrap rounded-full border border-slate-200 bg-slate-50 px-5 py-2.5 text-sm font-medium text-slate-600 transition-all hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700"
               >
                 {label}
               </span>
@@ -394,48 +462,53 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA BANNER */}
+      {/* =========================================================
+          CTA — PREMIUM BLUE COMPONENT
+      ========================================================= */}
       <section className="px-6 pb-24">
         <Reveal className="mx-auto max-w-6xl">
-          <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-slate-50 px-8 py-16 text-center shadow-sm">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1 }}
-              className="pointer-events-none absolute -bottom-24 left-1/2 h-[300px] w-[500px] -translate-x-1/2 rounded-full bg-blue-100/70 blur-3xl"
-            />
+          <div className="relative overflow-hidden rounded-[2rem] bg-[#071B3A] px-8 py-16 text-center shadow-2xl shadow-blue-950/15 sm:px-12">
+            {/* Decorative circles */}
+            <div className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-blue-500/10 blur-3xl" />
 
-            <h2 className="relative mb-4 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">
-              Need hospitality staff you can rely on?
-            </h2>
+            <div className="pointer-events-none absolute -bottom-32 -right-24 h-80 w-80 rounded-full bg-[#C9A24B]/10 blur-3xl" />
 
-            <p className="relative mx-auto mb-8 max-w-xl text-slate-600">
-              Whether you need a Night Auditor, Concierge, Front Office
-              Receptionist or additional hospitality staff, our team can help
-              you find suitable candidates for your business.
-            </p>
+            <div className="relative z-10">
+              <div className="mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-400/10 ring-1 ring-blue-300/20">
+                <Sparkles className="h-6 w-6 text-blue-300" />
+              </div>
 
-            <div className="relative flex flex-wrap items-center justify-center gap-4">
-              <motion.a
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                href="/night-audit/get-a-qoutes"
-                className="inline-flex items-center gap-2 rounded-full bg-blue-700 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-700/20 transition-colors hover:bg-blue-800"
-              >
-                Get a Quote
-                <ArrowRight className="h-4 w-4" />
-              </motion.a>
+              <h2 className="mb-4 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                Need hospitality staff you can rely on?
+              </h2>
 
-              <motion.a
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                href="/night-audit/contacts"
-                className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-6 py-3 text-sm font-semibold text-slate-700 transition-all hover:border-blue-300 hover:text-blue-700"
-              >
-                <Phone className="h-4 w-4" />
-                Contact us
-              </motion.a>
+              <p className="relative mx-auto mb-9 max-w-xl text-sm leading-relaxed text-blue-100/70 sm:text-base">
+                Whether you need a Night Auditor, Concierge, Front Office
+                Receptionist or additional hospitality staff, our team can
+                help you find suitable candidates for your business.
+              </p>
+
+              <div className="relative flex flex-wrap items-center justify-center gap-4">
+                <motion.a
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  href="/night-audit/get-a-qoutes"
+                  className="group inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-blue-900 shadow-xl transition-all hover:bg-blue-50"
+                >
+                  Get a Quote
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </motion.a>
+
+                <motion.a
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  href="/night-audit/contacts"
+                  className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-7 py-3.5 text-sm font-semibold text-white backdrop-blur-sm transition-all hover:border-white/40 hover:bg-white/10"
+                >
+                  <Phone className="h-4 w-4" />
+                  Contact us
+                </motion.a>
+              </div>
             </div>
           </div>
         </Reveal>
