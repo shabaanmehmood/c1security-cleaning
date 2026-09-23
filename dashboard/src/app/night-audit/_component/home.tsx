@@ -1,9 +1,22 @@
 "use client";
+
 import { motion } from "framer-motion";
 import {
-  Moon, ConciergeBell, Building2, CalendarClock, Award, ArrowRight,
-  CheckCircle2, Sparkles, MessageCircle, Users, Eye, ShieldCheck, Phone,
+  Moon,
+  ConciergeBell,
+  Building2,
+  CalendarClock,
+  Award,
+  ArrowRight,
+  CheckCircle2,
+  Sparkles,
+  MessageCircle,
+  Users,
+  Eye,
+  ShieldCheck,
+  Phone,
 } from "lucide-react";
+
 import Reveal from "./reveal";
 import ShiftTimeline from "./shift";
 import Skyline from "./skylane";
@@ -69,30 +82,50 @@ const WHY_US = [
   { icon: Building2, text: "Handle busy hospitality environments" },
   { icon: Eye, text: "Maintain attention to detail" },
   { icon: Moon, text: "Work flexible and overnight shifts" },
-  { icon: ShieldCheck, text: "Represent your hotel or accommodation business professionally" },
+  {
+    icon: ShieldCheck,
+    text: "Represent your hotel or accommodation business professionally",
+  },
 ];
 
 const WHO_WE_SUPPORT = [
-  "Hotels", "Resorts", "Serviced Apartments", "Motels", "Boutique Hotels",
-  "Luxury Accommodation", "Student Accommodation", "Corporate Accommodation",
+  "Hotels",
+  "Resorts",
+  "Serviced Apartments",
+  "Motels",
+  "Boutique Hotels",
+  "Luxury Accommodation",
+  "Student Accommodation",
+  "Corporate Accommodation",
   "Holiday Accommodation Providers",
 ];
 
 export default function Home() {
   return (
-    <div className="bg-[#0A0F1D] min-h-screen">
+    <div className="min-h-screen overflow-hidden bg-white font-sans text-slate-900">
       {/* HERO */}
-      <section className="relative pt-40 pb-28 px-6 overflow-hidden">
-        <div
-          className="pointer-events-none absolute -top-40 right-[-10%] w-[560px] h-[560px] rounded-full opacity-[0.16] blur-3xl"
-          style={{ background: "radial-gradient(circle, #C9A24B 0%, transparent 70%)" }}
+      <section className="relative overflow-hidden px-6 pb-28 pt-36 sm:pt-40">
+        {/* Background decoration */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1 }}
+          className="pointer-events-none absolute -right-40 -top-40 h-[500px] w-[500px] rounded-full bg-blue-100/70 blur-3xl"
         />
-        <div className="relative max-w-4xl mx-auto text-center">
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1.2, delay: 0.2 }}
+          className="pointer-events-none absolute -bottom-40 -left-40 h-[450px] w-[450px] rounded-full bg-[#C9A24B]/10 blur-3xl"
+        />
+
+        <div className="relative z-10 mx-auto max-w-5xl text-center">
           <motion.p
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="font-['JetBrains_Mono'] text-[11px] tracking-[0.22em] uppercase text-[#C9A24B] mb-6"
+            className="mb-6 text-[11px] font-semibold uppercase tracking-[0.22em] text-blue-700"
           >
             Hospitality Staffing · Australia-wide
           </motion.p>
@@ -100,22 +133,31 @@ export default function Home() {
           <motion.h1
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.75, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="font-['Fraunces'] text-[2.6rem] sm:text-6xl leading-[1.08] text-[#F3EEE3]"
+            transition={{
+              duration: 0.75,
+              delay: 0.1,
+              ease: [0.16, 1, 0.3, 1],
+            }}
+            className="text-[2.6rem] font-bold leading-[1.08] tracking-tight text-slate-950 sm:text-6xl"
           >
             Reliable Night Audit &amp; Concierge staff,
-            <span className="italic text-[#C9A24B]"> for whatever hour</span> the guest needs you.
+            <span className="text-blue-700">
+              {" "}
+              for whatever hour
+            </span>{" "}
+            the guest needs you.
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.25 }}
-            className="font-['Inter'] text-base sm:text-lg text-[#A6AFC4] mt-6 max-w-2xl mx-auto leading-relaxed"
+            className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg"
           >
-            We help hotels, resorts, serviced apartments and accommodation providers
-            across Australia recruit dependable Night Auditors, Concierge Staff and
-            Front Office Professionals — so guest service never clocks off.
+            We help hotels, resorts, serviced apartments and accommodation
+            providers across Australia recruit dependable Night Auditors,
+            Concierge Staff and Front Office Professionals — so guest service
+            never clocks off.
           </motion.p>
 
           <motion.div
@@ -126,14 +168,15 @@ export default function Home() {
           >
             <a
               href="/night-audit/get-a-qoutes"
-              className="group inline-flex items-center gap-2 font-['Inter'] text-sm font-medium px-6 py-3 rounded-full bg-[#C9A24B] text-[#0A0F1D] hover:bg-[#E4C878] transition-colors"
+              className="group inline-flex items-center gap-2 rounded-full bg-blue-700 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-700/20 transition-colors hover:bg-blue-800"
             >
               Get a Quote
-              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </a>
+
             <a
               href="/night-audit/contacts"
-              className="inline-flex items-center gap-2 font-['Inter'] text-sm font-medium px-6 py-3 rounded-full border border-[#33405F] text-[#F3EEE3] hover:border-[#C9A24B] transition-colors"
+              className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-6 py-3 text-sm font-semibold text-slate-700 transition-all hover:border-blue-300 hover:text-blue-700"
             >
               Talk to our team
             </a>
@@ -143,7 +186,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.55 }}
-            className="mt-16 max-w-lg mx-auto"
+            className="mx-auto mt-16 max-w-lg"
           >
             <ShiftTimeline />
           </motion.div>
@@ -153,27 +196,45 @@ export default function Home() {
       </section>
 
       {/* SERVICES */}
-      <section className="px-6 py-24 bg-[#0B1220]">
-        <div className="max-w-6xl mx-auto">
+      <section className="bg-slate-50 px-6 py-24">
+        <div className="mx-auto max-w-6xl">
           <Reveal>
-            <p className="font-['JetBrains_Mono'] text-[11px] tracking-[0.18em] uppercase text-[#C9A24B] mb-3">
+            <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-blue-700">
               Staffing solutions
             </p>
           </Reveal>
+
           <Reveal index={1}>
-            <h2 className="font-['Fraunces'] text-3xl sm:text-4xl text-[#F3EEE3] max-w-xl mb-14">
+            <h2 className="mb-14 max-w-xl text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">
               Every role your front desk needs, day or night.
             </h2>
           </Reveal>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {SERVICES.map((s, i) => (
-              <Reveal key={s.title} index={i} from="up" className="h-full">
-                <div className="h-full rounded-2xl border border-[#1C2740] bg-[#121A2E] p-7 hover:border-[#C9A24B]/50 transition-colors">
-                  <s.icon className="w-6 h-6 text-[#C9A24B] mb-5" />
-                  <h3 className="font-['Fraunces'] text-xl text-[#F3EEE3] mb-2">{s.title}</h3>
-                  <p className="font-['Inter'] text-sm text-[#93A0B8] leading-relaxed">{s.copy}</p>
-                </div>
+              <Reveal
+                key={s.title}
+                index={i}
+                from="up"
+                className="h-full"
+              >
+                <motion.div
+                  whileHover={{ y: -6 }}
+                  transition={{ duration: 0.25 }}
+                  className="group h-full rounded-2xl border border-slate-200 bg-white p-7 shadow-sm transition-all hover:border-blue-200 hover:shadow-xl hover:shadow-slate-200/50"
+                >
+                  <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 transition-colors group-hover:bg-blue-700">
+                    <s.icon className="h-5 w-5 text-blue-700 transition-colors group-hover:text-white" />
+                  </div>
+
+                  <h3 className="mb-2 text-xl font-bold text-slate-950">
+                    {s.title}
+                  </h3>
+
+                  <p className="text-sm leading-relaxed text-slate-600">
+                    {s.copy}
+                  </p>
+                </motion.div>
               </Reveal>
             ))}
           </div>
@@ -182,23 +243,36 @@ export default function Home() {
 
       {/* RESPONSIBILITIES */}
       <section className="px-6 py-24">
-        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-6">
+        <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-2">
+          {/* Night Auditor */}
           <Reveal from="left">
-            <div className="h-full rounded-2xl bg-[#121A2E] border border-[#1C2740] p-8">
-              <div className="flex items-center gap-3 mb-6">
-                <Moon className="w-5 h-5 text-[#C9A24B]" />
-                <h3 className="font-['Fraunces'] text-2xl text-[#F3EEE3]">Night Auditor</h3>
+            <div className="h-full rounded-3xl border border-slate-200 bg-white p-8 shadow-sm sm:p-9">
+              <div className="mb-6 flex items-center gap-3">
+                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50">
+                  <Moon className="h-5 w-5 text-blue-700" />
+                </div>
+
+                <h3 className="text-2xl font-bold text-slate-950">
+                  Night Auditor
+                </h3>
               </div>
-              <p className="font-['Inter'] text-sm text-[#93A0B8] mb-6 leading-relaxed">
-                A Night Auditor combines front office, guest service and financial
-                administration responsibilities to keep the property running smoothly
-                through the night.
+
+              <p className="mb-6 text-sm leading-relaxed text-slate-600">
+                A Night Auditor combines front office, guest service and
+                financial administration responsibilities to keep the property
+                running smoothly through the night.
               </p>
+
               <ul className="space-y-3">
                 {NIGHT_AUDIT_DUTIES.map((d, i) => (
-                  <Reveal key={d} index={i} distance={10} className="flex items-start gap-2.5">
-                    <li className="flex items-start gap-2.5 font-['Inter'] text-sm text-[#C7CEDF]">
-                      <CheckCircle2 className="w-4 h-4 text-[#C9A24B] mt-0.5 shrink-0" />
+                  <Reveal
+                    key={d}
+                    index={i}
+                    distance={10}
+                    className="flex items-start gap-2.5"
+                  >
+                    <li className="flex items-start gap-2.5 text-sm leading-relaxed text-slate-600">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-blue-700" />
                       {d}
                     </li>
                   </Reveal>
@@ -207,21 +281,35 @@ export default function Home() {
             </div>
           </Reveal>
 
+          {/* Concierge */}
           <Reveal from="right">
-            <div className="h-full rounded-2xl bg-[#121A2E] border border-[#1C2740] p-8">
-              <div className="flex items-center gap-3 mb-6">
-                <ConciergeBell className="w-5 h-5 text-[#C9A24B]" />
-                <h3 className="font-['Fraunces'] text-2xl text-[#F3EEE3]">Concierge</h3>
+            <div className="h-full rounded-3xl border border-slate-200 bg-white p-8 shadow-sm sm:p-9">
+              <div className="mb-6 flex items-center gap-3">
+                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#C9A24B]/10">
+                  <ConciergeBell className="h-5 w-5 text-[#B18A35]" />
+                </div>
+
+                <h3 className="text-2xl font-bold text-slate-950">
+                  Concierge
+                </h3>
               </div>
-              <p className="font-['Inter'] text-sm text-[#93A0B8] mb-6 leading-relaxed">
-                Often the first point of contact for guests, concierge staff provide
-                personalised assistance and help guests make the most of their stay.
+
+              <p className="mb-6 text-sm leading-relaxed text-slate-600">
+                Often the first point of contact for guests, concierge staff
+                provide personalised assistance and help guests make the most
+                of their stay.
               </p>
+
               <ul className="space-y-3">
                 {CONCIERGE_DUTIES.map((d, i) => (
-                  <Reveal key={d} index={i} distance={10} className="flex items-start gap-2.5">
-                    <li className="flex items-start gap-2.5 font-['Inter'] text-sm text-[#C7CEDF]">
-                      <CheckCircle2 className="w-4 h-4 text-[#C9A24B] mt-0.5 shrink-0" />
+                  <Reveal
+                    key={d}
+                    index={i}
+                    distance={10}
+                    className="flex items-start gap-2.5"
+                  >
+                    <li className="flex items-start gap-2.5 text-sm leading-relaxed text-slate-600">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#B18A35]" />
                       {d}
                     </li>
                   </Reveal>
@@ -233,26 +321,39 @@ export default function Home() {
       </section>
 
       {/* WHY US */}
-      <section className="px-6 py-24 bg-[#0B1220]">
-        <div className="max-w-6xl mx-auto">
+      <section className="bg-slate-50 px-6 py-24">
+        <div className="mx-auto max-w-6xl">
           <Reveal>
-            <p className="font-['JetBrains_Mono'] text-[11px] tracking-[0.18em] uppercase text-[#C9A24B] mb-3">
+            <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-blue-700">
               Why choose us
             </p>
           </Reveal>
+
           <Reveal index={1}>
-            <h2 className="font-['Fraunces'] text-3xl sm:text-4xl text-[#F3EEE3] max-w-2xl mb-14">
+            <h2 className="mb-14 max-w-2xl text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">
               Staff who are more than qualified — they're reliable.
             </h2>
           </Reveal>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-6">
+          <div className="grid gap-x-8 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
             {WHY_US.map((w, i) => (
-              <Reveal key={w.text} index={i} from="up" distance={16} className="flex items-start gap-3">
-                <div className="flex items-start gap-3">
-                  <w.icon className="w-5 h-5 text-[#C9A24B] mt-0.5 shrink-0" />
-                  <p className="font-['Inter'] text-sm text-[#C7CEDF] leading-relaxed">{w.text}</p>
-                </div>
+              <Reveal
+                key={w.text}
+                index={i}
+                from="up"
+                distance={16}
+                className="flex items-start gap-3"
+              >
+                <motion.div
+                  whileHover={{ scale: 1.08 }}
+                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white shadow-sm"
+                >
+                  <w.icon className="h-5 w-5 text-blue-700" />
+                </motion.div>
+
+                <p className="pt-2 text-sm leading-relaxed text-slate-600">
+                  {w.text}
+                </p>
               </Reveal>
             ))}
           </div>
@@ -260,24 +361,31 @@ export default function Home() {
       </section>
 
       {/* WHO WE SUPPORT — marquee */}
-      <section className="py-20 overflow-hidden">
+      <section className="overflow-hidden bg-white py-20">
         <Reveal className="px-6">
-          <p className="font-['JetBrains_Mono'] text-[11px] tracking-[0.18em] uppercase text-[#5C6883] text-center mb-8">
+          <p className="mb-8 text-center text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
             Who we support
           </p>
         </Reveal>
+
         <div className="relative">
-          <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#0A0F1D] to-transparent z-10" />
-          <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#0A0F1D] to-transparent z-10" />
+          <div className="absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-white to-transparent" />
+
+          <div className="absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-white to-transparent" />
+
           <motion.div
-            className="flex gap-4 w-max"
+            className="flex w-max gap-4"
             animate={{ x: ["0%", "-50%"] }}
-            transition={{ duration: 28, repeat: Infinity, ease: "linear" }}
+            transition={{
+              duration: 28,
+              repeat: Infinity,
+              ease: "linear",
+            }}
           >
             {[...WHO_WE_SUPPORT, ...WHO_WE_SUPPORT].map((label, i) => (
               <span
                 key={label + i}
-                className="font-['Inter'] text-sm text-[#C7CEDF] whitespace-nowrap px-5 py-2.5 rounded-full border border-[#1C2740] bg-[#121A2E]"
+                className="whitespace-nowrap rounded-full border border-slate-200 bg-slate-50 px-5 py-2.5 text-sm text-slate-600 transition-colors hover:border-blue-200 hover:text-blue-700"
               >
                 {label}
               </span>
@@ -288,38 +396,50 @@ export default function Home() {
 
       {/* CTA BANNER */}
       <section className="px-6 pb-24">
-        <Reveal className="max-w-6xl mx-auto">
-          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#121A2E] to-[#0E1526] border border-[#1C2740] px-8 py-16 text-center">
-            <div
-              className="pointer-events-none absolute -bottom-24 left-1/2 -translate-x-1/2 w-[500px] h-[300px] opacity-[0.14] blur-3xl"
-              style={{ background: "radial-gradient(circle, #C9A24B 0%, transparent 70%)" }}
+        <Reveal className="mx-auto max-w-6xl">
+          <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-slate-50 px-8 py-16 text-center shadow-sm">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1 }}
+              className="pointer-events-none absolute -bottom-24 left-1/2 h-[300px] w-[500px] -translate-x-1/2 rounded-full bg-blue-100/70 blur-3xl"
             />
-            <h2 className="relative font-['Fraunces'] text-3xl sm:text-4xl text-[#F3EEE3] mb-4">
+
+            <h2 className="relative mb-4 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">
               Need hospitality staff you can rely on?
             </h2>
-            <p className="relative font-['Inter'] text-[#93A0B8] max-w-xl mx-auto mb-8">
-              Whether you need a Night Auditor, Concierge, Front Office Receptionist or
-              additional hospitality staff, our team can help you find suitable
-              candidates for your business.
+
+            <p className="relative mx-auto mb-8 max-w-xl text-slate-600">
+              Whether you need a Night Auditor, Concierge, Front Office
+              Receptionist or additional hospitality staff, our team can help
+              you find suitable candidates for your business.
             </p>
+
             <div className="relative flex flex-wrap items-center justify-center gap-4">
-              <a
+              <motion.a
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
                 href="/night-audit/get-a-qoutes"
-                className="inline-flex items-center gap-2 font-['Inter'] text-sm font-medium px-6 py-3 rounded-full bg-[#C9A24B] text-[#0A0F1D] hover:bg-[#E4C878] transition-colors"
+                className="inline-flex items-center gap-2 rounded-full bg-blue-700 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-700/20 transition-colors hover:bg-blue-800"
               >
-                Get a Quote <ArrowRight className="w-4 h-4" />
-              </a>
-              <a
+                Get a Quote
+                <ArrowRight className="h-4 w-4" />
+              </motion.a>
+
+              <motion.a
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
                 href="/night-audit/contacts"
-                className="inline-flex items-center gap-2 font-['Inter'] text-sm font-medium px-6 py-3 rounded-full border border-[#33405F] text-[#F3EEE3] hover:border-[#C9A24B] transition-colors"
+                className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-6 py-3 text-sm font-semibold text-slate-700 transition-all hover:border-blue-300 hover:text-blue-700"
               >
-                <Phone className="w-4 h-4" /> Contact us
-              </a>
+                <Phone className="h-4 w-4" />
+                Contact us
+              </motion.a>
             </div>
           </div>
         </Reveal>
       </section>
-
     </div>
   );
 }

@@ -39,10 +39,7 @@ export default function Footer() {
             <p className="text-sm text-slate-400 leading-relaxed">
               Providing top-tier security and specialized night audit solutions tailored to safeguard your business and assets 24/7.
             </p>
-            <div className="flex items-center gap-2 text-xs text-blue-400 bg-blue-950/50 border border-blue-900/60 rounded-lg px-3 py-2 w-fit">
-              <ShieldCheck className="w-4 h-4 text-blue-400" />
-              <span>Fully Licensed & Insured Security Provider</span>
-            </div>
+            
           </div>
 
           {/* Column 2: Quick Links */}

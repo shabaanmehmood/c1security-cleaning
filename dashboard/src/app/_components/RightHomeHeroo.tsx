@@ -9,7 +9,7 @@ export default function Right() {
 
   const services = [
     {
-      title: "Security Services",
+      title: "Security",
       path: "/security",
       icon: Shield,
       color: "blue",
@@ -18,7 +18,7 @@ export default function Right() {
       text: "text-blue-400",
     },
     {
-      title: "Cleaning Services",
+      title: "Cleaning",
       path: "/cleaning",
       icon: Sparkles,
       color: "emerald",
@@ -27,7 +27,7 @@ export default function Right() {
       text: "text-emerald-400",
     },
     {
-      title: "Night Audit Services",
+      title: "Night Audit",
       path: "/night-audit",
       icon: Moon,
       color: "purple",
