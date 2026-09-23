@@ -34,13 +34,13 @@ export default function AboutHero() {
             <h1 className="text-5xl font-bold leading-tight md:text-6xl">
               Building Cleaner
               <span className="block text-blue-400">
-                Workplaces Since 2002
+                Workplaces
               </span>
             </h1>
 
             <p className="mt-6 max-w-xl text-lg leading-8 text-slate-800">
               We help businesses create healthier, cleaner, and more productive
-              workplaces through reliable commercial cleaning solutions,
+              workplaces through reliable  cleaning solutions,
               experienced professionals, and industry-leading quality standards.
             </p>
 
@@ -79,7 +79,6 @@ export default function AboutHero() {
 
               <div className="space-y-2">
                 <Users className="h-8 w-8 text-blue-400" />
-                <h3 className="font-semibold">500+ Clients</h3>
                 <p className="text-sm text-slate-400">
                   Trusted nationwide
                 </p>
@@ -87,7 +86,7 @@ export default function AboutHero() {
 
               <div className="space-y-2">
                 <Sparkles className="h-8 w-8 text-blue-400" />
-                <h3 className="font-semibold">20+ Years</h3>
+                <h3 className="font-semibold">5+ Years</h3>
                 <p className="text-sm text-slate-400">
                   Commercial experience
                 </p>
@@ -133,11 +132,11 @@ export default function AboutHero() {
               className="absolute -bottom-10 left-6 rounded-2xl border border-white/10 bg-slate-900/90 p-6 shadow-xl backdrop-blur-lg"
             >
               <h3 className="text-4xl font-bold text-blue-400">
-                20+
+                5+
               </h3>
 
               <p className="mt-2 text-slate-300">
-                Years of Commercial Cleaning Excellence
+                Years of  Cleaning Excellence
               </p>
             </motion.div>
 

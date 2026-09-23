@@ -20,7 +20,7 @@ export default function Footer() {
               />
             </Link>
             <p className="text-xs text-slate-400">
-              Professional Security & Cleaning Solutions
+              Professional Security, Cleaning & Night Audit Services
             </p>
           </div>
 

@@ -7,7 +7,7 @@ export const coreServicesFeatures = [
   {
     id: "cleaning",
     icon: Sparkles,
-    title: "Commercial Cleaning",
+    title: "Cleaning",
     description:
       "Comprehensive, eco-friendly hygiene solutions tailored for offices, industrial sites, healthcare facilities, and commercial properties.",
     imageSrc: "/images/industrial/feature-commercial.jpg",
@@ -16,7 +16,7 @@ export const coreServicesFeatures = [
   {
     id: "security",
     icon: ShieldCheck,
-    title: "Security Solutions",
+    title: "Security ",
     description:
       "Professional site guarding, mobile patrols, and integrated asset protection to ensure complete safety for your business 24/7.",
     imageSrc: "/s.jpg",
@@ -25,7 +25,7 @@ export const coreServicesFeatures = [
   {
     id: "night-audit",
     icon: Moon,
-    title: "Night Audit Services",
+    title: "Night Audit",
     description:
       "Overnight operational support, end-of-day financial auditing, and hospitality management services to keep operations running smoothly.",
     imageSrc: "/na.jpg",

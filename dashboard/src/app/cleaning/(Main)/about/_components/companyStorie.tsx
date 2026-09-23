@@ -42,12 +42,7 @@ export default function CompanyStory() {
               environments where people can live and work comfortably."
             </p>
 
-            <div className="mt-4">
-              <h3 className="font-bold text-slate-900 text-sm">
-                Muhammad Shabaan Mehmood
-              </h3>
-              <p className="text-xs text-slate-500">Founder & CEO</p>
-            </div>
+            
           </div>
         </div>
 
@@ -78,8 +73,7 @@ export default function CompanyStory() {
 
           {/* Experience Badge */}
           <div className="absolute top-4 right-4 rounded-2xl bg-blue-600 px-5 py-4 text-center text-white shadow-md">
-            <h4 className="text-2xl font-extrabold">500+</h4>
-            <p className="text-xs font-medium opacity-90">Happy Clients</p>
+            <h4 className="text-2xl font-extrabold">Happy Clients</h4>
           </div>
         </div>
       </div>

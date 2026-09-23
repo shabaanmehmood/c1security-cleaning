@@ -1,49 +1,66 @@
-import { HomeHeroProps } from "@/components/ui/city/Hero"; // Adjust path to where HomeHeroProps is defined
+import { HomeHeroProps } from "@/components/ui/city/Hero";
 
 export const servicesHomeHeroData: HomeHeroProps[] = [
   {
     title: "Commercial Cleaning",
-    description: "Our flagship commercial cleaning service delivers custom-tailored maintenance blueprints engineered specifically for high-rise enterprise buildings, corporate headquarters, and high-traffic commercial facilities across Australia. We integrate advanced touchpoint sanitisation, automated floor care systems, and rigorous ISO-certified quality auditing protocols to guarantee a pristine, safe, and prestigious physical environment that aligns with your brand's operational standards.",
-    city: "commercial"
+    description:
+      "Our commercial cleaning service provides reliable cleaning and maintenance for office buildings, corporate spaces, and busy commercial facilities across Australia. Our team handles regular cleaning, floor care, high-touch areas, and deep cleaning to keep your workplace clean, safe, and presentable.",
+    city: "commercial",
   },
+
   {
     title: "Office Cleaning",
-    description: "Elevate your workplace environment with our comprehensive office cleaning solutions designed to optimize workplace hygiene and employee productivity. Our dedicated service includes ultra-detailed workstation sanitisation, streak-free glass partition polishing, complete HVAC ventilation dusting, and deep sanitisation of high-use communal breakrooms. Operating under a strict zero-disruption protocol, our vetted after-hours personnel deploy hospital-grade HEPA filtration systems and non-toxic cleaning solutions to safeguard team health.",
-    city: "office"
+    description:
+      "Our office cleaning services help keep your workplace clean, fresh, and comfortable. We clean workstations, glass partitions, shared areas, kitchens, bathrooms, and other high-use spaces. Our team can work around your business hours to keep your workplace clean without disrupting your daily operations.",
+    city: "office",
   },
+
   {
     title: "Medical Cleaning",
-    description: "Adhering strictly to Australian Healthcare Hygiene Standards (NHMRC) and TGA regulatory frameworks, our specialized infection-control team executes hospital-grade terminal cleaning and bio-hazard containment. Utilizing color-coded microfiber systems to prevent cross-contamination, TGA-approved disinfectants, and ATP bioluminescence swab auditing, we deliver verifiable sterility across clinical procedure rooms, dental suites, diagnostic centers, and surgical facilities.",
-    city: "medical"
+    description:
+      "Our medical cleaning services are designed for clinics, dental practices, treatment rooms, and other healthcare facilities. We provide detailed cleaning and disinfection of rooms, surfaces, equipment areas, and high-touch points to help maintain a clean and safe environment.",
+    city: "medical",
   },
+
   {
     title: "Industrial Cleaning",
-    description: "Engineered specifically for complex manufacturing plants, chemical processing facilities, and engineering workshops where operational safety and strict regulatory compliance are critical. Our certified technicians specialize in heavy-duty machinery degreasing, overhead structural gantry clearance, confined space sanitation, and rapid emergency chemical containment, ensuring your facility maintains peak operational uptime while meeting all statutory Workplace Health and Safety standards.",
-    city: "industrial"
+    description:
+      "Our industrial cleaning services are designed for factories, manufacturing facilities, workshops, and other large industrial areas. We provide heavy-duty cleaning, machinery cleaning, floor cleaning, high-level cleaning, and safe cleaning of difficult areas to help keep your workplace clean and operational.",
+    city: "industrial",
   },
+
   {
     title: "Warehouse Cleaning",
-    description: "Maintain seamless supply chain operations and a safer working environment with our heavy-duty warehouse cleaning services tailored for distribution hubs, logistics centers, and cold storage plants. We deploy industrial ride-on scrubber sweepers, high-reach racking dust containment systems, and specialized tire-mark removal equipment to eliminate hazardous debris, preserve floor integrity, and maintain full compliance with logistics safety codes.",
-    city: "warehouse"
+    description:
+      "Our warehouse cleaning services help keep storage and distribution areas clean, organised, and safe. We clean floors, storage areas, loading spaces, high areas, and other commonly used sections while removing dust, dirt, marks, and unwanted debris.",
+    city: "warehouse",
   },
+
   {
     title: "School Cleaning",
-    description: "Creating safe, hygienic, and germ-free learning environments across primary, secondary, and tertiary educational institutions. Supported by fully police-checked and Blue Card cleared personnel, our educational cleaning program utilizes 100% eco-friendly, non-toxic sanitisation agents to execute deep classroom cleaning, science lab residue neutralisation, and gymnasium floor maintenance during scheduled term breaks and daily operational shifts.",
-    city: "school"
+    description:
+      "Our school cleaning services help create clean, safe, and comfortable learning environments. We clean classrooms, offices, common areas, bathrooms, science rooms, gyms, and other school facilities with regular cleaning and deep cleaning services.",
+    city: "school",
   },
+
   {
     title: "Food Area & Processing Cleaning",
-    description: "Specialised deep cleaning and rigorous pathogen management designed specifically for food manufacturing facilities, commercial kitchens, bottling lines, and food prep zones. Operating under strict HACCP guidelines, our teams execute comprehensive exhaust canopy grease extraction, bio-film eradication, cold room sanitisation, and continuous ATP surface verification to protect your supply chain from cross-contamination and ensure regulatory compliance.",
-    city: "food"
+    description:
+      "Our food area and processing cleaning services are designed for food facilities, commercial kitchens, food preparation areas, and processing spaces. We clean floors, work areas, equipment areas, exhaust systems, storage rooms, and other food-related spaces to help maintain a clean and hygienic environment.",
+    city: "food",
   },
+
   {
     title: "Hospital Cleaning",
-    description: "Delivering continuous, high-grade environmental sanitation and terminal cleaning solutions tailored for healthcare, hospitality, and large-scale event venues. Our specialized service covers complete commercial kitchen grease hood degreasing, bar zone bio-clearing, and deep upholstery steam extraction—executed seamlessly during overnight turnaround windows to maintain impeccable hygiene without impacting standard business hours.",
-    city: "hospital"
+    description:
+      "Our hospital cleaning services provide detailed cleaning and disinfection for healthcare facilities and other large environments. We clean patient areas, rooms, common spaces, bathrooms, floors, kitchens, and high-touch surfaces to help maintain a clean and safe environment.",
+    city: "hospital",
   },
+
   {
     title: "Government Cleaning",
-    description: "High-security, fully compliant facility maintenance and sanitisation engineered for municipal offices, courthouses, civic centers, and public sector infrastructure. Supported by background-checked, security-cleared personnel, we execute eco-friendly green cleaning routines that fulfill sustainable public procurement requirements while adhering to strict access control and operational privacy standards.",
-    city: "government"
-  }
+    description:
+      "Our government cleaning services are designed for government offices, courthouses, civic buildings, and public facilities. Our team provides regular cleaning, deep cleaning, floor care, bathroom cleaning, and general facility maintenance while following workplace safety and access requirements.",
+    city: "government",
+  },
 ];

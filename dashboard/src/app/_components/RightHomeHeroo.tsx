@@ -2,31 +2,74 @@
 
 import FerroFluid from "@/components/Ferrofluid";
 import { Shield, Sparkles, Moon } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function Right() {
+  const router = useRouter();
+
+  const services = [
+    {
+      title: "Security Services",
+      path: "/security",
+      icon: Shield,
+      color: "blue",
+      border: "border-blue-500/30",
+      hoverBorder: "hover:border-blue-400",
+      text: "text-blue-400",
+    },
+    {
+      title: "Cleaning Services",
+      path: "/cleaning",
+      icon: Sparkles,
+      color: "emerald",
+      border: "border-emerald-500/30",
+      hoverBorder: "hover:border-emerald-400",
+      text: "text-emerald-400",
+    },
+    {
+      title: "Night Audit Services",
+      path: "/night-audit",
+      icon: Moon,
+      color: "purple",
+      border: "border-purple-500/30",
+      hoverBorder: "hover:border-purple-400",
+      text: "text-purple-400",
+    },
+  ];
+
   return (
-    <div style={{ width: "100%", height: "600px", position: "relative" }} className="overflow-hidden rounded-3xl">
-      {/* Background FerroFluid Animation */}
+    <div
+      style={{ width: "100%", height: "600px", position: "relative" }}
+      className="overflow-hidden rounded-3xl"
+    >
+      {/* Background */}
       <FerroFluid />
 
-      {/* Service Overlay Badges */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-slate-950/20 p-6 backdrop-blur-[2px]">
-        {/* Security Service Tag */}
-        <div className="flex items-center gap-3 rounded-2xl border border-blue-500/30 bg-slate-900/80 px-6 py-3.5 text-blue-400 shadow-lg backdrop-blur-md transition-all hover:scale-105 hover:border-blue-400">
-          <Shield className="h-6 w-6 text-blue-400" />
-          <span className="text-base font-semibold text-white">Security Services</span>
-        </div>
+      {/* Overlay */}
+      <div className="absolute inset-0 flex items-center justify-center bg-slate-950/20 p-6 backdrop-blur-[2px]">
+        <div className="grid w-full max-w-4xl grid-cols-1 gap-5 sm:grid-cols-3">
+          {services.map((service) => {
+            const Icon = service.icon;
 
-        {/* Cleaning Service Tag */}
-        <div className="flex items-center gap-3 rounded-2xl border border-emerald-500/30 bg-slate-900/80 px-6 py-3.5 text-emerald-400 shadow-lg backdrop-blur-md transition-all hover:scale-105 hover:border-emerald-400">
-          <Sparkles className="h-6 w-6 text-emerald-400" />
-          <span className="text-base font-semibold text-white">Commercial Cleaning</span>
-        </div>
+            return (
+              <button
+                key={service.path}
+                type="button"
+                onClick={() => router.push(service.path)}
+                className={`group flex min-h-[150px] flex-col items-center justify-center gap-4 rounded-3xl border ${service.border} bg-slate-900/80 p-6 text-center shadow-xl backdrop-blur-md transition-all duration-300 hover:-translate-y-2 hover:scale-[1.03] ${service.hoverBorder}`}
+              >
+                <div
+                  className={`flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-950/70 ${service.text} transition-transform duration-300 group-hover:scale-110`}
+                >
+                  <Icon className="h-7 w-7" />
+                </div>
 
-        {/* Night Audit Service Tag */}
-        <div className="flex items-center gap-3 rounded-2xl border border-purple-500/30 bg-slate-900/80 px-6 py-3.5 text-purple-400 shadow-lg backdrop-blur-md transition-all hover:scale-105 hover:border-purple-400">
-          <Moon className="h-6 w-6 text-purple-400" />
-          <span className="text-base font-semibold text-white">Night Audit</span>
+                <span className="text-sm font-semibold text-white sm:text-base">
+                  {service.title}
+                </span>
+              </button>
+            );
+          })}
         </div>
       </div>
     </div>

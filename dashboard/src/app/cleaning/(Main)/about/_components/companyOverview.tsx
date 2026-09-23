@@ -29,7 +29,7 @@ export default function CompanyOverview() {
 
           {/* Experience Card Badge */}
           <div className="absolute -bottom-6 right-2 sm:right-6 rounded-2xl bg-blue-600 px-6 py-4 text-white shadow-lg text-center sm:text-left">
-            <h3 className="text-3xl font-extrabold">10+</h3>
+            <h3 className="text-3xl font-extrabold">5+</h3>
             <p className="text-xs font-medium opacity-90">
               Years of Cleaning Excellence
             </p>

@@ -179,7 +179,6 @@ export default function Navbar() {
                   </Link>
                 ))}
                 <div className="col-span-2 pt-2.5 mt-1 border-t border-slate-100 flex items-center justify-between text-xs px-2">
-                  <span className="text-slate-500 font-medium">ISO 9001 & TGA Accredited Sanitisation</span>
                   <Link href="/cleaning/services" className="text-blue-600 hover:text-blue-700 flex items-center gap-1 font-bold">
                     View All Services <ArrowRight className="w-3.5 h-3.5" />
                   </Link>

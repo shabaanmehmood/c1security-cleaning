@@ -44,14 +44,6 @@ export default function Left() {
         {/* Trust Stats */}
         <HeroAnimation delay={0.4}>
           <div className="mt-8 grid grid-cols-3 gap-2 sm:gap-4 border-t border-slate-200/60 pt-6">
-            <div>
-              <h3 className="text-xl font-bold text-blue-600 sm:text-2xl">
-                500+
-              </h3>
-              <p className="mt-0.5 text-xs text-slate-500">
-                Commercial Clients
-              </p>
-            </div>
 
             <div>
               <h3 className="text-xl font-bold text-blue-600 sm:text-2xl">

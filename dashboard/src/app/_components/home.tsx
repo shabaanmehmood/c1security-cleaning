@@ -27,9 +27,8 @@ const statItemVariants = {
 
 const stats = [
   { value: "99.8%", label: "Client Satisfaction" },
-  { value: "500+", label: "Properties Secured" },
   { value: "24/7", label: "Support & Response" },
-  { value: "10+ Yrs", label: "Industry Experience" },
+  { value: "5+ Yrs", label: "Industry Experience" },
 ];
 
 const serviceCards = [
@@ -42,7 +41,7 @@ const serviceCards = [
     badge: "Sanitized & Fresh",
   },
   {
-    title: "Security Solutions",
+    title: "Security Services",
     description: "24/7 physical and automated protection for complete peace of mind.",
     icon: Shield,
     href: "/security",
@@ -50,7 +49,7 @@ const serviceCards = [
     badge: "24/7 Protection",
   },
   {
-    title: "Night Audit",
+    title: "Night Audit Services",
     description: "Overnight financial verification, reporting, and operational oversight.",
     icon: Moon,
     href: "/night-audit",

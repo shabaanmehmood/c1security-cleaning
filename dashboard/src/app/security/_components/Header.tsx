@@ -1,8 +1,8 @@
+
 "use client";
 
 import Image from "next/image";
 import React, { useState } from "react";
-import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 
 type HeaderProps = {
@@ -21,7 +21,6 @@ export default function Header({
   imageSrc,
   reverse = false,
   googlePlayImg,
-  googlePlayLink,
   appStoreImg,
 }: HeaderProps) {
   const [isOpen, setIsOpen] = useState(false);
@@ -61,7 +60,7 @@ export default function Header({
               {description}
             </motion.p>
 
-            {/* App Store Buttons Section */}
+            {/* App Store Buttons */}
             {(googlePlayImg || appStoreImg) && (
               <motion.div
                 className="flex flex-col sm:flex-row gap-6 items-center justify-center md:justify-start mt-6"
@@ -69,12 +68,17 @@ export default function Header({
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 0.3 }}
               >
+                {/* Google Play */}
                 {googlePlayImg && (
                   <motion.div
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.97 }}
                   >
-                    <Link href={googlePlayLink || "#"} target="_blank">
+                    <button
+                      type="button"
+                      onClick={() => setIsOpen(true)}
+                      className="focus:outline-none block cursor-pointer"
+                    >
                       <Image
                         src={googlePlayImg}
                         alt="Get it on Google Play"
@@ -82,26 +86,27 @@ export default function Header({
                         height={60}
                         className="rounded-lg shadow-md hover:shadow-lg transition-all duration-300"
                       />
-                    </Link>
+                    </button>
                   </motion.div>
                 )}
 
+                {/* App Store */}
                 {appStoreImg && (
                   <motion.div
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.97 }}
                   >
                     <button
-                      onClick={() => setIsOpen(true)}
-                      className="focus:outline-none block"
                       type="button"
+                      onClick={() => setIsOpen(true)}
+                      className="focus:outline-none block cursor-pointer"
                     >
                       <Image
                         src={appStoreImg}
                         alt="Download on the App Store"
                         width={140}
                         height={60}
-                        className="rounded-lg shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer"
+                        className="rounded-lg shadow-md hover:shadow-lg transition-all duration-300"
                       />
                     </button>
                   </motion.div>
@@ -125,7 +130,11 @@ export default function Header({
             <motion.div
               animate={{
                 y: [0, -10, 0],
-                transition: { duration: 4, repeat: Infinity, ease: "easeInOut" },
+                transition: {
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                },
               }}
             >
               <Image
@@ -155,29 +164,41 @@ export default function Header({
             <path
               d="M0,50 C150,150 350,-50 500,50 L500,150 L0,150 Z"
               className="fill-white"
-            ></path>
+            />
           </svg>
         </motion.div>
       </header>
 
-      {/* iOS App Store Popup Modal */}
+      {/* Coming Soon Modal */}
       <AnimatePresence>
         {isOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+            onClick={() => setIsOpen(false)}
+          >
             <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ duration: 0.2 }}
+              onClick={(e) => e.stopPropagation()}
               className="bg-white rounded-2xl p-6 sm:p-8 max-w-sm w-full text-center shadow-xl text-gray-800"
             >
+              <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-blue-100">
+                <span className="text-2xl">📱</span>
+              </div>
+
               <h3 className="text-2xl font-bold text-gray-900 mb-2">
                 Coming Soon!
               </h3>
+
               <p className="text-gray-600 mb-6">
-                Our iOS application is currently under development and will be available on the App Store soon.
+                Our Android and iOS applications are currently under
+                development and will be available soon.
               </p>
+
               <button
+                type="button"
                 onClick={() => setIsOpen(false)}
                 className="w-full bg-blue-900 hover:bg-blue-800 text-white font-medium py-2.5 px-4 rounded-xl transition duration-200 focus:outline-none"
               >
