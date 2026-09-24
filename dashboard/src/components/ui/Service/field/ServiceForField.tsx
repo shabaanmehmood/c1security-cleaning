@@ -25,8 +25,8 @@ export default function ServicesFieldPage({ faq, HeroContent }: FaqAndHeroProps)
       <ServicePage title={HeroContent.title} />
 
       
-
-      <ServicesSection onOpenQuoteModal={() => setQuoteModalOpen(true)} />
+{/* 
+      <ServicesSection onOpenQuoteModal={() => setQuoteModalOpen(true)} /> */}
 
       <Faq faqs={faq} />
 

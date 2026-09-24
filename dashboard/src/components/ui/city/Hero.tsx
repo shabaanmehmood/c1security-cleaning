@@ -77,7 +77,7 @@ export default function HomeHero({ title, description, city }: HomeHeroProps) {
                 <span className="ml-2 text-sm font-bold text-blue-950">4.9/5</span>
               </div>
               <p className="text-xs sm:text-sm text-blue-800/70 font-medium">
-                Trusted by 500+ commercial properties nationwide
+                Trusted by many commercial properties nationwide
               </p>
             </div>
           </motion.div>
