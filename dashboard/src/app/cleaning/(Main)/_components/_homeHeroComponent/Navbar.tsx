@@ -147,7 +147,7 @@ export default function Navbar() {
           </Link>
 
           {/* Services Dropdown */}
-          <div
+          {/* <div
             className="relative"
             onMouseEnter={() => setMegaMenu("services")}
             onMouseLeave={() => setMegaMenu(null)}
@@ -185,7 +185,7 @@ export default function Navbar() {
                 </div>
               </div>
             )}
-          </div>
+          </div> */}
 
           {/* Locations Dropdown */}
           <div
@@ -347,7 +347,7 @@ export default function Navbar() {
                   Home
                 </Link>
 
-                <Link
+                {/* <Link
                   href="/cleaning/services"
                   className={`text-lg font-medium transition-colors flex items-center justify-between ${
                     pathname.startsWith("/cleaning/services") ? "text-blue-600" : "text-slate-700"
@@ -355,7 +355,7 @@ export default function Navbar() {
                 >
                   <span>Services</span>
                   <span className="text-xs text-blue-600 font-bold">View All</span>
-                </Link>
+                </Link> */}
 
                 <Link
                   href="/cleaning/industries"
