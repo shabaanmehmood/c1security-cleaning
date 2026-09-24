@@ -83,7 +83,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenQuoteMod
             <Sparkles className="w-3.5 h-3.5 text-blue-400" /> Certified Specialised Cleaners
           </span>
           <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight font-heading">
-            Our Commercial <span className="text-blue-400">Cleaning Services</span>
+            Our  <span className="text-blue-400">Cleaning Services</span>
           </h2>
           <p className="text-blue-200/80 text-sm sm:text-base mt-3">
             9 specialized cleaning protocols tailored for multi-tenant towers, medical centers, distribution facilities, and corporate headquarters.
