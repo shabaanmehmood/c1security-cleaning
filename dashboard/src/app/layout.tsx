@@ -4,6 +4,7 @@ import "./globals.css";
 
 import { AuthListener } from "@/components/auth/authListner";
 import LayoutContent from "@/components/layout";
+import { Toaster } from "sonner";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -20,9 +21,9 @@ export const metadata: Metadata = {
 
   description:
     "C1 Services provides professional commercial cleaning, security and facility maintenance services across Brisbane, Gold Coast and surrounding areas.",
-  
-  
-   icons: {
+
+
+  icons: {
     icon: [
       { url: "/c1-services-icon-32x32.png", sizes: "32x32", type: "image/png" },
       { url: "/c1-services-icon-192x192.png", sizes: "192x192", type: "image/png" },
@@ -65,7 +66,7 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
- 
+
 };
 
 
@@ -78,7 +79,32 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <AuthListener />
-        <LayoutContent>{children}</LayoutContent>
+        <LayoutContent>
+
+          <Toaster
+            position="top-right"
+            richColors
+            closeButton
+            duration={4000}
+            theme="light"
+            toastOptions={{
+              classNames: {
+                toast:
+                  "!bg-white !border !border-blue-100 !rounded-xl !shadow-lg !text-slate-800",
+                title: "!text-slate-900 !font-semibold",
+                description: "!text-slate-500",
+                success:
+                  "!bg-white !border-green-200 !text-slate-800",
+                error:
+                  "!bg-white !border-red-200 !text-slate-800",
+                closeButton:
+                  "!bg-white !border-slate-200 !text-slate-500",
+              },
+            }}
+          />
+
+          {children}
+        </LayoutContent>
       </body>
     </html>
   );

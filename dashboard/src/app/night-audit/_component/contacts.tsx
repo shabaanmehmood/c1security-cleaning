@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useState } from "react";
@@ -11,13 +12,15 @@ import {
   FaEnvelope,
   FaMapMarkerAlt,
 } from "react-icons/fa";
-
 import { Button } from "@/app/security/_components/ui/button";
 import { Input } from "@/app/security/_components/ui/input";
 import { Label } from "@/app/security/_components/ui/label";
 import { Textarea } from "@/app/security/_components/ui/textarea";
+import TurnstileCaptcha from "@/app/_components/captcha";
 import api from "@/utils/axois";
 import axios from "axios";
+import api2 from "@/utils/formapi";
+import { showErrorToast, showSuccessToast } from "@/utils/toast";
 
 const contactSchema = z.object({
   firstname: z.string().min(2, "First name is required"),
@@ -35,6 +38,8 @@ type ContactFormValues = z.infer<typeof contactSchema>;
 
 const ContactSection = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState("");
+  const [captchaWidgetKey, setCaptchaWidgetKey] = useState(0);
 
   const {
     register,
@@ -43,15 +48,42 @@ const ContactSection = () => {
     reset,
   } = useForm<ContactFormValues>({
     resolver: zodResolver(contactSchema),
+    defaultValues: {
+      firstname: "",
+      lastname: "",
+      email: "",
+      phone: "",
+      subject: "",
+      message: "",
+    },
   });
 
   const onSubmit = async (data: ContactFormValues) => {
+    if (!captchaToken) {
+      alert("Please complete CAPTCHA verification.");
+      return;
+    }
+
     setIsLoading(true);
 
     try {
-      const response = await api.post("/api/Email/nightaudit", data);
+      const payload = {
+        service:  "",
+        subServices: "",
+        firstName: data.firstname ?? "",
+        lastName: data.lastname ?? "",
+        companyInstituteName: "",
+        streetAddress:  "",
+        city:"",
+        contactNumber: data.phone ?? "",
+        email: data.email ?? "",
+        description: `${data.message} - ${data.subject}`,
+        captchaToken,
+      };
 
-      alert(
+      const response = await api2.post("/api/v1/web", payload);
+
+      showSuccessToast(
         response.data?.message ||
           "Quote request sent successfully. We'll get back to you shortly."
       );
@@ -59,7 +91,7 @@ const ContactSection = () => {
       reset();
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        alert(
+        showErrorToast(
           error.response?.data?.message ||
             "Something went wrong. Please try again."
         );
@@ -68,6 +100,10 @@ const ContactSection = () => {
       }
     } finally {
       setIsLoading(false);
+
+      // Turnstile tokens are single-use. Request a fresh token.
+      setCaptchaToken("");
+      setCaptchaWidgetKey((previous) => previous + 1);
     }
   };
 
@@ -91,7 +127,7 @@ const ContactSection = () => {
       />
 
       <div className="relative z-10 mx-auto max-w-6xl">
-        {/* HEADER */}
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -114,8 +150,7 @@ const ContactSection = () => {
           </p>
 
           <h2 className="text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">
-            Contact{" "}
-            <span className="text-blue-700">Control-1 Services</span>
+            Contact <span className="text-blue-700">Control-1 Services</span>
           </h2>
 
           <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg">
@@ -136,9 +171,9 @@ const ContactSection = () => {
           />
         </motion.div>
 
-        {/* CONTENT */}
+        {/* Content */}
         <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr]">
-          {/* CONTACT INFO */}
+          {/* Contact information */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -146,7 +181,6 @@ const ContactSection = () => {
             transition={{ duration: 0.7 }}
             className="relative overflow-hidden rounded-3xl border border-slate-200 bg-slate-50 p-8 shadow-sm sm:p-10"
           >
-            {/* Card decoration */}
             <div className="absolute -right-16 -top-16 h-40 w-40 rounded-full bg-blue-100/70 blur-2xl" />
 
             <div className="relative">
@@ -167,7 +201,6 @@ const ContactSection = () => {
               <div className="my-8 h-px bg-slate-200" />
 
               <div className="space-y-5">
-                {/* Phone */}
                 <motion.div
                   whileHover={{ x: 5 }}
                   className="flex items-start gap-4"
@@ -175,7 +208,6 @@ const ContactSection = () => {
                   <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-blue-50">
                     <FaPhoneAlt className="text-blue-700" />
                   </div>
-
                   <div>
                     <p className="text-sm font-semibold text-slate-950">
                       Phone
@@ -186,7 +218,6 @@ const ContactSection = () => {
                   </div>
                 </motion.div>
 
-                {/* Email */}
                 <motion.div
                   whileHover={{ x: 5 }}
                   className="flex items-start gap-4"
@@ -194,12 +225,10 @@ const ContactSection = () => {
                   <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-blue-50">
                     <FaEnvelope className="text-blue-700" />
                   </div>
-
                   <div>
                     <p className="text-sm font-semibold text-slate-950">
                       Email
                     </p>
-
                     <a
                       href="mailto:info@c1services.com.au"
                       className="mt-1 block text-sm text-blue-700 transition-colors hover:text-blue-900"
@@ -209,7 +238,6 @@ const ContactSection = () => {
                   </div>
                 </motion.div>
 
-                {/* Address */}
                 <motion.div
                   whileHover={{ x: 5 }}
                   className="flex items-start gap-4"
@@ -217,12 +245,10 @@ const ContactSection = () => {
                   <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-blue-50">
                     <FaMapMarkerAlt className="text-blue-700" />
                   </div>
-
                   <div>
                     <p className="text-sm font-semibold text-slate-950">
                       Address
                     </p>
-
                     <p className="mt-1 text-sm leading-6 text-slate-600">
                       10 Sanur Street, Marsden 4132
                       <br />
@@ -234,7 +260,7 @@ const ContactSection = () => {
             </div>
           </motion.div>
 
-          {/* FORM */}
+          {/* Contact form */}
           <motion.form
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -247,25 +273,22 @@ const ContactSection = () => {
               <h3 className="text-2xl font-bold text-slate-950">
                 Send us a message
               </h3>
-
               <p className="mt-2 text-sm leading-6 text-slate-500">
                 Complete the form below and our team will get back to you.
               </p>
             </div>
 
-            {/* First + Last Name */}
+            {/* First and last name */}
             <div className="mb-6 grid gap-5 sm:grid-cols-2">
               <div>
                 <Label className="mb-2 block text-sm font-medium text-slate-700">
                   First Name
                 </Label>
-
                 <Input
                   placeholder="Enter your first name"
                   {...register("firstname")}
                   className="h-12 rounded-xl border-slate-200 bg-slate-50 transition-all focus:border-blue-600 focus:bg-white focus:ring-blue-600"
                 />
-
                 {errors.firstname && (
                   <p className="mt-1.5 text-sm text-red-500">
                     {errors.firstname.message}
@@ -277,13 +300,11 @@ const ContactSection = () => {
                 <Label className="mb-2 block text-sm font-medium text-slate-700">
                   Last Name
                 </Label>
-
                 <Input
                   placeholder="Enter your last name"
                   {...register("lastname")}
                   className="h-12 rounded-xl border-slate-200 bg-slate-50 transition-all focus:border-blue-600 focus:bg-white focus:ring-blue-600"
                 />
-
                 {errors.lastname && (
                   <p className="mt-1.5 text-sm text-red-500">
                     {errors.lastname.message}
@@ -297,14 +318,12 @@ const ContactSection = () => {
               <Label className="mb-2 block text-sm font-medium text-slate-700">
                 Email
               </Label>
-
               <Input
                 type="email"
                 placeholder="example@gmail.com"
                 {...register("email")}
                 className="h-12 rounded-xl border-slate-200 bg-slate-50 transition-all focus:border-blue-600 focus:bg-white focus:ring-blue-600"
               />
-
               {errors.email && (
                 <p className="mt-1.5 text-sm text-red-500">
                   {errors.email.message}
@@ -317,14 +336,12 @@ const ContactSection = () => {
               <Label className="mb-2 block text-sm font-medium text-slate-700">
                 Phone
               </Label>
-
               <Input
                 type="tel"
                 placeholder="+61 487 190 645"
                 {...register("phone")}
                 className="h-12 rounded-xl border-slate-200 bg-slate-50 transition-all focus:border-blue-600 focus:bg-white focus:ring-blue-600"
               />
-
               {errors.phone && (
                 <p className="mt-1.5 text-sm text-red-500">
                   {errors.phone.message}
@@ -337,13 +354,11 @@ const ContactSection = () => {
               <Label className="mb-2 block text-sm font-medium text-slate-700">
                 Subject
               </Label>
-
               <Input
                 placeholder="How can we help?"
                 {...register("subject")}
                 className="h-12 rounded-xl border-slate-200 bg-slate-50 transition-all focus:border-blue-600 focus:bg-white focus:ring-blue-600"
               />
-
               {errors.subject && (
                 <p className="mt-1.5 text-sm text-red-500">
                   {errors.subject.message}
@@ -352,17 +367,15 @@ const ContactSection = () => {
             </div>
 
             {/* Message */}
-            <div className="mb-7">
+            <div className="mb-6">
               <Label className="mb-2 block text-sm font-medium text-slate-700">
                 Message
               </Label>
-
               <Textarea
                 placeholder="Write your message here..."
                 {...register("message")}
                 className="min-h-[140px] resize-none rounded-xl border-slate-200 bg-slate-50 transition-all focus:border-blue-600 focus:bg-white focus:ring-blue-600"
               />
-
               {errors.message && (
                 <p className="mt-1.5 text-sm text-red-500">
                   {errors.message.message}
@@ -370,14 +383,33 @@ const ContactSection = () => {
               )}
             </div>
 
-            {/* Submit */}
+            {/* Required Cloudflare Turnstile CAPTCHA */}
+            <div className="mb-7">
+              <Label className="mb-3 block text-sm font-medium text-slate-700">
+                Security Verification{" "}
+                <span className="text-red-500">*</span>
+              </Label>
+
+              <TurnstileCaptcha
+                key={captchaWidgetKey}
+                onVerify={setCaptchaToken}
+              />
+
+              {!captchaToken && (
+                <p className="mt-2 text-sm text-slate-500">
+                  Please complete CAPTCHA before submitting.
+                </p>
+              )}
+            </div>
+
+            {/* Submit button */}
             <motion.div
               whileHover={{ scale: 1.01 }}
               whileTap={{ scale: 0.98 }}
             >
               <Button
                 type="submit"
-                disabled={isLoading}
+                disabled={isLoading || !captchaToken}
                 className="h-13 w-full rounded-xl bg-blue-700 text-base font-semibold text-white shadow-lg shadow-blue-700/20 transition-all hover:bg-blue-800 hover:shadow-blue-700/30 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {isLoading ? "Sending..." : "Send Message"}

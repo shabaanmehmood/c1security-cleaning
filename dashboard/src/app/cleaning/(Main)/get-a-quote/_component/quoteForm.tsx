@@ -18,7 +18,7 @@ import {
 import {
   showErrorToast,
   showSuccessToast,
-} from "@/components/ui/toast";
+} from "@/utils/toast";
 import api2 from "@/utils/formapi";
 
 export default function QuoteForm() {
