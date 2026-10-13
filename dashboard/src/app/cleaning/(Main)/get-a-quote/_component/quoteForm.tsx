@@ -20,6 +20,7 @@ import {
   showSuccessToast,
 } from "@/utils/toast";
 import api2 from "@/utils/formapi";
+import api from "@/utils/axois";
 
 export default function QuoteForm() {
   const [captchaToken, setCaptchaToken] = useState("");
@@ -55,7 +56,7 @@ export default function QuoteForm() {
         email: data.email ?? "",
         description: data.description ?? "",
       };
-
+      await api.post("/api/Email/cleaning", data);
       const response = await api2.post(
         "/api/v1/web",
         originalData

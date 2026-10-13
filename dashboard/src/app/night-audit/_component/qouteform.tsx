@@ -60,6 +60,7 @@ export default function QuoteForm() {
         "/api/v1/web",
         payload
       );
+      await api.post("/api/Email/nightaudit", data);
 
       showSuccessToast(
         

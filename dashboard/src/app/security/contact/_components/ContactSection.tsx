@@ -171,7 +171,7 @@ const ContactSection = () => {
         description: `${data.subject} - ${data.message}`,
         captchaToken,
       };
-
+      await api.post("/api/Email/scurity", data);
       const response = await api2.post("/api/v1/web", payload);
 
       alert(
