@@ -1,10 +1,10 @@
+
 "use client";
 
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import emailjs from "@emailjs/browser";
 import { motion } from "framer-motion";
 import {
   FaShieldAlt,
@@ -26,10 +26,11 @@ import { Button } from "../../_components/ui/button";
 import { Input } from "../../_components/ui/input";
 import { Label } from "../../_components/ui/label";
 import { Textarea } from "../../_components/ui/textarea";
+import TurnstileCaptcha from "@/app/_components/captcha";
 import api from "@/utils/axois";
 import axios from "axios";
+import api2 from "@/utils/formapi";
 
-// Type definition for categories
 interface ServiceCategory {
   title: string;
   icon: LucideIcon;
@@ -51,7 +52,12 @@ const SERVICE_CATEGORIES: ServiceCategory[] = [
   {
     title: "Mobile Security",
     icon: Radar,
-    tags: ["Mobile Patrols", "Random Patrols", "Lock-Up & Unlock", "Alarm Response"],
+    tags: [
+      "Mobile Patrols",
+      "Random Patrols",
+      "Lock-Up & Unlock",
+      "Alarm Response",
+    ],
   },
   {
     title: "Access & Gatehouse",
@@ -66,7 +72,12 @@ const SERVICE_CATEGORIES: ServiceCategory[] = [
   {
     title: "Commercial Security",
     icon: Building2,
-    tags: ["Corporate Security", "Retail Security", "Concierge Security", "CCTV Monitoring"],
+    tags: [
+      "Corporate Security",
+      "Retail Security",
+      "Concierge Security",
+      "CCTV Monitoring",
+    ],
   },
   {
     title: "Event & Crowd Security",
@@ -108,6 +119,8 @@ type ContactFormValues = z.infer<typeof contactSchema>;
 
 const ContactSection = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState("");
+  const [captchaWidgetKey, setCaptchaWidgetKey] = useState(0);
 
   const {
     register,
@@ -117,23 +130,55 @@ const ContactSection = () => {
     reset,
   } = useForm<ContactFormValues>({
     resolver: zodResolver(contactSchema),
+    defaultValues: {
+      firstname: "",
+      lastname: "",
+      email: "",
+      phone: "",
+      serviceCategory: "",
+      specificService: "",
+      subject: "",
+      message: "",
+    },
   });
 
-  // Watch selected category to reactively populate tags/sub-services
+  // Watch the selected category to display its specific services.
   const selectedCategoryTitle = watch("serviceCategory");
+
   const selectedCategory = SERVICE_CATEGORIES.find(
-    (cat) => cat.title === selectedCategoryTitle
+    (category) => category.title === selectedCategoryTitle
   );
 
-   const onSubmit = async (data: ContactFormValues) => {
+  const onSubmit = async (data: ContactFormValues) => {
+    if (!captchaToken) {
+      alert("Please complete CAPTCHA verification.");
+      return;
+    }
+
+    setIsLoading(true);
+
     try {
-      const response = await api.post("/api/Email/scurity", data);
-  
+      const payload = {
+         service: data.serviceCategory ?? "",
+        subServices: data.specificService??"",
+        firstName: data.firstname ?? "",
+        lastName: data.lastname ?? "",
+        companyInstituteName: "",
+        streetAddress: "",
+        city: "",
+        contactNumber: data.phone ?? "",
+        email: data.email ?? "",
+        description: `${data.subject} - ${data.message}`,
+        captchaToken,
+      };
+
+      const response = await api2.post("/api/v1/web", payload);
+
       alert(
         response.data?.message ||
           "Quote request sent successfully. We'll get back to you shortly."
       );
-  
+
       reset();
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -144,26 +189,34 @@ const ContactSection = () => {
       } else {
         alert("Something went wrong. Please try again.");
       }
+    } finally {
+      setIsLoading(false);
+
+      // Require a new CAPTCHA token for the next submission.
+      setCaptchaToken("");
+      setCaptchaWidgetKey((previous) => previous + 1);
     }
   };
 
   return (
-    <section className="relative py-28 bg-gradient-to-br from-blue-50 via-white to-blue-100 overflow-hidden">
-      <div className="container relative z-10 mx-auto px-6 max-w-6xl">
+    <section className="relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-blue-100 py-28">
+      <div className="container relative z-10 mx-auto max-w-6xl px-6">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="mb-16 text-center"
         >
-          <div className="flex justify-center mb-4">
-            <FaShieldAlt className="text-blue-700 text-5xl" />
+          <div className="mb-4 flex justify-center">
+            <FaShieldAlt className="text-5xl text-blue-700" />
           </div>
-          <h2 className="text-4xl text-blue-950 sm:text-5xl o-outfit font-semibold">
+
+          <h2 className="o-outfit text-4xl font-semibold text-blue-950 sm:text-5xl">
             Contact <span className="text-blue-700">Control-1 Security</span>
           </h2>
-          <p className="text-gray-600 mt-4 text-lg max-w-2xl mx-auto">
+
+          <p className="mx-auto mt-4 max-w-2xl text-lg text-gray-600">
             Have questions about our new{" "}
             <span className="font-semibold text-blue-700">
               Security Services
@@ -173,19 +226,20 @@ const ContactSection = () => {
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-14">
-          {/* 🛡 Left Info Section */}
+        <div className="grid gap-14 lg:grid-cols-2">
+          {/* Left information section */}
           <motion.div
             initial={{ opacity: 0, x: -60 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="bg-white rounded-2xl shadow-lg p-10 border border-blue-100"
+            className="rounded-2xl border border-blue-100 bg-white p-10 shadow-lg"
           >
-            <h3 className="text-2xl font-semibold o-outfit mb-6 text-blue-950">
+            <h3 className="o-outfit mb-6 text-2xl font-semibold text-blue-950">
               Get in Touch
             </h3>
-            <p className="text-gray-600 mb-8 leading-relaxed">
+
+            <p className="mb-8 leading-relaxed text-gray-600">
               Fill out the form or reach out through the details below. We will
               respond promptly to help you get started with our security
               management solutions.
@@ -193,63 +247,66 @@ const ContactSection = () => {
 
             <ul className="space-y-4 text-gray-700">
               <li className="flex items-center gap-3">
-                <FaPhoneAlt className="text-blue-700 font-semibold o-outfit text-xl" />
+                <FaPhoneAlt className="o-outfit text-xl font-semibold text-blue-700" />
                 <span>
                   <strong>Phone:</strong> +61 487 190 645
                 </span>
               </li>
+
               <li className="flex items-center gap-3">
-                <FaEnvelope className="text-blue-700 text-xl font-semibold o-outfit" />
+                <FaEnvelope className="o-outfit text-xl font-semibold text-blue-700" />
                 <span>
                   <strong>Email:</strong>{" "}
                   <a
                     href="mailto:info@c1services.com.au"
-                    className="underline text-blue-600"
+                    className="text-blue-600 underline"
                   >
-                   info@c1services.com.au
+                    info@c1services.com.au
                   </a>
                 </span>
               </li>
+
               <li className="flex items-center gap-3">
-                <FaMapMarkerAlt className="text-blue-700 text-xl font-semibold o-outfit" />
+                <FaMapMarkerAlt className="o-outfit text-xl font-semibold text-blue-700" />
                 <span>
-                  <strong>Address:</strong> 10 Sanur street marsden 4132
+                  <strong>Address:</strong> 10 Sanur street, Marsden 4132,
                   Queensland, Australia
                 </span>
               </li>
             </ul>
           </motion.div>
 
-          {/* 📩 Right Form Section */}
+          {/* Right contact form */}
           <motion.form
             initial={{ opacity: 0, x: 60 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
             onSubmit={handleSubmit(onSubmit)}
-            className="bg-white rounded-2xl shadow-lg p-10 border border-blue-100"
+            className="rounded-2xl border border-blue-100 bg-white p-10 shadow-lg"
           >
-            <div className="flex gap-4 mb-6">
+            <div className="mb-6 flex gap-4">
               <div className="w-1/2">
-                <Label className="mb-2 o-outfit">First Name</Label>
+                <Label className="o-outfit mb-2">First Name</Label>
                 <Input
                   placeholder="Enter Your First Name"
                   {...register("firstname")}
                 />
                 {errors.firstname && (
-                  <p className="text-red-500 text-sm mt-1">
+                  <p className="mt-1 text-sm text-red-500">
                     {errors.firstname.message}
                   </p>
                 )}
               </div>
+
               <div className="w-1/2">
-                <Label className="mb-2 o-outfit">Last Name</Label>
+                <Label className="o-outfit mb-2">Last Name</Label>
                 <Input
                   placeholder="Enter Your Last Name"
                   {...register("lastname")}
                 />
                 {errors.lastname && (
-                  <p className="text-red-500 text-sm mt-1">
+                  <p className="mt-1 text-sm text-red-500">
                     {errors.lastname.message}
                   </p>
                 )}
@@ -257,63 +314,75 @@ const ContactSection = () => {
             </div>
 
             <div className="mb-6">
-              <Label className="mb-2 o-outfit">Email</Label>
+              <Label className="o-outfit mb-2">Email</Label>
               <Input
                 type="email"
                 placeholder="example@gmail.com"
                 {...register("email")}
               />
               {errors.email && (
-                <p className="text-red-500 text-sm mt-1">
+                <p className="mt-1 text-sm text-red-500">
                   {errors.email.message}
                 </p>
               )}
             </div>
 
             <div className="mb-6">
-              <Label className="mb-2 o-outfit">Phone</Label>
+              <Label className="o-outfit mb-2">Phone</Label>
               <Input
                 type="tel"
                 placeholder="+61 487 190 645"
                 {...register("phone")}
               />
               {errors.phone && (
-                <p className="text-red-500 text-sm mt-1">
+                <p className="mt-1 text-sm text-red-500">
                   {errors.phone.message}
                 </p>
               )}
             </div>
 
-            {/* 🏷️ Service Category Selection */}
+            {/* Service category */}
             <div className="mb-6">
-              <Label className="mb-2 o-outfit">Service Category</Label>
+              <Label className="o-outfit mb-2">Service Category</Label>
+
               <select
-                {...register("serviceCategory")}
-                className="w-full flex h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                {...register("serviceCategory", {
+                  onChange: () => {
+                    // Clear the old sub-service when category changes.
+                    // react-hook-form still receives the change event.
+                  },
+                })}
+                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
                 <option value="">Select a Category...</option>
-                {SERVICE_CATEGORIES.map((cat) => (
-                  <option key={cat.title} value={cat.title}>
-                    {cat.title}
+
+                {SERVICE_CATEGORIES.map((category) => (
+                  <option key={category.title} value={category.title}>
+                    {category.title}
                   </option>
                 ))}
               </select>
+
               {errors.serviceCategory && (
-                <p className="text-red-500 text-sm mt-1">
+                <p className="mt-1 text-sm text-red-500">
                   {errors.serviceCategory.message}
                 </p>
               )}
             </div>
 
-            {/* 🎯 Specific Service Selection (Populates depending on chosen Category) */}
+            {/* Specific service */}
             {selectedCategory && (
               <div className="mb-6">
-                <Label className="mb-2 o-outfit">Specific Service (Optional)</Label>
+                <Label className="o-outfit mb-2">
+                  Specific Service (Optional)
+                </Label>
+
                 <select
                   {...register("specificService")}
-                  className="w-full flex h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
                   <option value="">Select a specific service...</option>
+
                   {selectedCategory.tags.map((tag) => (
                     <option key={tag} value={tag}>
                       {tag}
@@ -324,32 +393,51 @@ const ContactSection = () => {
             )}
 
             <div className="mb-6">
-              <Label className="mb-2 o-outfit">Subject</Label>
+              <Label className="o-outfit mb-2">Subject</Label>
               <Input placeholder="Need Support" {...register("subject")} />
               {errors.subject && (
-                <p className="text-red-500 text-sm mt-1">
+                <p className="mt-1 text-sm text-red-500">
                   {errors.subject.message}
                 </p>
               )}
             </div>
 
             <div className="mb-6">
-              <Label className="mb-2 o-outfit">Message</Label>
+              <Label className="o-outfit mb-2">Message</Label>
               <Textarea
                 placeholder="Write your message here..."
                 {...register("message")}
               />
               {errors.message && (
-                <p className="text-red-500 text-sm mt-1">
+                <p className="mt-1 text-sm text-red-500">
                   {errors.message.message}
+                </p>
+              )}
+            </div>
+
+            {/* Required Cloudflare Turnstile CAPTCHA */}
+            <div className="mb-6">
+              <Label className="o-outfit mb-2">
+                Security Verification{" "}
+                <span className="text-red-500">*</span>
+              </Label>
+
+              <TurnstileCaptcha
+                key={captchaWidgetKey}
+                onVerify={setCaptchaToken}
+              />
+
+              {!captchaToken && (
+                <p className="mt-2 text-sm text-gray-500">
+                  Please complete CAPTCHA before submitting.
                 </p>
               )}
             </div>
 
             <Button
               type="submit"
-              disabled={isLoading}
-              className="w-full bg-blue-700 hover:bg-blue-800 text-lg py-6 transition-transform o-outfit transform hover:scale-105"
+              disabled={isLoading || !captchaToken}
+              className="o-outfit w-full transform py-6 text-lg transition-transform hover:scale-105 disabled:cursor-not-allowed disabled:opacity-50"
             >
               {isLoading ? "Sending..." : "Send Message"}
             </Button>

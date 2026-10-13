@@ -1,10 +1,14 @@
+
 "use client";
 
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
 import { Loader2, Send } from "lucide-react";
+import axios from "axios";
 
+import TurnstileCaptcha from "@/app/_components/captcha";
 import {
   QuoteSchema,
   QuoteFormData,
@@ -12,9 +16,16 @@ import {
   cities,
 } from "@/validators/quoteFormValidator";
 import api from "@/utils/axois";
-import axios from "axios";
+import {
+  showErrorToast,
+  showSuccessToast,
+} from "@/components/ui/toast";
+import api2 from "@/utils/formapi";
 
 export default function QuoteForm() {
+  const [captchaToken, setCaptchaToken] = useState("");
+  const [captchaWidgetKey, setCaptchaWidgetKey] = useState(0);
+
   const {
     register,
     handleSubmit,
@@ -25,36 +36,65 @@ export default function QuoteForm() {
   });
 
   const onSubmit = async (data: QuoteFormData) => {
+    if (!captchaToken) {
+      showErrorToast("Please complete CAPTCHA verification.");
+      return;
+    }
+
     try {
-      const response = await api.post("/api/Email/nightaudit", data);
-  
-      alert(
-        response.data?.message ||
+      const payload = {
+        captchaToken,
+        service: data.service ?? "",
+        subServices: "",
+        firstName: data.firstName ?? "",
+        lastName: data.lastName ?? "",
+        companyInstituteName: data.company ?? "",
+        streetAddress: data.address ?? "",
+        city: data.city,
+        contactNumber: data.contactNumber ?? "",
+        email: data.email ?? "",
+        description: data.description ?? "",
+      };
+
+      const response = await api2.post(
+        "/api/v1/web",
+        payload
+      );
+
+      showSuccessToast(
+        
           "Quote request sent successfully. We'll get back to you shortly."
       );
-  
+
       reset();
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        alert(
-          error.response?.data?.message ||
+        showErrorToast(
+        
             "Something went wrong. Please try again."
         );
       } else {
-        alert("Something went wrong. Please try again.");
+        showErrorToast("Something went wrong. Please try again.");
       }
+    } finally {
+      // Turnstile tokens can only be verified once.
+      // Require a fresh token for another attempt.
+      setCaptchaToken("");
+      setCaptchaWidgetKey((key) => key + 1);
     }
   };
 
   return (
-    <section className="py-20 ">
+    <section className="py-20">
       <div className="mx-auto max-w-5xl rounded-3xl border border-gray-200 bg-white p-10 shadow-2xl">
         <div className="mb-10 text-center">
-          <h2 className="text-4xl font-bold">Request a Free Quote</h2>
+          <h2 className="text-4xl font-bold">
+            Request a Free Quote
+          </h2>
 
           <p className="mt-3 text-gray-500">
-            Tell us about your cleaning requirements and we'll get back to you
-            shortly.
+            Tell us about your cleaning requirements and we'll
+            get back to you shortly.
           </p>
         </div>
 
@@ -64,7 +104,9 @@ export default function QuoteForm() {
         >
           {/* Service */}
           <div className="md:col-span-2">
-            <label className="mb-2 block font-medium">Service Required</label>
+            <label className="mb-2 block font-medium">
+              Service Required
+            </label>
 
             <select
               {...register("service")}
@@ -85,7 +127,9 @@ export default function QuoteForm() {
 
           {/* First Name */}
           <div>
-            <label className="mb-2 block font-medium">First Name</label>
+            <label className="mb-2 block font-medium">
+              First Name
+            </label>
 
             <input
               {...register("firstName")}
@@ -100,7 +144,9 @@ export default function QuoteForm() {
 
           {/* Last Name */}
           <div>
-            <label className="mb-2 block font-medium">Last Name</label>
+            <label className="mb-2 block font-medium">
+              Last Name
+            </label>
 
             <input
               {...register("lastName")}
@@ -132,7 +178,9 @@ export default function QuoteForm() {
 
           {/* Address */}
           <div className="md:col-span-2">
-            <label className="mb-2 block font-medium">Street Address</label>
+            <label className="mb-2 block font-medium">
+              Street Address
+            </label>
 
             <input
               {...register("address")}
@@ -147,7 +195,9 @@ export default function QuoteForm() {
 
           {/* City */}
           <div>
-            <label className="mb-2 block font-medium">City</label>
+            <label className="mb-2 block font-medium">
+              City
+            </label>
 
             <select
               {...register("city")}
@@ -161,12 +211,16 @@ export default function QuoteForm() {
               ))}
             </select>
 
-            <p className="mt-1 text-sm text-red-500">{errors.city?.message}</p>
+            <p className="mt-1 text-sm text-red-500">
+              {errors.city?.message}
+            </p>
           </div>
 
           {/* Region */}
           <div>
-            <label className="mb-2 block font-medium">Region</label>
+            <label className="mb-2 block font-medium">
+              Region
+            </label>
 
             <input
               {...register("region")}
@@ -181,7 +235,9 @@ export default function QuoteForm() {
 
           {/* Contact */}
           <div>
-            <label className="mb-2 block font-medium">Contact Number</label>
+            <label className="mb-2 block font-medium">
+              Contact Number
+            </label>
 
             <input
               {...register("contactNumber")}
@@ -196,7 +252,9 @@ export default function QuoteForm() {
 
           {/* Email */}
           <div>
-            <label className="mb-2 block font-medium">Email</label>
+            <label className="mb-2 block font-medium">
+              Email
+            </label>
 
             <input
               type="email"
@@ -205,12 +263,16 @@ export default function QuoteForm() {
               className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20"
             />
 
-            <p className="mt-1 text-sm text-red-500">{errors.email?.message}</p>
+            <p className="mt-1 text-sm text-red-500">
+              {errors.email?.message}
+            </p>
           </div>
 
           {/* Description */}
           <div className="md:col-span-2">
-            <label className="mb-2 block font-medium">Description</label>
+            <label className="mb-2 block font-medium">
+              Description
+            </label>
 
             <textarea
               rows={6}
@@ -224,13 +286,40 @@ export default function QuoteForm() {
             </p>
           </div>
 
-          {/* Animated Submit Button */}
+          {/* Required CAPTCHA */}
+          <div className="md:col-span-2">
+            <label className="mb-2 block font-medium">
+              Security Verification{" "}
+              <span className="text-red-500">*</span>
+            </label>
+
+            <TurnstileCaptcha
+              key={captchaWidgetKey}
+              onVerify={setCaptchaToken}
+            />
+
+            {!captchaToken && (
+              <p className="mt-2 text-sm text-gray-500">
+                Please complete CAPTCHA before submitting.
+              </p>
+            )}
+          </div>
+
+          {/* Submit Button */}
           <div className="md:col-span-2">
             <motion.button
               type="submit"
-              disabled={isSubmitting}
-              whileHover={{ scale: 1.01, y: -2 }}
-              whileTap={{ scale: 0.98 }}
+              disabled={isSubmitting || !captchaToken}
+              whileHover={
+                !isSubmitting && captchaToken
+                  ? { scale: 1.01, y: -2 }
+                  : undefined
+              }
+              whileTap={
+                !isSubmitting && captchaToken
+                  ? { scale: 0.98 }
+                  : undefined
+              }
               className="relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-blue-600 py-4 text-lg font-semibold text-white shadow-lg shadow-blue-600/25 transition-all duration-300 hover:bg-blue-700 hover:shadow-xl hover:shadow-blue-600/35 disabled:cursor-not-allowed disabled:opacity-60"
             >
               {isSubmitting ? (
@@ -241,7 +330,7 @@ export default function QuoteForm() {
               ) : (
                 <>
                   <span>Request Quote</span>
-                  <Send className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+                  <Send className="h-5 w-5" />
                 </>
               )}
             </motion.button>
