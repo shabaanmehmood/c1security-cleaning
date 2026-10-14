@@ -44,7 +44,7 @@ export default function QuoteForm() {
     try {
       const payload = {
         captchaToken,
-        service: data.service ?? "Nigth-Audit",
+        service: "Nigth-Audit",
         subServices: "",
         firstName: data.firstName ?? "",
         lastName: data.lastName ?? "",
